@@ -15,7 +15,6 @@
 		504EC30F1FED79650016851F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 504EC30E1FED79650016851F /* Assets.xcassets */; };
 		504EC3121FED79650016851F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 504EC3101FED79650016851F /* LaunchScreen.storyboard */; };
 		50B271D11FEDC1A000F3C39B /* public in Resources */ = {isa = PBXBuildFile; fileRef = 50B271D01FEDC1A000F3C39B /* public */; };
-		726FABC3DE5A68F7250B22F6 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FE568D86D8B3450C73360399 /* Foundation.framework */; };
 		75FADF72D7BB1D1B3B3B6F26 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A955DE04CE9490490349B835 /* Assets.xcassets */; };
 		81F098F4AD4209F8CE9B35A5 /* SehariWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = F08052D018D59D5BB7664CE6 /* SehariWidget.swift */; };
 		9582B6832FE993A70072D4E8 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9582B6822FE993A50072D4E8 /* SceneDelegate.swift */; };
@@ -66,11 +65,12 @@
 		958DCC722DB07C7200EA8C5F /* debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = debug.xcconfig; path = ../debug.xcconfig; sourceTree = SOURCE_ROOT; };
 		9C64CE50F3DEB4D1BF5854B8 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
 		A955DE04CE9490490349B835 /* Assets.xcassets */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		C1E0A5D27B4F4E2A9D3B6F01 /* SehariWidget.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = SehariWidget.xcconfig; sourceTree = "<group>"; };
+		C1E0A5D27B4F4E2A9D3B6F02 /* Signing.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Signing.xcconfig; sourceTree = "<group>"; };
 		F08052D018D59D5BB7664CE6 /* SehariWidget.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SehariWidget.swift; sourceTree = "<group>"; };
 		F20A57F54D9E5E6FA63C9651 /* SehariWidget.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; name = SehariWidget.appex; path = SehariWidget.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		F999A818695EA0C6C7421C9D /* App.entitlements */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.entitlements; path = App.entitlements; sourceTree = "<group>"; };
 		FA70A2F987E30149B059A420 /* DMSerifDisplay-Regular.ttf */ = {isa = PBXFileReference; includeInIndex = 1; path = "DMSerifDisplay-Regular.ttf"; sourceTree = "<group>"; };
-		FE568D86D8B3450C73360399 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS26.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -86,7 +86,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				726FABC3DE5A68F7250B22F6 /* Foundation.framework in Frameworks */,
 				F7E3FF5AB4CC68EAF579D69C /* WidgetKit.framework in Frameworks */,
 				9FB9523328F94A6D9CACD268 /* SwiftUI.framework in Frameworks */,
 			);
@@ -98,7 +97,6 @@
 		017792E2BDB3B9E005B12A28 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				736047184982FD92EE922705 /* iOS */,
 				9C64CE50F3DEB4D1BF5854B8 /* WidgetKit.framework */,
 				00AA74C337D2953C20597CEE /* SwiftUI.framework */,
 			);
@@ -113,6 +111,7 @@
 				FA70A2F987E30149B059A420 /* DMSerifDisplay-Regular.ttf */,
 				3D14BF773A213BDE7DDAEEB5 /* Info.plist */,
 				6DBAB6401C170559D20A041D /* SehariWidget.entitlements */,
+				C1E0A5D27B4F4E2A9D3B6F01 /* SehariWidget.xcconfig */,
 			);
 			name = SehariWidget;
 			path = SehariWidget;
@@ -122,6 +121,7 @@
 			isa = PBXGroup;
 			children = (
 				958DCC722DB07C7200EA8C5F /* debug.xcconfig */,
+				C1E0A5D27B4F4E2A9D3B6F02 /* Signing.xcconfig */,
 				504EC3061FED79650016851F /* App */,
 				504EC3051FED79650016851F /* Products */,
 				017792E2BDB3B9E005B12A28 /* Frameworks */,
@@ -153,14 +153,6 @@
 				F999A818695EA0C6C7421C9D /* App.entitlements */,
 			);
 			path = App;
-			sourceTree = "<group>";
-		};
-		736047184982FD92EE922705 /* iOS */ = {
-			isa = PBXGroup;
-			children = (
-				FE568D86D8B3450C73360399 /* Foundation.framework */,
-			);
-			name = iOS;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -331,6 +323,7 @@
 /* Begin XCBuildConfiguration section */
 		2C5AD8C2A1AC0742AFD232AB /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = C1E0A5D27B4F4E2A9D3B6F01 /* SehariWidget.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
@@ -340,7 +333,6 @@
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = SehariWidget/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -359,7 +351,7 @@
 		};
 		504EC3141FED79650016851F /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 958DCC722DB07C7200EA8C5F /* debug.xcconfig */;
+			baseConfigurationReference = C1E0A5D27B4F4E2A9D3B6F02 /* Signing.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -417,6 +409,7 @@
 		};
 		504EC3151FED79650016851F /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = C1E0A5D27B4F4E2A9D3B6F02 /* Signing.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -514,6 +507,7 @@
 		};
 		B65141A5CF3928D5126031D3 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = C1E0A5D27B4F4E2A9D3B6F01 /* SehariWidget.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
@@ -523,7 +517,6 @@
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = SehariWidget/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

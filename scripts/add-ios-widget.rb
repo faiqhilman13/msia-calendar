@@ -5,12 +5,16 @@ require 'xcodeproj'
 ROOT = File.expand_path('../ios/App', __dir__)
 project = Xcodeproj::Project.open(File.join(ROOT, 'App.xcodeproj'))
 app = project.targets.find { |t| t.name == 'App' } or abort 'App target not found'
-TEAM = app.build_configurations.first.build_settings['DEVELOPMENT_TEAM']
 
 # The app itself needs the App Group entitlement to share data with the widget.
 app.build_configurations.each { |c| c.build_settings['CODE_SIGN_ENTITLEMENTS'] = 'App/App.entitlements' }
 app_group = project.main_group.find_subpath('App', false)
 app_group.new_file('App.entitlements') unless app_group.files.any? { |f| f.path == 'App.entitlements' }
+
+# Both targets take DEVELOPMENT_TEAM from Signing.xcconfig -> Signing.local.xcconfig (git-ignored),
+# so no team ID is written into project.pbxproj. The App target's Debug config keeps debug.xcconfig.
+signing = project.main_group.files.find { |f| f.path == 'Signing.xcconfig' } || project.main_group.new_file('Signing.xcconfig')
+project.build_configurations.each { |c| c.base_configuration_reference = signing }
 
 if project.targets.any? { |t| t.name == 'SehariWidget' }
   project.save
@@ -21,11 +25,20 @@ end
 widget = project.new_target(:app_extension, 'SehariWidget', :ios, '16.0', nil, :swift)
 widget.product_reference.name = 'SehariWidget.appex'
 
+# new_target links Foundation from a hard-coded SDK path (iPhoneOS<n>.sdk) that breaks on other Xcodes.
+# Swift links it implicitly, so drop it along with the "iOS" group it creates.
+widget.frameworks_build_phase.files_references.select { |r| r.path.to_s.end_with?('/Foundation.framework') }.each do |ref|
+  parent = ref.parent
+  ref.remove_from_project
+  parent.remove_from_project if parent != project.frameworks_group && parent.children.empty?
+end
+
 group = project.main_group.new_group('SehariWidget', 'SehariWidget')
 widget.add_file_references([group.new_file('SehariWidget.swift')])
 widget.add_resources([group.new_file('Assets.xcassets'), group.new_file('DMSerifDisplay-Regular.ttf')])
 group.new_file('Info.plist')
 group.new_file('SehariWidget.entitlements')
+xcconfig = group.new_file('SehariWidget.xcconfig')
 
 %w[WidgetKit SwiftUI].each do |fw|
   ref = project.frameworks_group.files.find { |f| f.path == "System/Library/Frameworks/#{fw}.framework" } ||
@@ -34,17 +47,19 @@ group.new_file('SehariWidget.entitlements')
 end
 
 widget.build_configurations.each do |c|
+  # SehariWidget.xcconfig sets IPHONEOS_DEPLOYMENT_TARGET = 16.0. It must stay out of project.pbxproj:
+  # `npx cap sync` copies the first deployment target it finds there into CapApp-SPM/Package.swift.
+  c.base_configuration_reference = xcconfig
   s = c.build_settings
+  s.delete('IPHONEOS_DEPLOYMENT_TARGET')
   s['PRODUCT_NAME'] = '$(TARGET_NAME)'
   s['PRODUCT_BUNDLE_IDENTIFIER'] = 'my.sehariselembar.app.SehariWidget'
   s['INFOPLIST_FILE'] = 'SehariWidget/Info.plist'
   s['CODE_SIGN_ENTITLEMENTS'] = 'SehariWidget/SehariWidget.entitlements'
-  s['IPHONEOS_DEPLOYMENT_TARGET'] = '16.0'
   s['SWIFT_VERSION'] = '5.0'
   s['TARGETED_DEVICE_FAMILY'] = '1,2'
   s['SKIP_INSTALL'] = 'YES'
   s['CODE_SIGN_STYLE'] = 'Automatic'
-  s['DEVELOPMENT_TEAM'] = TEAM if TEAM
   s['MARKETING_VERSION'] = '1.0'
   s['CURRENT_PROJECT_VERSION'] = '1'
   s['ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME'] = 'AccentColor'

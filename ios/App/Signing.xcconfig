@@ -1,0 +1,10 @@
+// Code signing for the App and SehariWidget targets.
+//
+// To run on a device or archive, put your Apple Developer team ID in
+// Signing.local.xcconfig next to this file:
+//
+//     DEVELOPMENT_TEAM = ABCDE12345
+//
+// That file is git-ignored, so everyone keeps their own team and the ID never
+// lands in project.pbxproj. Simulator builds don't need it.
+#include? "Signing.local.xcconfig"

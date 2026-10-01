@@ -1,0 +1,7 @@
+// Build settings for the SehariWidget extension target.
+
+// Lock screen widget families need iOS 16; the app itself still runs on iOS 15.
+// This is set here, not in project.pbxproj, because `npx cap sync` takes the iOS
+// platform for CapApp-SPM/Package.swift from the first IPHONEOS_DEPLOYMENT_TARGET
+// it finds in the project file.
+IPHONEOS_DEPLOYMENT_TARGET = 16.0
