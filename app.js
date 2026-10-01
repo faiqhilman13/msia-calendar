@@ -948,7 +948,10 @@
      a snapshot of the next 21 days that the app writes through the native
      WidgetBridge plugin. In a browser this does nothing. */
   const cap = window.Capacitor;
-  const WidgetBridge = cap && cap.isNativePlatform && cap.isNativePlatform() && cap.registerPlugin ? cap.registerPlugin('WidgetBridge') : null;
+  // Without @capacitor/core bundled, the injected native bridge has nativePromise() but no registerPlugin().
+  const WidgetBridge = !(cap && cap.isNativePlatform && cap.isNativePlatform()) ? null
+    : cap.registerPlugin ? cap.registerPlugin('WidgetBridge')
+    : cap.nativePromise ? { setData: options => cap.nativePromise('WidgetBridge', 'setData', options) } : null;
   let widgetTimer = 0;
   function pushWidget() {
     if (!WidgetBridge) return;
