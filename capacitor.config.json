@@ -1,0 +1,11 @@
+{
+  "appId": "my.sehariselembar.app",
+  "appName": "Sehari Selembar",
+  "webDir": "www",
+  "backgroundColor": "#e9e4d9",
+  "plugins": {
+    "CapacitorHttp": { "enabled": true }
+  },
+  "ios": { "contentInset": "always" },
+  "android": { "allowMixedContent": false }
+}

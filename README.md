@@ -53,6 +53,54 @@ Imported calendars are stored separately from your own events, so a re-sync neve
 
 Subscription links are fetched by `netlify/functions/ics-proxy.mjs` at `/api/ics`, because most calendar hosts don't allow browsers to fetch them directly. It accepts only public http(s) hosts, re-checks every redirect, caps size and time, and returns only iCal.
 
+## iPhone and Android app, with widgets
+
+The same web app is packaged with [Capacitor](https://capacitorjs.com) as a native app for the App Store and Play Store. The native apps add home screen and lock screen widgets, which a web app can't offer.
+
+**The "Kalendar Koyak" widget** shows today's Tear-off sheet: a red binding, a DM Serif numeral, the day in Malay, plus the peribahasa and next event when there's room.
+- **iPhone:**
+  - home screen: small, medium and large sizes
+  - lock screen: inline, circular and rectangular slots
+  - StandBy mode
+- **Android:** a resizable home screen widget, which can also go on the lock screen where the phone supports it.
+
+### How the widgets get their data
+
+The app writes a snapshot of the next 21 days through the `WidgetBridge` plugin:
+- the date in every language, red days and holidays
+- the peribahasa and fact
+- the next events
+- the chosen style
+
+Saves are batched and also run when the app goes to the background. The widgets turn the page at midnight from that snapshot. With no snapshot yet, they still show the correct date.
+
+| Platform | Files |
+|---|---|
+| iOS | `ios/App/App/AppDelegate.swift` holds `WidgetBridgePlugin` and `MainViewController`. `ios/App/SehariWidget/` is the SwiftUI widget extension. |
+| Android | `android/app/src/main/java/my/sehariselembar/app/` holds `WidgetBridgePlugin`, `WidgetData` and `TearOffWidget`. Layouts are in `res/layout/widget_tearoff_*.xml`. |
+
+Subscription links in the native app are fetched natively (`CapacitorHttp`), so they don't need the `/api/ics` proxy.
+
+### Build
+
+```sh
+npm install
+npm run sync        # copies the web app into www/ and syncs it into ios/ and android/
+npm run android     # opens Android Studio: Run, or Build > Generate Signed Bundle for the Play Store
+npm run ios         # opens Xcode (on a Mac)
+```
+
+**iOS, one-time setup in Xcode:**
+1. For both the **App** and **SehariWidget** targets, choose your Team under Signing & Capabilities.
+2. Make sure **App Groups** contains `group.my.sehariselembar.app` on both targets. The project and entitlements already declare it; Xcode registers it with your Apple account the first time.
+3. Run the app once on a phone so the widgets get their first snapshot. Then long-press the home screen or lock screen → **+** → Sehari Selembar.
+
+The widget target was added by `scripts/add-ios-widget.rb` (uses the `xcodeproj` gem). It is safe to re-run.
+
+**Before you publish:**
+- The bundle id `my.sehariselembar.app` is set in `capacitor.config.json`. Change it there and in the two native projects before the first upload if you want a different one.
+- App icons and splash screens are still Capacitor's placeholders. `npx @capacitor/assets generate` can make them from `icons/`.
+
 ## Files
 
 | File | What it holds |
@@ -63,6 +111,7 @@ Subscription links are fetched by `netlify/functions/ics-proxy.mjs` at `/api/ics
 | `data/facts.js`, `data/peribahasa.js`, `data/holidays.js` | daily content and gazetted holidays for 2025–2027 |
 | `sw.js`, `manifest.webmanifest`, `icons/` | offline support and install on a phone |
 | `netlify/functions/ics-proxy.mjs`, `netlify.toml` | the `/api/ics` proxy for subscription links |
+| `package.json`, `capacitor.config.json`, `scripts/`, `ios/`, `android/` | native app packaging and widgets |
 | `studies/` | the original nine HTML design studies, design notes and reference board |
 
 ## Run locally

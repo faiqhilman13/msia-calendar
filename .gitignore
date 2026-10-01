@@ -2,3 +2,5 @@ server.log
 server-error.log
 screenshots/
 malaysian-calendar-html/
+node_modules/
+www/

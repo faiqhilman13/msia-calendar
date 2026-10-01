@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Tear-off widget, 4x2: today's page on the left, the peribahasa and next event on the right. -->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/w_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/widget_paper"
+    android:clipToOutline="true">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:alpha="0.25"
+        android:importantForAccessibility="no"
+        android:scaleType="centerCrop"
+        android:src="@drawable/paper_grain" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="22dp"
+            android:background="@drawable/widget_binding">
+            <ImageView android:layout_width="9dp" android:layout_height="9dp" android:layout_gravity="center_vertical|start" android:layout_marginStart="40dp" android:importantForAccessibility="no" android:src="@drawable/widget_hole" />
+            <ImageView android:layout_width="9dp" android:layout_height="9dp" android:layout_gravity="center_vertical|end" android:layout_marginEnd="40dp" android:importantForAccessibility="no" android:src="@drawable/widget_hole" />
+        </FrameLayout>
+        <ImageView android:layout_width="match_parent" android:layout_height="5dp" android:importantForAccessibility="no" android:scaleType="fitXY" android:src="@drawable/widget_torn" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:paddingStart="12dp"
+            android:paddingEnd="14dp"
+            android:paddingBottom="10dp">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.9"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
+                <TextView android:id="@+id/w_month" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="2dp" android:fontFamily="serif" android:letterSpacing="0.04" android:textColor="#28251E" android:textSize="11sp" android:textStyle="bold" />
+                <TextView android:id="@+id/w_date" android:layout_width="wrap_content" android:layout_height="0dp" android:layout_weight="1" android:fontFamily="@font/dm_serif_display" android:gravity="center" android:includeFontPadding="false" android:letterSpacing="-0.06" android:textColor="#BF292A" android:textSize="60sp" android:autoSizeTextType="uniform" android:autoSizeMinTextSize="40sp" android:autoSizeMaxTextSize="88sp" />
+                <TextView android:id="@+id/w_day" android:layout_width="wrap_content" android:layout_height="wrap_content" android:fontFamily="serif" android:letterSpacing="0.16" android:textColor="#BF292A" android:textSize="14sp" android:textStyle="bold" />
+            </LinearLayout>
+
+            <ImageView android:layout_width="1dp" android:layout_height="match_parent" android:layout_marginStart="10dp" android:layout_marginEnd="12dp" android:layout_marginTop="6dp" android:background="#817862" android:importantForAccessibility="no" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1.6"
+                android:orientation="vertical"
+                android:paddingTop="4dp">
+                <TextView android:id="@+id/w_langs" android:layout_width="wrap_content" android:layout_height="wrap_content" android:fontFamily="serif" android:letterSpacing="0.06" android:textColor="#28251E" android:textSize="11sp" android:textStyle="bold" />
+                <TextView android:id="@+id/w_holiday" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="3dp" android:background="#BF292A" android:paddingStart="5dp" android:paddingEnd="5dp" android:textColor="#FFF4DF" android:textSize="10sp" android:textStyle="bold" android:visibility="gone" />
+                <LinearLayout android:id="@+id/w_peri_block" android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="1" android:orientation="vertical" android:layout_marginTop="5dp">
+                    <TextView android:id="@+id/w_peri" android:layout_width="match_parent" android:layout_height="wrap_content" android:ellipsize="end" android:fontFamily="@font/dm_serif_display" android:maxLines="2" android:textColor="#28251E" android:textSize="15sp" />
+                    <TextView android:id="@+id/w_maksud" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="2dp" android:ellipsize="end" android:maxLines="2" android:textColor="#5A5244" android:textSize="11sp" />
+                </LinearLayout>
+                <TextView android:id="@+id/w_event" android:layout_width="match_parent" android:layout_height="wrap_content" android:background="#00000000" android:ellipsize="end" android:maxLines="1" android:paddingTop="3dp" android:textColor="#28251E" android:textSize="12sp" android:textStyle="bold" android:visibility="gone" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+</FrameLayout>

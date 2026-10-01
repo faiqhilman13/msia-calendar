@@ -558,6 +558,7 @@
     screen = stage.querySelector('.screen');
     if (sel) { const n = screen.querySelector(sel); if (n) n.focus({ preventScroll: true }); }
     renderLeaf();
+    pushWidget();
   }
   function renderLeaf() {
     leaf.dataset.theme = style.id;
@@ -941,6 +942,38 @@
   if ('serviceWorker' in navigator && /^https?:$/.test(location.protocol) && !/^(localhost|127\.0\.0\.1)$/.test(location.hostname)) {
     window.addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(() => {}));
   }
+
+  /* ----------------------------------------------------- native widgets
+     In the iOS and Android app (Capacitor), the home and lock screen widgets read
+     a snapshot of the next 21 days that the app writes through the native
+     WidgetBridge plugin. In a browser this does nothing. */
+  const cap = window.Capacitor;
+  const WidgetBridge = cap && cap.isNativePlatform && cap.isNativePlatform() && cap.registerPlugin ? cap.registerPlugin('WidgetBridge') : null;
+  let widgetTimer = 0;
+  function pushWidget() {
+    if (!WidgetBridge) return;
+    clearTimeout(widgetTimer);
+    widgetTimer = setTimeout(() => {
+      const days = [];
+      for (let i = 0; i < 21; i++) {
+        const p = addDays(today(), i);
+        const k = iso(p.y, p.m, p.d), w = weekday(p.y, p.m, p.d), h = holiday(p.y, p.m, p.d), hj = hijri(p.y, p.m, p.d);
+        const date = new Date(p.y, p.m, p.d, 12);
+        const r = periFor(p), f = factFor(p);
+        days.push({
+          date: k, d: p.d, m: p.m + 1, year: p.y, weekday: w,
+          month: MONTHS[p.m], monthEn: EN_MONTH[p.m].toUpperCase(), monthZh: translated(date, 'zh-CN', 'month'),
+          day: DAYS[w], dayEn: EN_DAY[w].toUpperCase(), dayZh: translated(date, 'zh-CN', 'weekday'),
+          red: w === 0 || !!h, holiday: h ? h.ms : '',
+          hijri: hj ? `${hj.day} ${HIJRI_MONTH[hj.month - 1]} ${hj.year}H` : '',
+          peribahasa: r.p, maksud: r.maksud, fact: f.t,
+          events: eventsFor(k).filter(e => !e.done).slice(0, 4).map(e => ({ time: e.time || '', title: e.title })),
+        });
+      }
+      WidgetBridge.setData({ json: JSON.stringify({ style: style.id, updated: Date.now(), days }) }).catch(() => {});
+    }, 400);
+  }
+  document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'hidden') pushWidget(); });
 
   /* --------------------------------------------------------------- start */
   const saved = store.get('theme', null);
