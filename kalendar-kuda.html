@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#e9e4d9">
+  <title>Kalendar · Nine Malaysian calendar studies</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <header class="gallery-header">
+    <div><p class="eyebrow">MALAYSIAN CALENDAR STUDIES</p><h1>Same day. Nine different ways.</h1></div>
+    <div class="gallery-intro"><p>Old print, new plans.</p><p>Select a date or add an event in any study. Open a design to see it on its own.</p></div>
+  </header>
+  <main id="studies" class="studies" aria-label="Nine calendar designs"></main>
+  <footer class="gallery-footer"><span>1 October 2026 · Kuala Lumpur</span><button class="reset-demo" data-reset="all">Reset demo</button><a href="references/design-board.png" target="_blank" rel="noopener">View the original design board ↗</a></footer>
+  <dialog id="event-dialog" class="event-dialog" aria-labelledby="event-title">
+    <form id="event-form">
+      <div class="dialog-heading"><h2 id="event-title">Tambah acara</h2><button type="button" class="close-dialog" aria-label="Close event form">×</button></div>
+      <label>Nama acara<input name="title" autocomplete="off" placeholder="Contoh: Makan keluarga" maxlength="80" required></label>
+      <div class="form-row"><label>Tarikh<input name="date" type="date" min="1900-01-01" max="2100-12-31" required></label><label>Masa<input name="time" type="time" value="09:00" required></label></div>
+      <label>Tempat <span>(pilihan)</span><input name="place" autocomplete="off" placeholder="Rumah, pejabat…" maxlength="100"></label>
+      <button class="save-event" type="submit">Simpan acara</button>
+    </form>
+  </dialog>
+  <p id="announcement" class="sr-only" role="status" aria-live="polite"></p>
+</body>
+</html>
