@@ -20,6 +20,8 @@
 		9582B6832FE993A70072D4E8 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9582B6822FE993A50072D4E8 /* SceneDelegate.swift */; };
 		979A01FD1F94789E4AB200BC /* DMSerifDisplay-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FA70A2F987E30149B059A420 /* DMSerifDisplay-Regular.ttf */; };
 		9FB9523328F94A6D9CACD268 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00AA74C337D2953C20597CEE /* SwiftUI.framework */; };
+		C1E0A5D27B4F4E2A9D3B6F04 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = C1E0A5D27B4F4E2A9D3B6F03 /* PrivacyInfo.xcprivacy */; };
+		C1E0A5D27B4F4E2A9D3B6F06 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = C1E0A5D27B4F4E2A9D3B6F05 /* PrivacyInfo.xcprivacy */; };
 		D40B4A467496B38D71EB7B7E /* SehariWidget.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = F20A57F54D9E5E6FA63C9651 /* SehariWidget.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		F7E3FF5AB4CC68EAF579D69C /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C64CE50F3DEB4D1BF5854B8 /* WidgetKit.framework */; };
 /* End PBXBuildFile section */
@@ -67,6 +69,8 @@
 		A955DE04CE9490490349B835 /* Assets.xcassets */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C1E0A5D27B4F4E2A9D3B6F01 /* SehariWidget.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = SehariWidget.xcconfig; sourceTree = "<group>"; };
 		C1E0A5D27B4F4E2A9D3B6F02 /* Signing.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Signing.xcconfig; sourceTree = "<group>"; };
+		C1E0A5D27B4F4E2A9D3B6F03 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+		C1E0A5D27B4F4E2A9D3B6F05 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		F08052D018D59D5BB7664CE6 /* SehariWidget.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SehariWidget.swift; sourceTree = "<group>"; };
 		F20A57F54D9E5E6FA63C9651 /* SehariWidget.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; name = SehariWidget.appex; path = SehariWidget.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		F999A818695EA0C6C7421C9D /* App.entitlements */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.entitlements; path = App.entitlements; sourceTree = "<group>"; };
@@ -112,6 +116,7 @@
 				3D14BF773A213BDE7DDAEEB5 /* Info.plist */,
 				6DBAB6401C170559D20A041D /* SehariWidget.entitlements */,
 				C1E0A5D27B4F4E2A9D3B6F01 /* SehariWidget.xcconfig */,
+				C1E0A5D27B4F4E2A9D3B6F05 /* PrivacyInfo.xcprivacy */,
 			);
 			name = SehariWidget;
 			path = SehariWidget;
@@ -151,6 +156,7 @@
 				2FAD9762203C412B000D30F8 /* config.xml */,
 				50B271D01FEDC1A000F3C39B /* public */,
 				F999A818695EA0C6C7421C9D /* App.entitlements */,
+				C1E0A5D27B4F4E2A9D3B6F03 /* PrivacyInfo.xcprivacy */,
 			);
 			path = App;
 			sourceTree = "<group>";
@@ -254,6 +260,7 @@
 			files = (
 				75FADF72D7BB1D1B3B3B6F26 /* Assets.xcassets in Resources */,
 				979A01FD1F94789E4AB200BC /* DMSerifDisplay-Regular.ttf in Resources */,
+				C1E0A5D27B4F4E2A9D3B6F06 /* PrivacyInfo.xcprivacy in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -267,6 +274,7 @@
 				50379B232058CBB4000EE86E /* capacitor.config.json in Resources */,
 				504EC30D1FED79650016851F /* Main.storyboard in Resources */,
 				2FAD9763203C412B000D30F8 /* config.xml in Resources */,
+				C1E0A5D27B4F4E2A9D3B6F04 /* PrivacyInfo.xcprivacy in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -11,14 +11,23 @@ app.build_configurations.each { |c| c.build_settings['CODE_SIGN_ENTITLEMENTS'] =
 app_group = project.main_group.find_subpath('App', false)
 app_group.new_file('App.entitlements') unless app_group.files.any? { |f| f.path == 'App.entitlements' }
 
+# Both targets use the App Group's UserDefaults, an API that needs a declared reason (1C8F.1) in each
+# bundle's PrivacyInfo.xcprivacy. App Store Connect rejects uploads without it.
+def add_privacy_manifest(target, group)
+  ref = group.files.find { |f| f.path == 'PrivacyInfo.xcprivacy' } || group.new_file('PrivacyInfo.xcprivacy')
+  target.add_resources([ref]) unless target.resources_build_phase.files_references.include?(ref)
+end
+add_privacy_manifest(app, app_group)
+
 # Both targets take DEVELOPMENT_TEAM from Signing.xcconfig -> Signing.local.xcconfig (git-ignored),
 # so no team ID is written into project.pbxproj. The App target's Debug config keeps debug.xcconfig.
 signing = project.main_group.files.find { |f| f.path == 'Signing.xcconfig' } || project.main_group.new_file('Signing.xcconfig')
 project.build_configurations.each { |c| c.base_configuration_reference = signing }
 
-if project.targets.any? { |t| t.name == 'SehariWidget' }
+if (existing = project.targets.find { |t| t.name == 'SehariWidget' })
+  add_privacy_manifest(existing, project.main_group.find_subpath('SehariWidget', false))
   project.save
-  puts 'SehariWidget target already present; app entitlements checked.'
+  puts 'SehariWidget target already present; entitlements and privacy manifests checked.'
   exit
 end
 
@@ -36,6 +45,7 @@ end
 group = project.main_group.new_group('SehariWidget', 'SehariWidget')
 widget.add_file_references([group.new_file('SehariWidget.swift')])
 widget.add_resources([group.new_file('Assets.xcassets'), group.new_file('DMSerifDisplay-Regular.ttf')])
+add_privacy_manifest(widget, group)
 group.new_file('Info.plist')
 group.new_file('SehariWidget.entitlements')
 xcconfig = group.new_file('SehariWidget.xcconfig')
