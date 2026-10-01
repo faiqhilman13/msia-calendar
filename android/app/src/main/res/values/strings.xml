@@ -4,6 +4,6 @@
     <string name="title_activity_main">Sehari Selembar</string>
     <string name="package_name">my.sehariselembar.app</string>
     <string name="custom_url_scheme">my.sehariselembar.app</string>
-    <string name="widget_tearoff_label">Kalendar Koyak</string>
-    <string name="widget_tearoff_description">Helaian hari ini: tarikh, peribahasa dan acara seterusnya.</string>
+    <string name="widget_tearoff_label">Tear-off Calendar</string>
+    <string name="widget_tearoff_description">Today\'s page: the date, a peribahasa and your next event.</string>
 </resources>

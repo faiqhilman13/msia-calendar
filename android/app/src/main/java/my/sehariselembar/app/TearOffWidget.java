@@ -54,13 +54,13 @@ public class TearOffWidget extends AppWidgetProvider {
         WidgetData d = WidgetData.today(ctx);
         RemoteViews v = new RemoteViews(ctx.getPackageName(), wide ? R.layout.widget_tearoff_wide : R.layout.widget_tearoff_small);
         int red = 0xFFBF292A, ink = 0xFF28251E;
-        v.setTextViewText(R.id.w_month, d.month + " " + d.year);
+        v.setTextViewText(R.id.w_month, d.monthEn + " " + d.year);
         v.setTextViewText(R.id.w_date, String.valueOf(d.dayOfMonth));
         v.setTextColor(R.id.w_date, d.red ? red : ink);
-        v.setTextViewText(R.id.w_day, d.day);
+        v.setTextViewText(R.id.w_day, d.dayEn);
         v.setTextColor(R.id.w_day, d.red ? red : ink);
         if (wide) {
-            v.setTextViewText(R.id.w_langs, d.dayZh + "  ·  " + d.dayEn);
+            v.setTextViewText(R.id.w_langs, d.dayZh + "  ·  " + d.day);
             boolean hasHoliday = !d.holiday.isEmpty();
             v.setViewVisibility(R.id.w_holiday, hasHoliday ? View.VISIBLE : View.GONE);
             v.setTextViewText(R.id.w_holiday, d.holiday);
@@ -70,7 +70,7 @@ public class TearOffWidget extends AppWidgetProvider {
             v.setTextViewText(R.id.w_maksud, d.maksud);
             boolean hasEvent = !d.eventTitle.isEmpty();
             v.setViewVisibility(R.id.w_event, hasEvent ? View.VISIBLE : View.GONE);
-            v.setTextViewText(R.id.w_event, (d.eventTime.isEmpty() ? "Hari ini" : d.eventTime) + "   " + d.eventTitle);
+            v.setTextViewText(R.id.w_event, (d.eventTime.isEmpty() ? "All day" : d.eventTime) + "   " + d.eventTitle);
         }
         Intent open = new Intent(ctx, MainActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
         v.setOnClickPendingIntent(R.id.w_root, PendingIntent.getActivity(ctx, 0, open, PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE));

@@ -14,10 +14,11 @@ final class WidgetData {
     private static final String[] DAYS = {"AHAD", "ISNIN", "SELASA", "RABU", "KHAMIS", "JUMAAT", "SABTU"};
     private static final String[] DAYS_EN = {"SUNDAY", "MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY"};
     private static final String[] DAYS_ZH = {"星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"};
-    private static final String[] MONTHS = {"JANUARI", "FEBRUARI", "MAC", "APRIL", "MEI", "JUN", "JULAI", "OGOS", "SEPTEMBER", "OKTOBER", "NOVEMBER", "DISEMBER"};
+    private static final String[] MONTHS_EN = {"JANUARY", "FEBRUARY", "MARCH", "APRIL", "MAY", "JUNE", "JULY", "AUGUST", "SEPTEMBER", "OCTOBER", "NOVEMBER", "DECEMBER"};
     private static final String[] MONTHS_ZH = {"一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月"};
 
-    String date, month, monthZh, day, dayEn, dayZh, holiday, peribahasa, maksud, eventTime, eventTitle;
+    // English leads; `day` is the Malay day name for the language line. holiday and maksud prefer English.
+    String date, monthEn, monthZh, day, dayEn, dayZh, holiday, peribahasa, maksud, eventTime, eventTitle;
     int dayOfMonth, year;
     boolean red;
 
@@ -34,7 +35,7 @@ final class WidgetData {
         w.dayOfMonth = c.get(Calendar.DAY_OF_MONTH);
         int dow = c.get(Calendar.DAY_OF_WEEK) - 1, m = c.get(Calendar.MONTH);
         w.date = String.format(Locale.ROOT, "%04d-%02d-%02d", w.year, m + 1, w.dayOfMonth);
-        w.month = MONTHS[m];
+        w.monthEn = MONTHS_EN[m];
         w.monthZh = MONTHS_ZH[m];
         w.day = DAYS[dow];
         w.dayEn = DAYS_EN[dow];
@@ -49,9 +50,9 @@ final class WidgetData {
                 JSONObject d = days.getJSONObject(i);
                 if (!w.date.equals(d.optString("date"))) continue;
                 w.red = d.optBoolean("red", w.red);
-                w.holiday = d.optString("holiday", "");
+                w.holiday = firstNonEmpty(d.optString("holidayEn", ""), d.optString("holiday", ""));
                 w.peribahasa = d.optString("peribahasa", "");
-                w.maksud = d.optString("maksud", "");
+                w.maksud = firstNonEmpty(d.optString("maksudEn", ""), d.optString("maksud", ""));
                 w.dayZh = d.optString("dayZh", w.dayZh);
                 w.monthZh = d.optString("monthZh", w.monthZh);
                 JSONArray ev = d.optJSONArray("events");
@@ -66,5 +67,9 @@ final class WidgetData {
             // A damaged snapshot still leaves a correct date on the widget.
         }
         return w;
+    }
+
+    private static String firstNonEmpty(String a, String b) {
+        return a.isEmpty() ? b : a;
     }
 }

@@ -951,6 +951,8 @@
   const WidgetBridge = !(cap && cap.isNativePlatform && cap.isNativePlatform()) ? null
     : cap.registerPlugin ? cap.registerPlugin('WidgetBridge')
     : cap.nativePromise ? { setData: options => cap.nativePromise('WidgetBridge', 'setData', options) } : null;
+  // Each English explanation pictures the saying first and ends with what it means; the widget only has room for the meaning.
+  const periMeaning = r => { const m = /^.*[.!?]\s+([A-Z].*)$/.exec(r.en || ''); return m ? m[1] : (r.en || r.maksud); };
   let widgetTimer = 0;
   function pushWidget() {
     if (!WidgetBridge) return;
@@ -966,9 +968,9 @@
           date: k, d: p.d, m: p.m + 1, year: p.y, weekday: w,
           month: MS_MONTH[p.m].toUpperCase(), monthEn: MONTHS[p.m], monthZh: translated(date, 'zh-CN', 'month'),
           day: MS_DAY[w].toUpperCase(), dayEn: DAYS[w], dayZh: translated(date, 'zh-CN', 'weekday'),
-          red: w === 0 || !!h, holiday: h ? h.ms : '',
+          red: w === 0 || !!h, holiday: h ? h.ms : '', holidayEn: h ? h.en : '',
           hijri: hj ? `${hj.day} ${HIJRI_MONTH[hj.month - 1]} ${hj.year}H` : '',
-          peribahasa: r.p, maksud: r.maksud, fact: f.t,
+          peribahasa: r.p, maksud: r.maksud, maksudEn: periMeaning(r), fact: f.t,
           events: eventsFor(k).filter(e => !e.done).slice(0, 4).map(e => ({ time: e.time || '', title: e.title })),
         });
       }
