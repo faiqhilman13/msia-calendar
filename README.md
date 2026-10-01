@@ -1,6 +1,8 @@
 # Sehari Selembar
 
-A nostalgic Malaysian calendar app with nine styles. Every day has a **Tahukah Anda?** fact about Malaysia and a **peribahasa** with its maksud, an English explanation and an example sentence. You can keep your own appointments or import them from Google Calendar, Apple Calendar, Outlook or Notion.
+A nostalgic Malaysian calendar app with nine styles. Every day has a **Did You Know?** fact about Malaysia and a **peribahasa** (Malay proverb) with its English meaning, the Malay maksud and an example sentence. You can keep your own appointments or import them from Google Calendar, Apple Calendar, Outlook or Notion.
+
+The app is in English. Dates also give the day in Malay, Chinese and Tamil, and peribahasa stay in Malay. The Malay shop-sign lettering in the artwork is part of the designs and stays as it is.
 
 It is static HTML, CSS and JS with no build step, published from the repository root. The only server code is the small iCal proxy for subscription links.
 
@@ -20,15 +22,15 @@ The screens are a 1:1 port of the design studies in `studies/`. That covers thei
 8. Riso Pop
 9. Midnight Almanac
 
-On first launch you pick a style from a gallery of live previews. The **Gaya** button reopens it.
+On first launch you pick a style from a gallery of live previews. The **Style** button reopens it.
 
 ## What the app adds around each screen
 
 - **The daily leaf.** A second page set in the chosen design's paper, ink and type. It holds:
   - the date, Hijri and Chinese lunar dates, and any public holiday
   - the fact and peribahasa, with a reroll button for each
-  - notes, and an "Urus acara" list to edit or delete your events
-- **Animations.** Moving months lifts the page with a curl. Moving days on a day page (Tear-off, or any Hari view) tears the sheet off.
+  - notes, and a **Manage events** list to edit or delete your events
+- **Animations.** Moving months lifts the page with a curl. Moving days on a day page (Tear-off, or any Day view) tears the sheet off.
 - **Holidays.** Sundays and public holidays print in the design's red.
 - **One shared agenda.** Events are shared across all nine styles. Tap an event row to mark it done.
 
@@ -37,10 +39,10 @@ On first launch you pick a style from a gallery of live previews. The **Gaya** b
 **Import** accepts:
 
 - **Files:** `.ics`, Google Calendar's export `.zip` (no need to unzip) and Notion CSV exports. These come from:
-  - Google Calendar: Tetapan → Import & eksport → Eksport
-  - Apple Calendar: Fail → Eksport
-  - Outlook: Simpan Kalendar
-  - Notion: Export → CSV
+  - Google Calendar: Settings → Import & export → Export
+  - Apple Calendar: File → Export
+  - Outlook: File → Save Calendar
+  - Notion: Export → Markdown & CSV
 - **Subscription links:** `https://` or `webcal://` iCal links, such as Google's secret iCal address, iCloud public calendars and Outlook published calendars. Each one re-syncs when the app opens, at most every 3 hours.
 
 The parser, `import.js`, handles:
@@ -57,7 +59,7 @@ Subscription links are fetched by `netlify/functions/ics-proxy.mjs` at `/api/ics
 
 The same web app is packaged with [Capacitor](https://capacitorjs.com) as a native app for the App Store and Play Store. The native apps add home screen and lock screen widgets, which a web app can't offer.
 
-**The "Kalendar Koyak" widget** shows today's Tear-off sheet: a red binding, a DM Serif numeral, the day in Malay, plus the peribahasa and next event when there's room.
+**The "Tear-off Calendar" widget** shows today's Tear-off sheet: a red binding, a DM Serif numeral and the day in English. Sundays and public holidays print in red. The bigger sizes add the day in Chinese, Malay and Tamil, the peribahasa with its English meaning, and the day's events. The large size also has the month at a glance.
 - **iPhone:**
   - home screen: small, medium and large sizes
   - lock screen: inline, circular and rectangular slots
@@ -90,12 +92,19 @@ npm run android     # opens Android Studio: Run, or Build > Generate Signed Bund
 npm run ios         # opens Xcode (on a Mac)
 ```
 
-**iOS, one-time setup in Xcode:**
-1. For both the **App** and **SehariWidget** targets, choose your Team under Signing & Capabilities.
-2. Make sure **App Groups** contains `group.my.sehariselembar.app` on both targets. The project and entitlements already declare it; Xcode registers it with your Apple account the first time.
-3. Run the app once on a phone so the widgets get their first snapshot. Then long-press the home screen or lock screen → **+** → Sehari Selembar.
+**iOS, one-time setup:**
+1. Put your Apple Developer team ID in `ios/App/Signing.local.xcconfig`, a git-ignored file next to `Signing.xcconfig`:
+   ```
+   DEVELOPMENT_TEAM = ABCDE12345
+   ```
+   Both targets read it through `ios/App/Signing.xcconfig`, so your ID never lands in `project.pbxproj`. Leave Team unset in Xcode's Signing & Capabilities tab, because picking one there writes it into the project. Simulator builds don't need a team.
+2. Sign in to Xcode with the same Apple ID (Xcode → Settings → Accounts) so it can make the provisioning profiles.
+3. **App Groups** already lists `group.my.sehariselembar.app` on both targets, through `App/App.entitlements` and `SehariWidget/SehariWidget.entitlements`. Xcode registers it with your team the first time you build for a phone.
+4. Run the app once on a phone so the widgets get their first snapshot. Then long-press the home screen → **Edit** → **Add Widget**, or the lock screen → **Customize**, and pick Sehari Selembar.
 
-The widget target was added by `scripts/add-ios-widget.rb` (uses the `xcodeproj` gem). It is safe to re-run.
+A free Apple ID (Personal Team) can put the app and widgets on your own phone. Its profiles expire after 7 days, and it can register only 10 App IDs a week. TestFlight and the App Store need a paid Apple Developer Program membership.
+
+The widget target was added by `scripts/add-ios-widget.rb` (uses the `xcodeproj` gem). It is safe to re-run. The widget needs iOS 16 for the lock screen, while the app supports iOS 15. The widget's deployment target lives in `ios/App/SehariWidget/SehariWidget.xcconfig`, not in `project.pbxproj`, because `npx cap sync` copies the first deployment target it finds there into `CapApp-SPM/Package.swift`.
 
 **Before you publish:**
 - The bundle id `my.sehariselembar.app` is set in `capacitor.config.json`. Change it there and in the two native projects before the first upload if you want a different one.
