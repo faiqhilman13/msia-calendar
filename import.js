@@ -153,7 +153,7 @@
      { uid, date: 'YYYY-MM-DD', time: 'HH:MM' | '', title, place, allDay } */
   function parseICS(text, { from, to } = {}) {
     const lines = unfold(text);
-    if (!lines.some(l => /^BEGIN:VCALENDAR/i.test(l))) throw new Error('Fail ini bukan kalendar iCal (.ics).');
+    if (!lines.some(l => /^BEGIN:VCALENDAR/i.test(l))) throw new Error('This file is not an iCal (.ics) calendar.');
     from = from || new Date(Date.now() - 400 * DAY);
     to = to || new Date(Date.now() + 760 * DAY);
     let calName = '', calZone = '';
@@ -197,7 +197,7 @@
       if (v.STATUS && /CANCELLED/i.test(v.STATUS.value)) return;
       const s = parseDate(v.DTSTART.value, v.DTSTART.params, calZone);
       if (!s) return;
-      const title = v.SUMMARY ? unescapeText(v.SUMMARY.value) : '(Tanpa tajuk)';
+      const title = v.SUMMARY ? unescapeText(v.SUMMARY.value) : '(Untitled)';
       const place = v.LOCATION ? unescapeText(v.LOCATION.value).split('\n')[0] : '';
       const uid = v.UID ? v.UID.value : `ev${idx}`;
       let span = 0; // extra all-day days
@@ -278,19 +278,19 @@
   }
   function parseCSV(text) {
     const rows = parseCSVRows(text);
-    if (rows.length < 2) throw new Error('Fail CSV kosong.');
+    if (rows.length < 2) throw new Error('The CSV file is empty.');
     const head = rows[0].map(h => h.trim());
     const find = re => head.findIndex(h => re.test(h));
     let ti = find(/^(name|title|nama|tajuk|event|acara|task|tugas)$/i);
     if (ti < 0) ti = 0;
     const di = find(/date|tarikh|when|due|start|mula|masa/i);
-    if (di < 0) throw new Error('Tiada lajur tarikh. Pastikan pangkalan data Notion ada lajur "Date".');
+    if (di < 0) throw new Error('No date column found. Make sure the Notion database has a "Date" column.');
     const li = find(/location|place|tempat|lokasi|venue/i);
     const items = [];
     rows.slice(1).forEach((r, idx) => {
       const p = parseNotionDate(r[di]);
       if (!p) return;
-      const title = (r[ti] || '').trim() || '(Tanpa tajuk)';
+      const title = (r[ti] || '').trim() || '(Untitled)';
       for (let k = 0; k <= p.span; k++) {
         const day = new Date(p.date + 'T12:00'); day.setDate(day.getDate() + k);
         items.push({ uid: `row${idx}@${isoOf(day)}`, date: isoOf(day), time: p.time, title, place: li >= 0 ? (r[li] || '').trim() : '', allDay: !p.time });
@@ -301,7 +301,7 @@
 
   /* ------------------------------------------------- zip (Google's export) */
   async function inflateRaw(bytes) {
-    if (typeof DecompressionStream === 'undefined') throw new Error('Pelayar ini tidak boleh membuka fail .zip. Nyahzip dahulu, kemudian pilih fail .ics.');
+    if (typeof DecompressionStream === 'undefined') throw new Error("This browser can't open .zip files. Unzip it first, then choose the .ics file.");
     const stream = new Blob([bytes]).stream().pipeThrough(new DecompressionStream('deflate-raw'));
     return new Uint8Array(await new Response(stream).arrayBuffer());
   }
@@ -309,7 +309,7 @@
     const u8 = new Uint8Array(buf), dv = new DataView(buf);
     let eocd = -1;
     for (let i = u8.length - 22; i >= Math.max(0, u8.length - 66000); i--) if (dv.getUint32(i, true) === 0x06054b50) { eocd = i; break; }
-    if (eocd < 0) throw new Error('Fail .zip rosak.');
+    if (eocd < 0) throw new Error('The .zip file is damaged.');
     const entries = dv.getUint16(eocd + 10, true);
     let p = dv.getUint32(eocd + 16, true);
     const files = [];
@@ -334,7 +334,7 @@
     const base = file.name.replace(/\.[^.]+$/, '');
     if (/\.zip$/i.test(file.name)) {
       const files = await readZip(await file.arrayBuffer());
-      if (!files.length) throw new Error('Tiada fail .ics dalam .zip ini.');
+      if (!files.length) throw new Error('There are no .ics files in this .zip.');
       return files.map(f => {
         const cal = /\.csv$/i.test(f.name) ? parseCSV(f.text) : parseICS(f.text);
         return { name: cal.name || f.name.replace(/^.*\//, '').replace(/\.[^.]+$/, '').replace(/_[a-z0-9.]+@.*$/i, ''), items: cal.items };
@@ -348,11 +348,11 @@
   /* Fetch a subscription link (webcal/https). Tries direct first, then the /api/ics proxy. */
   async function fetchFeed(url) {
     let u = url.trim().replace(/^webcals?:\/\//i, 'https://');
-    if (!/^https?:\/\//i.test(u)) throw new Error('Pautan mesti bermula dengan https:// atau webcal://');
-    const tryText = async res => { if (!res.ok) throw new Error(`HTTP ${res.status}`); const t = await res.text(); if (!/BEGIN:VCALENDAR/i.test(t)) throw new Error('Pautan ini tidak memulangkan kalendar iCal.'); return t; };
+    if (!/^https?:\/\//i.test(u)) throw new Error('The link must start with https:// or webcal://');
+    const tryText = async res => { if (!res.ok) throw new Error(`HTTP ${res.status}`); const t = await res.text(); if (!/BEGIN:VCALENDAR/i.test(t)) throw new Error("This link didn't return an iCal calendar."); return t; };
     try { return await tryText(await fetch(u, { cache: 'no-store' })); } catch (direct) {
       try { return await tryText(await fetch('/api/ics?url=' + encodeURIComponent(u), { cache: 'no-store' })); } catch (proxied) {
-        throw new Error(/HTTP 4|iCal/.test(proxied.message) ? proxied.message : 'Tidak dapat memuat pautan. Semak pautan itu, atau muat turun fail .ics dan import fail itu.');
+        throw new Error(/HTTP 4|iCal/.test(proxied.message) ? proxied.message : "Couldn't load the link. Check it, or download the .ics file and import that instead.");
       }
     }
   }

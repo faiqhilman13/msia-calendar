@@ -71,8 +71,12 @@ body[data-style="runcit"] .face.back { background: #ead06a; }
 .leaf-hol span { font-weight: 400; opacity: .85; }
 .leaf-card { margin-top: 16px; padding-top: 14px; border-top: 1px solid var(--line); }
 .leaf-card-head { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; }
-.leaf-card-head h3 { margin: 0; font: var(--head-weight) 21px/1.1 var(--head); letter-spacing: var(--head-track); color: var(--accent); }
-.leaf-card-head span { font: 500 10px/1 var(--label); letter-spacing: .12em; text-transform: uppercase; opacity: .7; white-space: nowrap; }
+.leaf-card-head h3 { flex: none; margin: 0; font: var(--head-weight) 21px/1.1 var(--head); letter-spacing: var(--head-track); color: var(--accent); }
+/* English and Malay labels sit on one line with a dot between them, or stack when the sheet is narrow.
+   The dot hangs off the end of the first label, so the clip hides it when the Malay one wraps. */
+.leaf-card-head span { display: flex; flex-wrap: wrap; justify-content: flex-end; column-gap: 1.3em; clip-path: inset(0); font: 500 10px/1.3 var(--label); letter-spacing: .12em; text-transform: uppercase; opacity: .7; text-align: right; }
+.leaf-card-head span b { position: relative; font-weight: inherit; white-space: nowrap; }
+.leaf-card-head span b:not(:last-child)::after { content: '·'; position: absolute; left: 100%; width: 1.3em; text-align: center; letter-spacing: 0; }
 .leaf-fact-body { display: grid; grid-template-columns: 38px 1fr; gap: 12px; margin-top: 10px; }
 .leaf-icon { width: 38px; height: 38px; display: grid; place-items: center; border: 1px solid var(--line); border-radius: 50%; color: var(--accent); }
 .leaf-icon svg { width: 22px; height: 22px; }
@@ -183,3 +187,13 @@ body[data-style="runcit"] .face.back { background: #ead06a; }
   .chip { padding: 5px 7px; font-size: 10px; }
 }
 @media (prefers-reduced-motion: reduce) { .ob-prev { transition: none; } }
+
+/* "All day" is longer than the Malay "Hari" the time columns were sized for. */
+.event-row time.all-day { font-size: .8em; white-space: nowrap; }
+/* English weekday names run longer than the Malay ones the tear-off sheet was drawn for. */
+.tear-weekday.long { font-size: 34px; }
+@media (max-width: 370px) {
+  .tear-weekday.long { font-size: 29px; }
+  /* Batik keeps its caption on one line; "WEDNESDAY, 30 SEPTEMBER 2026" would run into the strip. */
+  .batik .date-caption .caption-weekday { display: block; }
+}

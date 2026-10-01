@@ -13,18 +13,17 @@
 
   /* ------------------------------------------------------------------ names */
   const MS_MONTH = ['Januari', 'Februari', 'Mac', 'April', 'Mei', 'Jun', 'Julai', 'Ogos', 'September', 'Oktober', 'November', 'Disember'];
-  const MS_MON3 = ['JAN', 'FEB', 'MAC', 'APR', 'MEI', 'JUN', 'JUL', 'OGO', 'SEP', 'OKT', 'NOV', 'DIS'];
   const EN_MONTH = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
   const TA_MONTH = ['ஜனவரி', 'பிப்ரவரி', 'மார்ச்', 'ஏப்ரல்', 'மே', 'ஜூன்', 'ஜூலை', 'ஆகஸ்ட்', 'செப்டம்பர்', 'அக்டோபர்', 'நவம்பர்', 'டிசம்பர்'];
   const MS_DAY = ['Ahad', 'Isnin', 'Selasa', 'Rabu', 'Khamis', 'Jumaat', 'Sabtu'];
   const EN_DAY = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
   const TA_DAY = ['ஞாயிறு', 'திங்கள்', 'செவ்வாய்', 'புதன்', 'வியாழன்', 'வெள்ளி', 'சனி'];
-  const WD_MON = ['I', 'S', 'R', 'K', 'J', 'S', 'A'];
   const ZH_NUM = ['〇', '一', '二', '三', '四', '五', '六', '七', '八', '九', '十'];
   const ZH_DAY = ['日', '一', '二', '三', '四', '五', '六'];
   const ZH_LUNAR_MONTH = ['正', '二', '三', '四', '五', '六', '七', '八', '九', '十', '十一', '十二'];
   const HIJRI_MONTH = ['Muharam', 'Safar', 'Rabiulawal', 'Rabiulakhir', 'Jamadilawal', 'Jamadilakhir', 'Rejab', 'Syaaban', 'Ramadan', 'Syawal', 'Zulkaedah', 'Zulhijah'];
   const CAT_EN = { Sejarah: 'History', Alam: 'Nature', Makanan: 'Food', Budaya: 'Culture', Geografi: 'Geography', Bahasa: 'Language', Sukan: 'Sport', Tempat: 'Places' };
+  const JENIS_EN = { Perumpamaan: 'Simile', 'Simpulan Bahasa': 'Idiom', Bidalan: 'Adage', Pepatah: 'Proverb', Perbilangan: 'Adat saying' };
   const zhMonth = m => (m <= 10 ? ZH_NUM[m] : '十' + ZH_NUM[m - 10]) + '月';
 
   /* ------------------------------------------------------------- date maths */
@@ -371,20 +370,20 @@
      (markup below mirrors its renderScreen(); CSS lives in design.css).
      =================================================================== */
   const STYLES = [
-    { id: 'tearoff', no: 1, cls: 'tearoff', name: 'Tear-off', start: 'month', color: '#b42b2b', desc: 'Satu hari, dakwat merah. Helaian yang dikoyak esok pagi.' },
-    { id: 'kuda', no: 2, cls: 'horse', name: 'Kalendar Kuda', start: 'month', color: '#c4312b', desc: 'Kuda, garis merah, tarikh biru. Kalendar dinding klasik.' },
-    { id: 'kopitiam', no: 3, cls: 'ledger', name: 'Kopitiam Ledger', start: 'month', color: '#24553c', desc: 'Seminggu rancangan, di antara garis buku akaun kedai kopi.' },
-    { id: 'runcit', no: 4, cls: 'runcit', name: 'Kedai Runcit', start: 'month', color: '#c92d31', desc: 'Kertas kuning mentega dan kalendar dari kedai hujung jalan.' },
-    { id: 'batik', no: 5, cls: 'batik', name: 'Batik Margin', start: 'month', color: '#17364d', desc: 'Sebulan yang lapang, dengan batik biru nila di tepi.' },
-    { id: 'postcard', no: 6, cls: 'postcard', name: 'Postcard Month', start: 'month', color: '#dd8875', desc: 'Jalan rumah kedai di atas bulan. Poskad kecil di dinding.' },
-    { id: 'stamp', no: 7, cls: 'stamp', name: 'Rubber Stamp', start: 'day', color: '#943340', desc: 'Borang harian untuk temu janji dan nota, dicop merah.' },
-    { id: 'riso', no: 8, cls: 'riso', name: 'Riso Pop', start: 'month', color: '#e94a47', desc: 'Merah karang dan biru kobalt, bulan besar dan bas bandar.' },
-    { id: 'midnight', no: 9, cls: 'midnight', name: 'Midnight Almanac', start: 'month', color: '#25251f', desc: 'Tarikh krim dan garis tembaga di atas kertas dakwat gelap.' },
+    { id: 'tearoff', no: 1, cls: 'tearoff', name: 'Tear-off', start: 'month', color: '#b42b2b', desc: 'One day, red ink. A sheet you tear off tomorrow morning.' },
+    { id: 'kuda', no: 2, cls: 'horse', name: 'Kalendar Kuda', start: 'month', color: '#c4312b', desc: 'A horse, red rules, blue dates. The classic wall calendar.' },
+    { id: 'kopitiam', no: 3, cls: 'ledger', name: 'Kopitiam Ledger', start: 'month', color: '#24553c', desc: "A week of plans between the lines of a coffee shop's account book." },
+    { id: 'runcit', no: 4, cls: 'runcit', name: 'Kedai Runcit', start: 'month', color: '#c92d31', desc: 'Butter-yellow paper and the calendar from the corner shop.' },
+    { id: 'batik', no: 5, cls: 'batik', name: 'Batik Margin', start: 'month', color: '#17364d', desc: 'A roomy month with indigo batik down the side.' },
+    { id: 'postcard', no: 6, cls: 'postcard', name: 'Postcard Month', start: 'month', color: '#dd8875', desc: 'A street of shophouses above the month. A little postcard on the wall.' },
+    { id: 'stamp', no: 7, cls: 'stamp', name: 'Rubber Stamp', start: 'day', color: '#943340', desc: 'A daily form for appointments and notes, stamped in red.' },
+    { id: 'riso', no: 8, cls: 'riso', name: 'Riso Pop', start: 'month', color: '#e94a47', desc: 'Coral red and cobalt blue, a big month and a city bus.' },
+    { id: 'midnight', no: 9, cls: 'midnight', name: 'Midnight Almanac', start: 'month', color: '#25251f', desc: 'Cream dates and copper rules on dark ink paper.' },
   ];
-  const DAYS = ['AHAD', 'ISNIN', 'SELASA', 'RABU', 'KHAMIS', 'JUMAAT', 'SABTU'];
-  const SHORT_DAYS = ['AHAD', 'ISN', 'SEL', 'RAB', 'KHAMIS', 'JUMAAT', 'SABTU'];
-  const DAY_INITIALS = ['I', 'S', 'R', 'K', 'J', 'S', 'A'];
-  const MONTHS = MS_MONTH.map(m => m.toUpperCase());
+  const DAYS = EN_DAY.map(d => d.toUpperCase());
+  const SHORT_DAYS = DAYS.map(d => d.slice(0, 3));
+  const DAY_INITIALS = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
+  const MONTHS = EN_MONTH.map(m => m.toUpperCase());
   const dateFromISO = v => { const [y, m, d] = v.split('-').map(Number); return new Date(y, m - 1, d, 12); };
   const isoFromDate = d => iso(d.getFullYear(), d.getMonth(), d.getDate());
   const monthName = d => MONTHS[d.getMonth()];
@@ -404,7 +403,7 @@
   const sources = store.get('sources', {}) || {};
   const importDone = store.get('importDone', {}) || {};
   const saveEvents = () => store.set('events', events);
-  const saveSources = () => { try { localStorage.setItem('sehari:sources', JSON.stringify(sources)); } catch { announce('Storan pelayar penuh. Sebahagian acara import mungkin tidak disimpan.'); } };
+  const saveSources = () => { try { localStorage.setItem('sehari:sources', JSON.stringify(sources)); } catch { announce('Browser storage is full. Some imported events may not be saved.'); } };
   let importIndex = null; // date -> imported items, rebuilt when sources change
   function rebuildImportIndex() {
     importIndex = new Map();
@@ -428,10 +427,10 @@
 
   function art(kind, extra = '') { return `<span class="print-art art-${kind} ${extra}" aria-hidden="true"></span>`; }
   function multilingual(date) {
-    return `<div class="multilingual"><span lang="zh">${esc(translated(date, 'zh-CN', 'month'))}</span><span lang="en">${esc(translated(date, 'en-GB', 'month').toUpperCase())}</span><span lang="ta">${esc(translated(date, 'ta-MY', 'month'))}</span></div>`;
+    return `<div class="multilingual"><span lang="zh">${esc(translated(date, 'zh-CN', 'month'))}</span><span lang="ms">${MS_MONTH[date.getMonth()].toUpperCase()}</span><span lang="ta">${esc(translated(date, 'ta-MY', 'month'))}</span></div>`;
   }
   function monthHeading(date, { split = false, compact = false } = {}) {
-    return `<div class="month-title-wrap"><div class="month-nav"><button class="nav-arrow" data-action="month-prev" aria-label="Bulan sebelumnya">‹</button><h3 class="month-heading${split ? ' split' : ''}"><span class="month-word">${monthName(date)}</span>${split ? '' : ' '}<span class="year">${date.getFullYear()}</span></h3><button class="nav-arrow" data-action="month-next" aria-label="Bulan seterusnya">›</button></div>${compact ? '' : multilingual(date)}</div>`;
+    return `<div class="month-title-wrap"><div class="month-nav"><button class="nav-arrow" data-action="month-prev" aria-label="Previous month">‹</button><h3 class="month-heading${split ? ' split' : ''}"><span class="month-word">${monthName(date)}</span>${split ? '' : ' '}<span class="year">${date.getFullYear()}</span></h3><button class="nav-arrow" data-action="month-next" aria-label="Next month">›</button></div>${compact ? '' : multilingual(date)}</div>`;
   }
   function calendar(st, { mini = false, week = false } = {}) {
     const selected = dateFromISO(st.selected);
@@ -452,56 +451,56 @@
       const hol = holiday(date.getFullYear(), date.getMonth(), date.getDate());
       const has = eventsFor(k).length > 0;
       const red = date.getDay() === 0 || hol;
-      dates += `<button type="button" class="date-cell${sel ? ' selected' : ''}${red ? ' sunday' : ''}${hol ? ' holiday' : ''}${outside ? ' outside' : ''}${has ? ' has-events' : ''}" data-date="${k}" aria-label="${esc(fullLabel(date))}${hol ? ', ' + esc(hol.ms) : ''}${has ? ', ada acara' : ''}" aria-pressed="${sel}"${k === TODAY ? ' aria-current="date"' : ''}><span class="date-number">${date.getDate()}</span></button>`;
+      dates += `<button type="button" class="date-cell${sel ? ' selected' : ''}${red ? ' sunday' : ''}${hol ? ' holiday' : ''}${outside ? ' outside' : ''}${has ? ' has-events' : ''}" data-date="${k}" aria-label="${esc(fullLabel(date))}${hol ? ', ' + esc(hol.en) : ''}${has ? ', has events' : ''}" aria-pressed="${sel}"${k === TODAY ? ' aria-current="date"' : ''}><span class="date-number">${date.getDate()}</span></button>`;
     }
-    return `<div class="calendar${mini ? ' mini-calendar' : ''}${week ? ' week-calendar' : ''}" aria-label="${week ? 'Dua minggu' : monthName(selected) + ' ' + selected.getFullYear()}">${weekdays}${dates}</div>`;
+    return `<div class="calendar${mini ? ' mini-calendar' : ''}${week ? ' week-calendar' : ''}" aria-label="${week ? 'Two weeks' : monthName(selected) + ' ' + selected.getFullYear()}">${weekdays}${dates}</div>`;
   }
-  function eventLabel(e) { return `${e.done ? 'Tandakan belum selesai' : 'Tandakan selesai'}: ${e.title}, ${e.time || 'sepanjang hari'}${e.src ? ' (' + e.src + ')' : ''}`; }
+  function eventLabel(e) { return `${e.done ? 'Mark as not done' : 'Mark as done'}: ${e.title}, ${e.time || 'all day'}${e.src ? ' (' + e.src + ')' : ''}`; }
   function eventRows(st, { places = false } = {}) {
     const rows = eventsFor(st.selected);
-    if (!rows.length) return '<p class="empty-events">Tiada acara. Ruang untuk rancangan baru.</p>';
-    return rows.map(e => `<button type="button" class="event-row${e.done ? ' completed' : ''}${e.imported ? ' imported' : ''}" data-event="${esc(e.id)}" aria-pressed="${!!e.done}" aria-label="${esc(eventLabel(e))}"><time datetime="${e.date}${e.time ? 'T' + e.time : ''}">${e.time || 'Hari'}</time><span class="event-title">${esc(e.title)}${places && (e.place || e.src) ? `<span class="event-place">${esc(e.place || e.src)}</span>` : ''}</span><span class="check" aria-hidden="true">${e.done ? '✓' : ''}</span></button>`).join('');
+    if (!rows.length) return '<p class="empty-events">No events. Room for new plans.</p>';
+    return rows.map(e => `<button type="button" class="event-row${e.done ? ' completed' : ''}${e.imported ? ' imported' : ''}" data-event="${esc(e.id)}" aria-pressed="${!!e.done}" aria-label="${esc(eventLabel(e))}"><time${e.time ? '' : ' class="all-day"'} datetime="${e.date}${e.time ? 'T' + e.time : ''}">${e.time || 'All day'}</time><span class="event-title">${esc(e.title)}${places && (e.place || e.src) ? `<span class="event-place">${esc(e.place || e.src)}</span>` : ''}</span><span class="check" aria-hidden="true">${e.done ? '✓' : ''}</span></button>`).join('');
   }
   function caption(st) { const d = dateFromISO(st.selected); return `<p class="date-caption"><span class="caption-weekday">${DAYS[d.getDay()]}, </span>${d.getDate()} ${monthName(d)} ${d.getFullYear()}</p>`; }
-  function agenda(st, { showCaption = true, places = false } = {}) { return `<section class="agenda" aria-label="Acara untuk ${esc(fullLabel(dateFromISO(st.selected)))}">${showCaption ? caption(st) : ''}${eventRows(st, { places })}</section>`; }
-  const addButton = () => '<button type="button" class="add-event" data-action="add">+ Acara</button>';
+  function agenda(st, { showCaption = true, places = false } = {}) { return `<section class="agenda" aria-label="Events for ${esc(fullLabel(dateFromISO(st.selected)))}">${showCaption ? caption(st) : ''}${eventRows(st, { places })}</section>`; }
+  const addButton = () => '<button type="button" class="add-event" data-action="add">+ Event</button>';
   function controls(st, { toggle = true, add = true } = {}) {
-    return `<div class="controls">${toggle ? `<div class="view-switch" aria-label="Paparan kalendar"><button type="button" data-action="day" aria-pressed="${st.view === 'day'}">Hari</button><button type="button" data-action="month" aria-pressed="${st.view === 'month'}">Bulan</button></div>` : ''}${add ? addButton() : ''}</div>`;
+    return `<div class="controls">${toggle ? `<div class="view-switch" aria-label="Calendar view"><button type="button" data-action="day" aria-pressed="${st.view === 'day'}">Day</button><button type="button" data-action="month" aria-pressed="${st.view === 'month'}">Month</button></div>` : ''}${add ? addButton() : ''}</div>`;
   }
   function selectedDay(st, { expanded = false, motif = false } = {}) {
     const d = dateFromISO(st.selected);
-    return `<div class="selected-day${expanded ? ' day-expanded' : ''}"><span class="selected-number">${d.getDate()}</span><div class="selected-day-copy"><h3>${DAYS[d.getDay()]}</h3><p>${esc(translated(d, 'en-GB', 'weekday'))}</p><p lang="zh">${esc(translated(d, 'zh-CN', 'weekday'))}</p></div>${motif ? art('moon') : ''}</div>`;
+    return `<div class="selected-day${expanded ? ' day-expanded' : ''}"><span class="selected-number">${d.getDate()}</span><div class="selected-day-copy"><h3>${DAYS[d.getDay()]}</h3><p lang="ms">${MS_DAY[d.getDay()]}</p><p lang="zh">${esc(translated(d, 'zh-CN', 'weekday'))}</p></div>${motif ? art('moon') : ''}</div>`;
   }
   function weekRows(st) {
     const date = dateFromISO(st.selected);
     const monday = new Date(date); monday.setDate(date.getDate() - (date.getDay() + 6) % 7);
-    let rows = '<div class="ledger-columns" aria-hidden="true"><span></span><span></span><span>ACARA</span></div>';
+    let rows = '<div class="ledger-columns" aria-hidden="true"><span></span><span></span><span>EVENTS</span></div>';
     for (let n = 0; n < 7; n++) {
       const day = new Date(monday); day.setDate(monday.getDate() + n);
       const k = isoFromDate(day), sel = k === st.selected;
       const red = day.getDay() === 0 || holiday(day.getFullYear(), day.getMonth(), day.getDate());
       const list = eventsFor(k);
-      rows += `<div class="ledger-row${sel ? ' is-selected' : ''}"><div class="ledger-day"><button class="ledger-num${red ? ' sunday' : ''}" data-date="${k}" aria-label="${esc(fullLabel(day))}" aria-pressed="${sel}">${day.getDate()}</button><button class="${red ? 'sunday' : ''}" data-date="${k}" aria-label="${esc(fullLabel(day))}" aria-pressed="${sel}">${sel ? DAYS[day.getDay()].charAt(0) + DAYS[day.getDay()].slice(1).toLowerCase() : SHORT_DAYS[day.getDay()]}</button></div><div class="ledger-events">${list.map(e => `<button class="ledger-event${e.done ? ' completed' : ''}" data-event="${esc(e.id)}" aria-label="${esc(eventLabel(e))}" aria-pressed="${!!e.done}">${e.time || 'Hari'}&nbsp; ${esc(e.title)}</button>`).join('')}</div></div>`;
+      rows += `<div class="ledger-row${sel ? ' is-selected' : ''}"><div class="ledger-day"><button class="ledger-num${red ? ' sunday' : ''}" data-date="${k}" aria-label="${esc(fullLabel(day))}" aria-pressed="${sel}">${day.getDate()}</button><button class="${red ? 'sunday' : ''}" data-date="${k}" aria-label="${esc(fullLabel(day))}" aria-pressed="${sel}">${sel ? DAYS[day.getDay()].charAt(0) + DAYS[day.getDay()].slice(1).toLowerCase() : SHORT_DAYS[day.getDay()]}</button></div><div class="ledger-events">${list.map(e => `<button class="ledger-event${e.done ? ' completed' : ''}" data-event="${esc(e.id)}" aria-label="${esc(eventLabel(e))}" aria-pressed="${!!e.done}">${e.time || 'All day'}&nbsp; ${esc(e.title)}</button>`).join('')}</div></div>`;
     }
-    return `<section class="ledger-table" aria-label="Agenda mingguan">${rows}<div class="ledger-tail" aria-hidden="true"><span></span><span></span><span></span></div></section>`;
+    return `<section class="ledger-table" aria-label="Weekly agenda">${rows}<div class="ledger-tail" aria-hidden="true"><span></span><span></span><span></span></div></section>`;
   }
   function screenHTML(s, st, { preview = false } = {}) {
     const date = dateFromISO(st.selected), d = date.getDate();
     switch (s.no) {
-      case 1: return `<div class="binding" aria-hidden="true"><i></i><i></i></div>${monthHeading(date, { compact: true })}<div class="tear-date${d >= 10 ? ' two-digit' : ''}">${d}</div><h3 class="tear-weekday">${DAYS[date.getDay()]}</h3><div class="tear-translations"><span lang="zh">${esc(translated(date, 'zh-CN', 'weekday'))}</span><span lang="en">${esc(translated(date, 'en-GB', 'weekday').toUpperCase())}</span><span lang="ta">${esc(translated(date, 'ta-MY', 'weekday'))}</span></div><div class="tear-month">${calendar(st, { mini: true })}<div class="tear-month-label">${monthName(date)}<br>${esc(translated(date, 'en-GB', 'month'))}<br><span lang="zh">${esc(translated(date, 'zh-CN', 'month'))}</span></div></div>${agenda(st, { showCaption: false })}${controls(st, { toggle: false })}`;
-      case 2: return `<header class="horse-masthead"><h3>KALENDAR</h3><div class="horse-copy" lang="zh">萬用<br>實用<br>天天進步<small>KALENDAR KUDA<br>馬牌日曆</small></div>${art('horse')}</header>${monthHeading(date)}${calendar(st)}${selectedDay(st, { expanded: true })}${agenda(st)}${controls(st)}`;
-      case 3: return `<header class="coffee-masthead"><h3><small>KEDAI KOPI</small>SINAR PAGI</h3><p class="chinese" lang="zh">新早晨咖啡店</p>${art('coffee')}<p class="strapline">KOPI · ROTI · KAWAN · JADUAL HIDUP</p></header>${monthHeading(date, { compact: true })}${st.view === 'day' ? `${selectedDay(st)}${agenda(st, { showCaption: false, places: true })}` : st.ledgerCompact ? weekRows(st) : `${calendar(st)}${agenda(st)}`}${controls(st)}`;
-      case 4: return `<header class="shop-masthead"><h3>HARI HARI</h3><h4>KEDAI RUNCIT</h4>${art('goods')}<p>BERAS · GULA · MINYAK MASAK<br>TEPUNG · MINUMAN · BARANG HARIAN</p></header>${monthHeading(date)}${calendar(st)}<div class="receipt">${agenda(st)}${controls(st, { toggle: false })}</div>`;
+      case 1: return `<div class="binding" aria-hidden="true"><i></i><i></i></div>${monthHeading(date, { compact: true })}<div class="tear-date${d >= 10 ? ' two-digit' : ''}">${d}</div><h3 class="tear-weekday${DAYS[date.getDay()].length > 8 ? ' long' : ''}">${DAYS[date.getDay()]}</h3><div class="tear-translations"><span lang="zh">${esc(translated(date, 'zh-CN', 'weekday'))}</span><span lang="ms">${MS_DAY[date.getDay()].toUpperCase()}</span><span lang="ta">${esc(translated(date, 'ta-MY', 'weekday'))}</span></div><div class="tear-month">${calendar(st, { mini: true })}<div class="tear-month-label">${monthName(date)}<br><span lang="ms">${MS_MONTH[date.getMonth()]}</span><br><span lang="zh">${esc(translated(date, 'zh-CN', 'month'))}</span></div></div>${agenda(st, { showCaption: false })}${controls(st, { toggle: false })}`;
+      case 2: return `<header class="horse-masthead" lang="ms"><h3>KALENDAR</h3><div class="horse-copy" lang="zh">萬用<br>實用<br>天天進步<small>KALENDAR KUDA<br>馬牌日曆</small></div>${art('horse')}</header>${monthHeading(date)}${calendar(st)}${selectedDay(st, { expanded: true })}${agenda(st)}${controls(st)}`;
+      case 3: return `<header class="coffee-masthead" lang="ms"><h3><small>KEDAI KOPI</small>SINAR PAGI</h3><p class="chinese" lang="zh">新早晨咖啡店</p>${art('coffee')}<p class="strapline">KOPI · ROTI · KAWAN · JADUAL HIDUP</p></header>${monthHeading(date, { compact: true })}${st.view === 'day' ? `${selectedDay(st)}${agenda(st, { showCaption: false, places: true })}` : st.ledgerCompact ? weekRows(st) : `${calendar(st)}${agenda(st)}`}${controls(st)}`;
+      case 4: return `<header class="shop-masthead" lang="ms"><h3>HARI HARI</h3><h4>KEDAI RUNCIT</h4>${art('goods')}<p>BERAS · GULA · MINYAK MASAK<br>TEPUNG · MINUMAN · BARANG HARIAN</p></header>${monthHeading(date)}${calendar(st)}<div class="receipt">${agenda(st)}${controls(st, { toggle: false })}</div>`;
       case 5: return `<div class="batik-strip" aria-hidden="true"></div>${monthHeading(date, { split: true })}${calendar(st)}${selectedDay(st, { expanded: true })}${agenda(st)}${controls(st)}`;
-      case 6: return `<div class="postcard-picture"><img src="assets/postcard-street.webp" alt="Ilustrasi lama rumah kedai dan pokok kelapa"><span class="postcard-greeting">Selamat Datang<br>ke<strong>MALAYSIA</strong></span></div>${monthHeading(date)}${calendar(st)}${selectedDay(st, { expanded: true })}<div class="postcard-bottom">${art('flower')}${agenda(st)}</div>${controls(st)}`;
-      case 7: return `<header class="stamp-header"><p>PELAN<br>JADUAL<br>HARIAN</p><p class="serial">No. ${pad2(date.getMonth() + 1)}${pad2(d)}28</p><div class="weekday-stamp">${DAYS[date.getDay()]}</div></header><h3 class="stamp-date">${pad2(d)} / ${pad2(date.getMonth() + 1)} / ${date.getFullYear()}</h3>${monthHeading(date, { compact: true })}${st.view === 'month' ? calendar(st) : ''}${agenda(st, { showCaption: false, places: true })}<label class="stamp-notes"${preview ? '' : ' for="notes-7"'}>NOTA<textarea${preview ? '' : ' id="notes-7"'} data-notes="${st.selected}" aria-label="Nota untuk ${esc(fullLabel(date))}" maxlength="500" spellcheck="false">${esc(notes[st.selected] || '')}</textarea></label><div class="stamp-footer"><div><p class="stamp-mini-title">${monthName(date)} ${date.getFullYear()}</p>${calendar(st, { mini: true })}</div><div class="print-seal" aria-hidden="true"><span>JADUAL</span><strong>★</strong><span>HARIAN</span></div></div>${controls(st)}`;
-      case 8: return `<header class="riso-masthead"><h3>${monthName(date).slice(0, 3)}</h3><p class="riso-year">${date.getFullYear()}</p>${art('flower')}<div class="riso-languages"><span><span lang="zh">${esc(translated(date, 'zh-CN', 'month'))}</span>&nbsp; ${esc(translated(date, 'en-GB', 'month').toUpperCase())}</span><span lang="ta">${esc(translated(date, 'ta-MY', 'month'))}</span></div></header>${calendar(st, { week: st.risoCompact })}${st.view === 'month' && st.risoCompact ? '<div class="week-navigation"><button data-action="week-prev" aria-label="Minggu sebelumnya">‹</button><span>DUA MINGGU</span><button data-action="week-next" aria-label="Minggu seterusnya">›</button></div>' : ''}${selectedDay(st, { expanded: true })}<div class="riso-bottom">${art('bus')}<section class="agenda" aria-label="Acara hari ini">${caption(st)}${eventRows(st)}${addButton()}</section></div>${controls(st, { add: false })}`;
+      case 6: return `<div class="postcard-picture"><img src="assets/postcard-street.webp" alt="Vintage illustration of shophouses and coconut trees"><span class="postcard-greeting" lang="ms">Selamat Datang<br>ke<strong>MALAYSIA</strong></span></div>${monthHeading(date)}${calendar(st)}${selectedDay(st, { expanded: true })}<div class="postcard-bottom">${art('flower')}${agenda(st)}</div>${controls(st)}`;
+      case 7: return `<header class="stamp-header"><p lang="ms">PELAN<br>JADUAL<br>HARIAN</p><p class="serial">No. ${pad2(date.getMonth() + 1)}${pad2(d)}28</p><div class="weekday-stamp">${DAYS[date.getDay()]}</div></header><h3 class="stamp-date">${pad2(d)} / ${pad2(date.getMonth() + 1)} / ${date.getFullYear()}</h3>${monthHeading(date, { compact: true })}${st.view === 'month' ? calendar(st) : ''}${agenda(st, { showCaption: false, places: true })}<label class="stamp-notes"${preview ? '' : ' for="notes-7"'}>NOTES<textarea${preview ? '' : ' id="notes-7"'} data-notes="${st.selected}" aria-label="Notes for ${esc(fullLabel(date))}" maxlength="500" spellcheck="false">${esc(notes[st.selected] || '')}</textarea></label><div class="stamp-footer"><div><p class="stamp-mini-title">${monthName(date)} ${date.getFullYear()}</p>${calendar(st, { mini: true })}</div><div class="print-seal" aria-hidden="true"><span>JADUAL</span><strong>★</strong><span>HARIAN</span></div></div>${controls(st)}`;
+      case 8: return `<header class="riso-masthead"><h3>${monthName(date).slice(0, 3)}</h3><p class="riso-year">${date.getFullYear()}</p>${art('flower')}<div class="riso-languages"><span><span lang="zh">${esc(translated(date, 'zh-CN', 'month'))}</span>&nbsp; <span lang="ms">${MS_MONTH[date.getMonth()].toUpperCase()}</span></span><span lang="ta">${esc(translated(date, 'ta-MY', 'month'))}</span></div></header>${calendar(st, { week: st.risoCompact })}${st.view === 'month' && st.risoCompact ? '<div class="week-navigation"><button data-action="week-prev" aria-label="Previous week">‹</button><span>TWO WEEKS</span><button data-action="week-next" aria-label="Next week">›</button></div>' : ''}${selectedDay(st, { expanded: true })}<div class="riso-bottom">${art('bus')}<section class="agenda" aria-label="Events for this day">${caption(st)}${eventRows(st)}${addButton()}</section></div>${controls(st, { add: false })}`;
       case 9: return `${art('moon')}${monthHeading(date)}${calendar(st)}${selectedDay(st, { motif: true })}${agenda(st, { showCaption: false })}${controls(st)}`;
       default: return '';
     }
   }
   function screenElementHTML(s, st, opts = {}) {
-    return `<section class="screen ${s.cls}" data-study="${s.no}" data-view="${st.view}" aria-label="${esc(s.name)}" lang="ms"${opts.preview ? ' inert' : ''}>${screenHTML(s, st, opts)}</section>`;
+    return `<section class="screen ${s.cls}" data-study="${s.no}" data-view="${st.view}" aria-label="${esc(s.name)}" lang="en"${opts.preview ? ' inert' : ''}>${screenHTML(s, st, opts)}</section>`;
   }
 
   /* --------------------------------------------- the daily leaf (our page)
@@ -516,32 +515,32 @@
     const cat = CAT_EN[f.cat] ? f.cat : 'Tempat';
     const mine = (events[st.selected] || []);
     const imported = eventsFor(st.selected).filter(e => e.imported);
-    const meta = [hj ? `${hj.day} ${HIJRI_MONTH[hj.month - 1]} ${hj.year} H` : '', l ? `<span lang="zh">${lunarYearName(p.y, p.m, p.d)}${lunarMonthZh(l)}${lunarDayZh(l.day)}</span>` : ''].filter(Boolean).join('<i aria-hidden="true">·</i>');
+    const meta = [hj ? `${hj.day} ${HIJRI_MONTH[hj.month - 1]} ${hj.year} AH` : '', l ? `<span lang="zh">${lunarYearName(p.y, p.m, p.d)}${lunarMonthZh(l)}${lunarDayZh(l.day)}</span>` : ''].filter(Boolean).join('<i aria-hidden="true">·</i>');
     return `
       <header class="leaf-head">
-        <p class="leaf-kicker">Helaian hari ini · <span>Hari ke-${doy}, ${left} hari lagi</span></p>
+        <p class="leaf-kicker">Daily sheet · <span>Day ${doy}, ${left} ${left === 1 ? 'day' : 'days'} left</span></p>
         <h2 class="leaf-date">${fullLabel(d)}</h2>
         <p class="leaf-meta">${meta}</p>
-        ${h ? `<p class="leaf-hol">${esc(h.ms)}${h.approx ? '*' : ''} <span>${esc(h.en)}${h.scope === 'some' ? ' · sesetengah negeri' : ''}</span></p>` : ''}
+        ${h ? `<p class="leaf-hol">${esc(h.en)}${h.approx ? '*' : ''}${h.ms !== h.en ? ` <span lang="ms">${esc(h.ms)}</span>` : ''}${h.scope === 'some' ? `<span>${h.ms !== h.en ? ' · ' : ' '}some states</span>` : ''}</p>` : ''}
       </header>
       <article class="leaf-card leaf-fact">
-        <div class="leaf-card-head"><h3>Tahukah Anda?</h3><span>${esc(cat)} · ${CAT_EN[cat]}</span></div>
+        <div class="leaf-card-head"><h3>Did You Know?</h3><span><b>${CAT_EN[cat]}</b><b lang="ms">${esc(cat)}</b></span></div>
         <div class="leaf-fact-body"><span class="leaf-icon" aria-hidden="true">${ICONS[cat]}</span><p>${esc(f.t)}</p></div>
-        <button type="button" class="leaf-redraw" data-kind="fact">Fakta lain ${REDRAW_ICON}</button>
+        <button type="button" class="leaf-redraw" data-kind="fact">Another fact ${REDRAW_ICON}</button>
       </article>
       <article class="leaf-card leaf-peri">
-        <div class="leaf-card-head"><h3>Peribahasa</h3>${r.jenis ? `<span>${esc(r.jenis)}</span>` : ''}</div>
-        <p class="leaf-proverb">${esc(r.p)}</p>
+        <div class="leaf-card-head"><h3>Peribahasa</h3>${r.jenis ? `<span>${JENIS_EN[r.jenis] ? `<b>${JENIS_EN[r.jenis]}</b>` : ''}<b lang="ms">${esc(r.jenis)}</b></span>` : ''}</div>
+        <p class="leaf-proverb" lang="ms">${esc(r.p)}</p>
         <dl>
-          <dt>Maksud</dt><dd>${esc(r.maksud)}</dd>
-          ${r.en ? `<dt lang="en">Explanation</dt><dd lang="en">${esc(r.en)}</dd>` : ''}
-          ${r.contoh ? `<dt>Contoh ayat</dt><dd class="leaf-example">${esc(r.contoh)}</dd>` : ''}
+          ${r.en ? `<dt>Meaning</dt><dd>${esc(r.en)}</dd>` : ''}
+          <dt>In Malay</dt><dd lang="ms">${esc(r.maksud)}</dd>
+          ${r.contoh ? `<dt>Example</dt><dd class="leaf-example" lang="ms">${esc(r.contoh)}</dd>` : ''}
         </dl>
-        <button type="button" class="leaf-redraw" data-kind="peri">Peribahasa lain ${REDRAW_ICON}</button>
+        <button type="button" class="leaf-redraw" data-kind="peri">Another peribahasa ${REDRAW_ICON}</button>
       </article>
-      ${style.no === 7 ? '' : `<label class="leaf-note">Catatan<textarea data-notes="${st.selected}" maxlength="500" spellcheck="false" placeholder="cth: bayar bil air, kenduri Mak Long…">${esc(notes[st.selected] || '')}</textarea></label>`}
-      ${mine.length || imported.length ? `<section class="leaf-manage" aria-label="Urus acara"><h3>Urus acara</h3><ul>${mine.slice().sort((a, b) => a.time.localeCompare(b.time)).map(e => `<li><span><b>${esc(e.time)}</b> ${esc(e.title)}</span><button type="button" data-edit="${esc(e.id)}">Ubah</button></li>`).join('')}${imported.map(e => `<li class="leaf-imported"><span><b>${e.time || 'Hari'}</b> ${esc(e.title)}</span><small>${esc(e.src)}</small></li>`).join('')}</ul></section>` : ''}
-      <nav class="leaf-nav" aria-label="Tukar hari"><button type="button" data-step="-1">‹ Semalam</button><button type="button" data-step="0">Hari ini</button><button type="button" data-step="1">Esok ›</button></nav>`;
+      ${style.no === 7 ? '' : `<label class="leaf-note">Notes<textarea data-notes="${st.selected}" maxlength="500" spellcheck="false" placeholder="e.g. pay the water bill, Mak Long's kenduri…">${esc(notes[st.selected] || '')}</textarea></label>`}
+      ${mine.length || imported.length ? `<section class="leaf-manage" aria-label="Manage events"><h3>Manage events</h3><ul>${mine.slice().sort((a, b) => a.time.localeCompare(b.time)).map(e => `<li><span><b>${esc(e.time)}</b> ${esc(e.title)}</span><button type="button" data-edit="${esc(e.id)}">Edit</button></li>`).join('')}${imported.map(e => `<li class="leaf-imported"><span><b>${e.time || 'All day'}</b> ${esc(e.title)}</span><small>${esc(e.src)}</small></li>`).join('')}</ul></section>` : ''}
+      <nav class="leaf-nav" aria-label="Change day"><button type="button" data-step="-1">‹ Yesterday</button><button type="button" data-step="0">Today</button><button type="button" data-step="1">Tomorrow ›</button></nav>`;
   }
 
   /* ----------------------------------------------------------- rendering */
@@ -704,7 +703,7 @@
     const n = screen.querySelector(`[data-event="${CSS.escape(id)}"]`);
     if (n) n.focus({ preventScroll: true });
     const ev = eventsFor(state.selected).find(x => x.id === id);
-    if (ev) announce(`${ev.title}: ${ev.done ? 'selesai' : 'belum selesai'}`);
+    if (ev) announce(`${ev.title}: ${ev.done ? 'done' : 'not done'}`);
   }
 
   /* ------------------------------------------------------ event dialog */
@@ -726,7 +725,7 @@
     const found = id ? findOwn(id) : null;
     editing = found;
     form.reset();
-    $('#eventTitle').textContent = found ? 'Ubah acara' : 'Tambah acara';
+    $('#eventTitle').textContent = found ? 'Edit event' : 'Add event';
     form.elements.title.value = found ? found.ev.title : '';
     form.elements.date.value = found ? found.k : state.selected;
     form.elements.time.value = found ? found.ev.time : '09:00';
@@ -740,7 +739,7 @@
   form.addEventListener('submit', e => {
     e.preventDefault();
     const title = form.elements.title.value.trim(), date = form.elements.date.value, time = form.elements.time.value;
-    if (!title) { form.elements.title.setCustomValidity('Masukkan nama acara.'); form.elements.title.reportValidity(); return; }
+    if (!title) { form.elements.title.setCustomValidity('Enter a name for the event.'); form.elements.title.reportValidity(); return; }
     if (!/^\d{4}-\d{2}-\d{2}$/.test(date) || !/^([01]\d|2[0-3]):[0-5]\d$/.test(time)) return;
     const place = form.elements.place.value.trim();
     if (editing) {
@@ -755,7 +754,7 @@
     render();
     closeEventDialog();
     Sound.rustle(0.2);
-    announce(`Acara ${title} disimpan untuk ${fullLabel(dateFromISO(date))}.`);
+    announce(`Saved ${title} for ${fullLabel(dateFromISO(date))}.`);
   });
   form.elements.title.addEventListener('input', () => form.elements.title.setCustomValidity(''));
   $('#deleteEvent').addEventListener('click', () => {
@@ -765,7 +764,7 @@
     saveEvents();
     render();
     closeEventDialog();
-    announce('Acara dipadam.');
+    announce('Event deleted.');
   });
   dlg.querySelector('.close-dialog').addEventListener('click', closeEventDialog);
   dlg.addEventListener('click', e => { if (e.target === dlg) closeEventDialog(); });
@@ -775,26 +774,26 @@
   const impStatus = $('#importStatus');
   function sourceListHTML() {
     const list = Object.entries(sources);
-    if (!list.length) return '<p class="imp-empty">Belum ada kalendar diimport.</p>';
+    if (!list.length) return '<p class="imp-empty">No calendars imported yet.</p>';
     return `<ul class="imp-sources">${list.map(([sid, s]) => {
       const n = (s.items || []).length;
-      const when = s.synced ? new Date(s.synced).toLocaleString('ms-MY', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' }) : '';
-      return `<li><div><b>${esc(s.name)}</b><small>${n} acara · ${s.kind === 'url' ? 'langganan' : 'fail'}${when ? ' · ' + when : ''}</small></div><span>${s.kind === 'url' ? `<button type="button" data-sync="${sid}">Segerak</button>` : ''}<button type="button" data-remove="${sid}">Buang</button></span></li>`;
+      const when = s.synced ? new Date(s.synced).toLocaleString('en-MY', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' }) : '';
+      return `<li><div><b>${esc(s.name)}</b><small>${n} ${n === 1 ? 'event' : 'events'} · ${s.kind === 'url' ? 'subscription' : 'file'}${when ? ' · ' + when : ''}</small></div><span>${s.kind === 'url' ? `<button type="button" data-sync="${sid}">Sync</button>` : ''}<button type="button" data-remove="${sid}">Remove</button></span></li>`;
     }).join('')}</ul>`;
   }
   function paintSources() { $('#importSources').innerHTML = sourceListHTML(); }
   function status(msg, bad) { impStatus.textContent = msg; impStatus.classList.toggle('bad', !!bad); }
   function addSource(name, kind, items, url) {
     const sid = (kind === 'url' ? 'u' : 'f') + Date.now().toString(36) + Math.random().toString(36).slice(2, 5);
-    sources[sid] = { name: name || 'Kalendar', kind, url: url || '', synced: Date.now(), items };
+    sources[sid] = { name: name || 'Calendar', kind, url: url || '', synced: Date.now(), items };
     saveSources(); rebuildImportIndex();
     return sid;
   }
   function summarise(items) {
-    if (!items.length) return 'tiada acara dalam julat dua tahun';
+    if (!items.length) return 'No events in the two-year range';
     const ds = items.map(i => i.date).sort();
-    const f = d => { const p = parseIso(d); return `${p.d} ${MS_MON3[p.m]} ${p.y}`; };
-    return `${items.length} acara (${f(ds[0])} – ${f(ds[ds.length - 1])})`;
+    const f = d => { const p = parseIso(d); return `${p.d} ${EN_MONTH[p.m].slice(0, 3)} ${p.y}`; };
+    return `${items.length} ${items.length === 1 ? 'event' : 'events'} (${f(ds[0])} – ${f(ds[ds.length - 1])})`;
   }
   function openImport(from) {
     returnFocus = from || null;
@@ -807,7 +806,7 @@
     const files = [...e.target.files];
     e.target.value = '';
     if (!files.length) return;
-    status('Membaca fail…');
+    status('Reading files…');
     const done = [];
     for (const file of files) {
       try {
@@ -815,7 +814,7 @@
         cals.forEach(c => { addSource(c.name, 'file', c.items); done.push(`${c.name}: ${summarise(c.items)}`); });
       } catch (err) { status(`${file.name}: ${err.message}`, true); paintSources(); return; }
     }
-    status('Diimport. ' + done.join('; ') + '.');
+    status('Imported. ' + done.join('; ') + '.');
     paintSources(); render();
   });
   $('#importUrlForm').addEventListener('submit', async e => {
@@ -823,13 +822,13 @@
     const url = e.target.elements.url.value.trim();
     const name = e.target.elements.name.value.trim();
     if (!url) return;
-    status('Memuat pautan…');
+    status('Loading link…');
     try {
       const text = await window.SehariImport.fetchFeed(url);
       const cal = window.SehariImport.parseICS(text);
       addSource(name || cal.name || new URL(url.replace(/^webcals?:/i, 'https:')).hostname, 'url', cal.items, url);
       e.target.reset();
-      status(`Dilanggan. ${summarise(cal.items)}. Akan disegerak semula setiap kali aplikasi dibuka.`);
+      status(`Subscribed. ${summarise(cal.items)}. It syncs again when the app opens.`);
       paintSources(); render();
     } catch (err) { status(err.message, true); }
   });
@@ -840,7 +839,7 @@
       const cal = window.SehariImport.parseICS(await window.SehariImport.fetchFeed(s.url));
       s.items = cal.items; s.synced = Date.now();
       saveSources(); rebuildImportIndex();
-      if (!quiet) status(`${s.name} disegerak: ${summarise(cal.items)}.`);
+      if (!quiet) status(`${s.name} synced: ${summarise(cal.items)}.`);
     } catch (err) { if (!quiet) status(`${s.name}: ${err.message}`, true); }
   }
   $('#importSources').addEventListener('click', async e => {
@@ -851,9 +850,9 @@
       Object.keys(importDone).filter(k => k.startsWith(`imp:${sid}:`)).forEach(k => delete importDone[k]);
       store.set('importDone', importDone);
       delete sources[sid]; saveSources(); rebuildImportIndex();
-      status('Kalendar dibuang.'); paintSources(); render();
+      status('Calendar removed.'); paintSources(); render();
     }
-    if (t.dataset.sync) { status('Menyegerak…'); await syncSource(t.dataset.sync); paintSources(); render(); }
+    if (t.dataset.sync) { status('Syncing…'); await syncSource(t.dataset.sync); paintSources(); render(); }
   });
   imp.querySelector('.close-dialog').addEventListener('click', () => { imp.close(); if (returnFocus && returnFocus.isConnected) returnFocus.focus(); });
   imp.addEventListener('click', e => { if (e.target === imp) imp.close(); });
@@ -886,7 +885,7 @@
   function paintChoice() {
     obGrid.querySelectorAll('.ob-tile').forEach(b => { const on = b.dataset.id === obChoice; b.setAttribute('aria-checked', String(on)); b.tabIndex = on ? 0 : -1; });
     const s = STYLES.find(x => x.id === obChoice);
-    $('#obPicked').textContent = s ? `Dipilih: ${s.name}` : '';
+    $('#obPicked').textContent = s ? `Selected: ${s.name}` : '';
   }
   function closeOnboarding() { onboard.hidden = true; document.body.classList.remove('ob-open'); $('#app').inert = false; obGrid.innerHTML = ''; }
   obGrid.addEventListener('click', e => { const t = e.target.closest('.ob-tile'); if (!t) return; obChoice = t.dataset.id; paintChoice(); Sound.rustle(0.2); });
@@ -923,7 +922,7 @@
   $('#importBtn').addEventListener('click', e => openImport(e.currentTarget));
   $('#todayBtn').addEventListener('click', () => { const k = TODAY; if (k.slice(0, 7) !== state.selected.slice(0, 7)) curlTo(() => { state.selected = k; }, k > state.selected ? 1 : -1); else selectDate(k); });
   const soundBtn = $('#soundBtn');
-  const paintSound = () => { soundBtn.setAttribute('aria-pressed', String(Sound.on)); soundBtn.textContent = Sound.on ? 'Bunyi: Ya' : 'Bunyi: Tidak'; };
+  const paintSound = () => { soundBtn.setAttribute('aria-pressed', String(Sound.on)); soundBtn.textContent = Sound.on ? 'Sound: On' : 'Sound: Off'; };
   soundBtn.addEventListener('click', () => { Sound.toggle(); paintSound(); Sound.rustle(0.25); });
   paintSound();
   document.addEventListener('keydown', e => {
@@ -965,8 +964,8 @@
         const r = periFor(p), f = factFor(p);
         days.push({
           date: k, d: p.d, m: p.m + 1, year: p.y, weekday: w,
-          month: MONTHS[p.m], monthEn: EN_MONTH[p.m].toUpperCase(), monthZh: translated(date, 'zh-CN', 'month'),
-          day: DAYS[w], dayEn: EN_DAY[w].toUpperCase(), dayZh: translated(date, 'zh-CN', 'weekday'),
+          month: MS_MONTH[p.m].toUpperCase(), monthEn: MONTHS[p.m], monthZh: translated(date, 'zh-CN', 'month'),
+          day: MS_DAY[w].toUpperCase(), dayEn: DAYS[w], dayZh: translated(date, 'zh-CN', 'weekday'),
           red: w === 0 || !!h, holiday: h ? h.ms : '',
           hijri: hj ? `${hj.day} ${HIJRI_MONTH[hj.month - 1]} ${hj.year}H` : '',
           peribahasa: r.p, maksud: r.maksud, fact: f.t,

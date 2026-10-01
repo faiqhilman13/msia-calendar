@@ -1,5 +1,5 @@
 /* Sehari Selembar service worker: works offline, refreshes in the background. */
-const CACHE = 'sehari-v4';
+const CACHE = 'sehari-v5';
 const FONTS = ['HTx3L3I-JCGChYJ8VI-L6OO_au7B2xY', 'HTxwL3I-JCGChYJ8VI-L6OO_au7B4-Lw_3E', 'HTxwL3I-JCGChYJ8VI-L6OO_au7B4873_3E', 'HTxwL3I-JCGChYJ8VI-L6OO_au7B46r2_3E', 'HTxwL3I-JCGChYJ8VI-L6OO_au7B47b1_3E', 'HTxwL3I-JCGChYJ8VI-L6OO_au7B45L0_3E', '-nFnOHM81r4j6k0gjAW3mujVU2B2K_c', '-F63fjptAgt5VM-kVkqdyU8n5ig', '-F6qfjptAgt5VM-kVkqdyU8n3twJ8lc', '-F6qfjptAgt5VM-kVkqdyU8n3vAO8lc', 'Gg8lN4UfRSqiPg7Jn2ZI12V4DCEwkj1E4LVeHbau', 'Gg8gN4UfRSqiPg7Jn2ZI12V4DCEwkj1E4LVeHY5a64vr', 'Gg8gN4UfRSqiPg7Jn2ZI12V4DCEwkj1E4LVeHY527Ivr', 'Gg8gN4UfRSqiPg7Jn2ZI12V4DCEwkj1E4LVeHY4S7Yvr'].map(f => `assets/fonts/${f}.ttf`);
 const SHELL = [
   './', 'index.html', 'design.css', 'styles.css', 'app.js', 'import.js',
