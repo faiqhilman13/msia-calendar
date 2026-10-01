@@ -23,6 +23,13 @@
 	<key>UIAppFonts</key>
 	<array>
 		<string>DMSerifDisplay-Regular.ttf</string>
+		<string>BarlowCondensed-SemiBold.ttf</string>
+		<string>BarlowCondensed-Bold.ttf</string>
+		<string>BarlowCondensed-ExtraBold.ttf</string>
+		<string>BarlowCondensed-Black.ttf</string>
+		<string>IBMPlexSansCondensed-Medium.ttf</string>
+		<string>IBMPlexSansCondensed-SemiBold.ttf</string>
+		<string>IBMPlexMono-Regular.ttf</string>
 	</array>
 	<key>NSExtension</key>
 	<dict>

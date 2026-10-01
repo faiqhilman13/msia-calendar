@@ -59,12 +59,12 @@ Subscription links are fetched by `netlify/functions/ics-proxy.mjs` at `/api/ics
 
 The same web app is packaged with [Capacitor](https://capacitorjs.com) as a native app for the App Store and Play Store. The native apps add home screen and lock screen widgets, which a web app can't offer.
 
-**The "Tear-off Calendar" widget** shows today's Tear-off sheet: a red binding, a DM Serif numeral and the day in English. Sundays and public holidays print in red. The bigger sizes add the day in Chinese, Malay and Tamil, the peribahasa with its English meaning, and the day's events. The large size also has the month at a glance.
+**The "Tear-off Calendar" widget** shows today's sheet, with Sundays and public holidays in red. The bigger sizes add the peribahasa and the day's events.
 - **iPhone:**
-  - home screen: small, medium and large sizes
-  - lock screen: inline, circular and rectangular slots
-  - StandBy mode
-- **Android:** a resizable home screen widget, which can also go on the lock screen where the phone supports it.
+  - home screen: small, medium and large sizes, drawn in whichever of the nine styles the app is set to. They redraw when you pick another style. Each style lays out its sheet like its own screen. Tear-off, for example, has a red binding, a DM Serif numeral, the day in English, Chinese, Malay and Tamil, and in the large size the month at a glance.
+  - lock screen: inline, circular and rectangular slots, which take the system's tint in every style
+  - StandBy mode, where the paper and pictures drop out and the sheet prints in light ink on black
+- **Android:** a resizable home screen widget, which can also go on the lock screen where the phone supports it. It always shows the Tear-off sheet.
 
 ### How the widgets get their data
 

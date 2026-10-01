@@ -1,5 +1,6 @@
-// Sehari Selembar widgets: the Tear-off sheet on the home screen and the lock screen.
+// Sehari Selembar widgets: today's sheet on the home screen, in the app's design, and on the lock screen.
 // Reads the snapshot the app writes into the shared App Group (see WidgetBridgePlugin in AppDelegate.swift).
+// The designs other than Tear-off are in SehariStyles.swift.
 import SwiftUI
 import WidgetKit
 
@@ -86,11 +87,12 @@ enum Sheet {
                        holidayEn: nil, peribahasa: nil, maksud: nil, maksudEn: nil, events: nil)
     }
 
-    static func load() -> [String: DayInfo] {
+    /// The app's design and its days, by date. Before the app has written anything: its first design and no days.
+    static func load() -> (style: SheetStyle, days: [String: DayInfo]) {
         guard let json = UserDefaults(suiteName: appGroup)?.string(forKey: "snapshot"),
               let data = json.data(using: .utf8),
-              let snap = try? JSONDecoder().decode(Snapshot.self, from: data) else { return [:] }
-        return Dictionary(snap.days.map { ($0.date, $0) }, uniquingKeysWith: { a, _ in a })
+              let snap = try? JSONDecoder().decode(Snapshot.self, from: data) else { return (SheetStyle(id: nil), [:]) }
+        return (SheetStyle(id: snap.style), Dictionary(snap.days.map { ($0.date, $0) }, uniquingKeysWith: { a, _ in a }))
     }
 
     static func info(for date: Date, in days: [String: DayInfo]) -> DayInfo {
@@ -112,26 +114,31 @@ enum Sheet {
 struct SheetEntry: TimelineEntry {
     let date: Date
     let info: DayInfo
+    /// The design the app is set to. Changing it writes a new snapshot and reloads the widgets.
+    var style: SheetStyle = SheetStyle(id: nil)
+    /// Every day the snapshot has, for the designs that show the week or the month.
+    var days: [String: DayInfo] = [:]
 }
 
 struct SheetProvider: TimelineProvider {
     func placeholder(in context: Context) -> SheetEntry {
-        SheetEntry(date: Date(), info: Sheet.sample)
+        SheetEntry(date: Date(), info: Sheet.sample, style: Sheet.load().style)
     }
 
     func getSnapshot(in context: Context, completion: @escaping (SheetEntry) -> Void) {
-        let days = Sheet.load()
-        completion(SheetEntry(date: Date(), info: context.isPreview && days.isEmpty ? Sheet.sample : Sheet.info(for: Date(), in: days)))
+        let (style, days) = Sheet.load()
+        let info = context.isPreview && days.isEmpty ? Sheet.sample : Sheet.info(for: Date(), in: days)
+        completion(SheetEntry(date: Date(), info: info, style: style, days: days))
     }
 
     func getTimeline(in context: Context, completion: @escaping (Timeline<SheetEntry>) -> Void) {
-        let days = Sheet.load()
+        let (style, days) = Sheet.load()
         let cal = Sheet.calendar
         let start = cal.startOfDay(for: Date())
-        var entries = [SheetEntry(date: Date(), info: Sheet.info(for: Date(), in: days))]
+        var entries = [SheetEntry(date: Date(), info: Sheet.info(for: Date(), in: days), style: style, days: days)]
         for i in 1...7 {
             if let day = cal.date(byAdding: .day, value: i, to: start) {
-                entries.append(SheetEntry(date: day, info: Sheet.info(for: day, in: days)))
+                entries.append(SheetEntry(date: day, info: Sheet.info(for: day, in: days), style: style, days: days))
             }
         }
         completion(Timeline(entries: entries, policy: .atEnd))
@@ -181,8 +188,8 @@ extension EnvironmentValues {
 // Fixed sizes: the sheets work out their layout from the widget's size, so Dynamic Type must not scale these.
 private func serif(_ size: CGFloat) -> Font { .custom("DMSerifDisplay-Regular", fixedSize: size) }
 private func georgia(_ size: CGFloat) -> Font { .custom("Georgia-Bold", fixedSize: size) }
-/// SF Condensed stands in for the web's IBM Plex Sans Condensed.
-private func condensed(_ size: CGFloat) -> Font { .system(size: size, weight: .semibold).width(.condensed) }
+/// IBM Plex Sans Condensed, the web sheet's text face.
+private func condensed(_ size: CGFloat) -> Font { face(.ui, size) }
 
 /// 20pt on most iPhones, 18pt on the SE.
 private func bindingHeight(_ size: CGSize) -> CGFloat { min(22, max(16, min(size.width, size.height) * 0.122)) }
@@ -237,11 +244,18 @@ struct BindingStrip: View {
     }
 }
 
+/// The design's paper with the grain pressed into it. Midnight's dark stock gets a faint light grain instead.
 struct PaperBackground: View {
+    var style: SheetStyle = .tearoff
+
     var body: some View {
         ZStack {
-            Ink.paper
-            Image("PaperGrain").resizable().scaledToFill().opacity(0.25).blendMode(.multiply)
+            Theme.paper(style)
+            if style == .midnight {
+                Image("PaperGrain").resizable().scaledToFill().opacity(0.08).blendMode(.screen)
+            } else {
+                Image("PaperGrain").resizable().scaledToFill().opacity(0.25).blendMode(.multiply)
+            }
         }
     }
 }
@@ -307,15 +321,17 @@ struct SmallSheet: View {
     }
 }
 
+/// The holiday's name on a band of the design's holiday colour (`.leaf-hol` in styles.css).
 struct HolidayTag: View {
-    @Environment(\.palette) private var palette
+    @Environment(\.theme) private var theme
     let name: String
+    var size: CGFloat = 11
 
     var body: some View {
-        Text(name).font(condensed(11)).foregroundColor(Ink.paper)
+        Text(name).font(face(.uiBold, size)).foregroundColor(theme.buttonInk)
             .lineLimit(1).minimumScaleFactor(0.8)
-            .padding(.horizontal, 5).padding(.vertical, 1)
-            .background(palette.red)
+            .padding(.horizontal, size * 0.45).padding(.vertical, size * 0.1)
+            .background(Rectangle().fill(theme.holiday))
     }
 }
 
@@ -553,6 +569,23 @@ struct LargeSheet: View {
     }
 }
 
+/// The Tear-off design: binding strip, numeral, peribahasa and agenda.
+struct TearOffSheet: View {
+    let ctx: SheetContext
+
+    var body: some View {
+        let paper = ctx.theme.onPaper
+        Group {
+            switch ctx.family {
+            case .systemMedium: MediumSheet(info: ctx.info, size: ctx.size, paper: paper)
+            case .systemLarge, .systemExtraLarge: LargeSheet(info: ctx.info, size: ctx.size, paper: paper)
+            default: SmallSheet(info: ctx.info, size: ctx.size, paper: paper)
+            }
+        }
+        .environment(\.palette, paper ? .paper : .night)
+    }
+}
+
 // MARK: - Lock screen
 
 /// Sits after the system's own date ("Thu 1") above the lock-screen clock, so it leaves the date out.
@@ -609,22 +642,14 @@ struct SehariWidgetView: View {
             LockRectangular(info: entry.info).widgetBackground { Color.clear }
         default:
             PaperCheck { shown in
-                let paper = shown && renderingMode == .fullColor
+                let theme = Theme.of(entry.style, onPaper: shown && renderingMode == .fullColor)
                 GeometryReader { g in
-                    sheet(size: g.size, paper: paper).frame(width: g.size.width, height: g.size.height, alignment: .top)
+                    StyledSheet(ctx: SheetContext(info: entry.info, days: entry.days, family: family, size: g.size, theme: theme))
+                        .frame(width: g.size.width, height: g.size.height, alignment: .top)
                 }
-                .environment(\.palette, paper ? Palette.paper : Palette.night)
+                .environment(\.theme, theme)
             }
-            .widgetBackground { PaperBackground() }
-        }
-    }
-
-    @ViewBuilder
-    private func sheet(size: CGSize, paper: Bool) -> some View {
-        switch family {
-        case .systemMedium: MediumSheet(info: entry.info, size: size, paper: paper)
-        case .systemLarge, .systemExtraLarge: LargeSheet(info: entry.info, size: size, paper: paper)
-        default: SmallSheet(info: entry.info, size: size, paper: paper)
+            .widgetBackground { PaperBackground(style: entry.style) }
         }
     }
 }
@@ -681,7 +706,7 @@ struct SehariTearOffWidget: Widget {
             SehariWidgetView(entry: entry)
         }
         .configurationDisplayName("Tear-off Calendar")
-        .description("Today's page: the date, a peribahasa and your next event.")
+        .description("Today's page in the app's design: the date, a peribahasa and your next event.")
         .supportedFamilies([.systemSmall, .systemMedium, .systemLarge, .accessoryInline, .accessoryCircular, .accessoryRectangular])
         .fullBleed()
     }

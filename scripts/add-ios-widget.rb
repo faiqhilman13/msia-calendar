@@ -19,15 +19,28 @@ def add_privacy_manifest(target, group)
 end
 add_privacy_manifest(app, app_group)
 
+# SehariStyles.swift draws the widget in each of the app's styles, with these fonts besides DM Serif Display.
+# Info.plist lists the same fonts under UIAppFonts.
+STYLE_FONTS = %w[BarlowCondensed-SemiBold BarlowCondensed-Bold BarlowCondensed-ExtraBold BarlowCondensed-Black
+                 IBMPlexSansCondensed-Medium IBMPlexSansCondensed-SemiBold IBMPlexMono-Regular].map { |f| "#{f}.ttf" }
+def add_style_files(target, group)
+  ref = group.files.find { |f| f.path == 'SehariStyles.swift' } || group.new_file('SehariStyles.swift')
+  target.add_file_references([ref]) unless target.source_build_phase.files_references.include?(ref)
+  fonts = STYLE_FONTS.map { |name| group.files.find { |f| f.path == name } || group.new_file(name) }
+  target.add_resources(fonts - target.resources_build_phase.files_references)
+end
+
 # Both targets take DEVELOPMENT_TEAM from Signing.xcconfig -> Signing.local.xcconfig (git-ignored),
 # so no team ID is written into project.pbxproj. The App target's Debug config keeps debug.xcconfig.
 signing = project.main_group.files.find { |f| f.path == 'Signing.xcconfig' } || project.main_group.new_file('Signing.xcconfig')
 project.build_configurations.each { |c| c.base_configuration_reference = signing }
 
 if (existing = project.targets.find { |t| t.name == 'SehariWidget' })
-  add_privacy_manifest(existing, project.main_group.find_subpath('SehariWidget', false))
+  widget_group = project.main_group.find_subpath('SehariWidget', false)
+  add_privacy_manifest(existing, widget_group)
+  add_style_files(existing, widget_group)
   project.save
-  puts 'SehariWidget target already present; entitlements and privacy manifests checked.'
+  puts 'SehariWidget target already present; entitlements, privacy manifests and style files checked.'
   exit
 end
 
@@ -45,6 +58,7 @@ end
 group = project.main_group.new_group('SehariWidget', 'SehariWidget')
 widget.add_file_references([group.new_file('SehariWidget.swift')])
 widget.add_resources([group.new_file('Assets.xcassets'), group.new_file('DMSerifDisplay-Regular.ttf')])
+add_style_files(widget, group)
 add_privacy_manifest(widget, group)
 group.new_file('Info.plist')
 group.new_file('SehariWidget.entitlements')

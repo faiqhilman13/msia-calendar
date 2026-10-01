@@ -19,6 +19,14 @@
 		81F098F4AD4209F8CE9B35A5 /* SehariWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = F08052D018D59D5BB7664CE6 /* SehariWidget.swift */; };
 		9582B6832FE993A70072D4E8 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9582B6822FE993A50072D4E8 /* SceneDelegate.swift */; };
 		979A01FD1F94789E4AB200BC /* DMSerifDisplay-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FA70A2F987E30149B059A420 /* DMSerifDisplay-Regular.ttf */; };
+		1A451437A62396BDDDBD9F87 /* BarlowCondensed-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0B4B8A1ABBB1DBD82096FF8B /* BarlowCondensed-SemiBold.ttf */; };
+		3F7F1B93A4CFF5E1DBEABBB2 /* BarlowCondensed-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8406CE56CE0B12865B7DDA31 /* BarlowCondensed-Bold.ttf */; };
+		45E9693738E7C36EBFAC41A7 /* BarlowCondensed-ExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EB9FAB92B5D1416EF39DFBA1 /* BarlowCondensed-ExtraBold.ttf */; };
+		81DCC41F45C0D66920470977 /* BarlowCondensed-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DAF21FA31365F1F090ECBEA2 /* BarlowCondensed-Black.ttf */; };
+		830AA76D314820FFDAF4C1D8 /* IBMPlexSansCondensed-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3B796C6413C61320C0AB9A65 /* IBMPlexSansCondensed-Medium.ttf */; };
+		1EDD147B3F83D9FE48FB50ED /* IBMPlexSansCondensed-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3CB0F456E1485A33CC05B9A3 /* IBMPlexSansCondensed-SemiBold.ttf */; };
+		495757D0CE6E81EB5CB034DF /* IBMPlexMono-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1CF95B2640FAAB2B11BBE77E /* IBMPlexMono-Regular.ttf */; };
+		FA4B86B3FD85A6DDB06C2A78 /* SehariStyles.swift in Sources */ = {isa = PBXBuildFile; fileRef = A19CD27C67B25143C15B6B1B /* SehariStyles.swift */; };
 		9FB9523328F94A6D9CACD268 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00AA74C337D2953C20597CEE /* SwiftUI.framework */; };
 		C1E0A5D27B4F4E2A9D3B6F04 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = C1E0A5D27B4F4E2A9D3B6F03 /* PrivacyInfo.xcprivacy */; };
 		C1E0A5D27B4F4E2A9D3B6F06 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = C1E0A5D27B4F4E2A9D3B6F05 /* PrivacyInfo.xcprivacy */; };
@@ -75,6 +83,14 @@
 		F20A57F54D9E5E6FA63C9651 /* SehariWidget.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; name = SehariWidget.appex; path = SehariWidget.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		F999A818695EA0C6C7421C9D /* App.entitlements */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.entitlements; path = App.entitlements; sourceTree = "<group>"; };
 		FA70A2F987E30149B059A420 /* DMSerifDisplay-Regular.ttf */ = {isa = PBXFileReference; includeInIndex = 1; path = "DMSerifDisplay-Regular.ttf"; sourceTree = "<group>"; };
+		0B4B8A1ABBB1DBD82096FF8B /* BarlowCondensed-SemiBold.ttf */ = {isa = PBXFileReference; includeInIndex = 1; path = "BarlowCondensed-SemiBold.ttf"; sourceTree = "<group>"; };
+		8406CE56CE0B12865B7DDA31 /* BarlowCondensed-Bold.ttf */ = {isa = PBXFileReference; includeInIndex = 1; path = "BarlowCondensed-Bold.ttf"; sourceTree = "<group>"; };
+		EB9FAB92B5D1416EF39DFBA1 /* BarlowCondensed-ExtraBold.ttf */ = {isa = PBXFileReference; includeInIndex = 1; path = "BarlowCondensed-ExtraBold.ttf"; sourceTree = "<group>"; };
+		DAF21FA31365F1F090ECBEA2 /* BarlowCondensed-Black.ttf */ = {isa = PBXFileReference; includeInIndex = 1; path = "BarlowCondensed-Black.ttf"; sourceTree = "<group>"; };
+		3B796C6413C61320C0AB9A65 /* IBMPlexSansCondensed-Medium.ttf */ = {isa = PBXFileReference; includeInIndex = 1; path = "IBMPlexSansCondensed-Medium.ttf"; sourceTree = "<group>"; };
+		3CB0F456E1485A33CC05B9A3 /* IBMPlexSansCondensed-SemiBold.ttf */ = {isa = PBXFileReference; includeInIndex = 1; path = "IBMPlexSansCondensed-SemiBold.ttf"; sourceTree = "<group>"; };
+		1CF95B2640FAAB2B11BBE77E /* IBMPlexMono-Regular.ttf */ = {isa = PBXFileReference; includeInIndex = 1; path = "IBMPlexMono-Regular.ttf"; sourceTree = "<group>"; };
+		A19CD27C67B25143C15B6B1B /* SehariStyles.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SehariStyles.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -111,8 +127,16 @@
 			isa = PBXGroup;
 			children = (
 				F08052D018D59D5BB7664CE6 /* SehariWidget.swift */,
+				A19CD27C67B25143C15B6B1B /* SehariStyles.swift */,
 				A955DE04CE9490490349B835 /* Assets.xcassets */,
 				FA70A2F987E30149B059A420 /* DMSerifDisplay-Regular.ttf */,
+				0B4B8A1ABBB1DBD82096FF8B /* BarlowCondensed-SemiBold.ttf */,
+				8406CE56CE0B12865B7DDA31 /* BarlowCondensed-Bold.ttf */,
+				EB9FAB92B5D1416EF39DFBA1 /* BarlowCondensed-ExtraBold.ttf */,
+				DAF21FA31365F1F090ECBEA2 /* BarlowCondensed-Black.ttf */,
+				3B796C6413C61320C0AB9A65 /* IBMPlexSansCondensed-Medium.ttf */,
+				3CB0F456E1485A33CC05B9A3 /* IBMPlexSansCondensed-SemiBold.ttf */,
+				1CF95B2640FAAB2B11BBE77E /* IBMPlexMono-Regular.ttf */,
 				3D14BF773A213BDE7DDAEEB5 /* Info.plist */,
 				6DBAB6401C170559D20A041D /* SehariWidget.entitlements */,
 				C1E0A5D27B4F4E2A9D3B6F01 /* SehariWidget.xcconfig */,
@@ -260,6 +284,13 @@
 			files = (
 				75FADF72D7BB1D1B3B3B6F26 /* Assets.xcassets in Resources */,
 				979A01FD1F94789E4AB200BC /* DMSerifDisplay-Regular.ttf in Resources */,
+				1A451437A62396BDDDBD9F87 /* BarlowCondensed-SemiBold.ttf in Resources */,
+				3F7F1B93A4CFF5E1DBEABBB2 /* BarlowCondensed-Bold.ttf in Resources */,
+				45E9693738E7C36EBFAC41A7 /* BarlowCondensed-ExtraBold.ttf in Resources */,
+				81DCC41F45C0D66920470977 /* BarlowCondensed-Black.ttf in Resources */,
+				830AA76D314820FFDAF4C1D8 /* IBMPlexSansCondensed-Medium.ttf in Resources */,
+				1EDD147B3F83D9FE48FB50ED /* IBMPlexSansCondensed-SemiBold.ttf in Resources */,
+				495757D0CE6E81EB5CB034DF /* IBMPlexMono-Regular.ttf in Resources */,
 				C1E0A5D27B4F4E2A9D3B6F06 /* PrivacyInfo.xcprivacy in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -286,6 +317,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				81F098F4AD4209F8CE9B35A5 /* SehariWidget.swift in Sources */,
+				FA4B86B3FD85A6DDB06C2A78 /* SehariStyles.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
