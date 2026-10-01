@@ -1,0 +1,354 @@
+@import url('assets/fonts.css');
+
+:root{color-scheme:light;--board:#e9e4d9;--ui:'IBM Plex Sans Condensed',Arial,sans-serif;--serif:'DM Serif Display',Georgia,serif;--display:'Barlow Condensed','Arial Narrow',sans-serif;--mono:'IBM Plex Mono',monospace}
+*{box-sizing:border-box}
+body{margin:0;background:var(--board);color:#302e27;font-family:var(--ui);font-size:16px}
+button,input,textarea{font:inherit}
+button,a,input,textarea{-webkit-tap-highlight-color:transparent}
+button{cursor:pointer}
+button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible{outline:3px solid #c18a28;outline-offset:4px}
+a{color:inherit;text-underline-offset:4px}
+.gallery-header{max-width:1340px;margin:0 auto;padding:58px 36px 38px;display:flex;justify-content:space-between;gap:40px;border-bottom:1px solid #c8c1b1}
+.eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.15em;margin:0 0 14px}
+h1{font-family:var(--serif);font-weight:400;font-size:clamp(30px,3vw,46px);line-height:1.1;letter-spacing:-.025em;margin:0}
+.gallery-intro{width:285px;padding-top:3px;flex-shrink:0}
+.gallery-intro p{margin:0 0 8px;line-height:1.45;font-size:15px;color:#655f53}
+.gallery-intro p:first-child{color:#302e27;font-size:18px;font-weight:600}
+.studies{max-width:1340px;margin:auto;padding:40px 36px 70px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:48px 34px;align-items:start}
+.study{min-width:0}
+.study-heading{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:15px}
+.study-heading h2{font-family:var(--serif);font-size:23px;letter-spacing:-.03em;font-weight:400;margin:0}
+.study-heading .number{font-family:var(--mono);font-size:11px;margin-right:9px;color:#7d7464;vertical-align:middle}
+.study-link{font-family:var(--mono);font-size:10px;white-space:nowrap;text-decoration:none;padding:6px 0;border-bottom:1px solid #a69b86}
+.study-description{margin:13px 0 0;color:#6c6559;font-size:14px;line-height:1.4;max-width:350px}
+.screen{--paper:#f2e7d0;--ink:#28251e;--accent:#bf2c2d;--line:#b4a489;--button-ink:#fff4df;position:relative;isolation:isolate;width:100%;min-height:758px;padding:24px 24px 18px;background:var(--paper);color:var(--ink);border-radius:5px;box-shadow:0 3px 5px #37302113,0 12px 20px #37302113;overflow:hidden;display:flex;flex-direction:column;container-type:inline-size}
+.screen:after{content:'';position:absolute;inset:0;background-image:url('assets/paper-grain.webp');background-size:500px;opacity:.25;mix-blend-mode:multiply;pointer-events:none;z-index:5}
+.screen>*{position:relative;z-index:1}
+.screen button{color:inherit}
+.month-heading{font-family:var(--serif);font-weight:400;margin:0;line-height:1.04;letter-spacing:-.055em;font-size:38px;white-space:nowrap}
+.month-heading.split{white-space:normal}
+.month-heading.split .year{display:block}
+.multilingual{display:flex;align-items:center;justify-content:center;gap:12px;font-size:13px;margin:9px 0 15px;letter-spacing:.04em;line-height:1.4}
+.month-title-wrap{position:relative}
+.month-nav{display:flex;align-items:center;justify-content:space-between;gap:3px}
+.month-nav .month-heading{text-align:center;flex:1;min-width:0}
+.nav-arrow{border:0;background:transparent;color:inherit;padding:5px;font-size:25px;line-height:1;width:26px;flex:0 0 26px;opacity:.75}
+.nav-arrow:hover{opacity:1;background:#00000008}
+.calendar{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));width:100%;font-family:var(--serif);align-content:start}
+.weekday{font-size:13px;text-align:center;min-height:29px;display:grid;place-items:center;font-weight:400}
+.date-cell{border:0;background:transparent;min-width:0;height:44px;display:grid;place-items:center;font-family:var(--serif);font-size:23px;position:relative;padding:0;border-radius:0;font-weight:400}
+.date-cell:hover{background:#00000008}
+.date-cell.sunday,.weekday.sunday{color:var(--accent)}
+.date-cell.outside{opacity:.4}
+.date-cell.selected .date-number{background:var(--accent);color:var(--button-ink);border-radius:50%;width:36px;height:36px;display:grid;place-items:center}
+.date-cell.has-events:after{content:'';position:absolute;bottom:2px;width:3px;height:3px;border-radius:50%;background:currentColor;opacity:.6}
+.date-cell.selected.has-events:after{display:none}
+.mini-calendar .weekday{font-size:10px;min-height:20px}
+.mini-calendar .date-cell{font-size:13px;height:23px}
+.mini-calendar .date-cell.selected .date-number{width:21px;height:21px}
+.date-caption{font-family:var(--display);font-weight:600;font-size:15px;letter-spacing:.015em;margin:10px 0 8px;text-transform:uppercase}
+.agenda{margin-top:auto;border-top:1px solid var(--line);padding-top:7px}
+.event-row{width:100%;display:grid;grid-template-columns:47px 1fr 17px;gap:10px;align-items:center;min-height:33px;border:0;border-bottom:1px solid color-mix(in srgb,var(--line) 55%,transparent);text-align:left;background:transparent;font-size:15px;padding:3px 0;font-weight:500}
+.event-row:last-child{border-bottom:0}
+.event-row time{font-variant-numeric:tabular-nums}
+.event-row .event-title{min-width:0;overflow-wrap:anywhere}
+.event-row .event-place{display:block;font-size:12px;opacity:.65;font-weight:400;margin-top:2px}
+.event-row .check{width:15px;height:15px;border:1px solid var(--ink);border-radius:50%;display:grid;place-items:center;line-height:1;font-size:10px;opacity:.65}
+.event-row.completed .event-title{text-decoration:line-through;opacity:.5}
+.event-row.completed .check{background:var(--ink);color:var(--paper);opacity:1}
+.empty-events{min-height:60px;display:flex;align-items:center;color:var(--ink);opacity:.65;font-size:14px;margin:0}
+.controls{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-top:13px}
+.view-switch{display:flex;flex:1;max-width:190px;border:1px solid var(--accent);border-radius:4px;overflow:hidden}
+.view-switch button{min-width:0;flex:1;background:transparent;border:0;padding:7px 14px;font-size:14px;line-height:1.1}
+.view-switch button[aria-pressed=true]{background:var(--accent);color:var(--button-ink)}
+.add-event{border:1px solid var(--accent);background:var(--accent);color:var(--button-ink)!important;border-radius:4px;min-height:35px;padding:6px 17px;white-space:nowrap;font-size:16px;line-height:1.2}
+.add-event:hover,.save-event:hover{filter:brightness(.91)}
+.print-art{background-image:url('assets/print-atlas.webp');background-size:300% 200%;background-repeat:no-repeat;display:block;pointer-events:none;flex-shrink:0;aspect-ratio:1;clip-path:inset(2% 5%)}
+.art-horse{background-position:0 0}.art-coffee{background-position:50% 0}.art-goods{background-position:100% 0}.art-flower{background-position:0 100%}.art-bus{background-position:50% 100%}.art-moon{background-position:100% 100%}
+.selected-day{display:flex;align-items:center;gap:18px;border-top:1px solid var(--line);padding-top:12px;margin-top:20px}
+.selected-day .selected-number{font-family:var(--serif);font-size:90px;line-height:.95;color:var(--accent)}
+.selected-day h3{margin:0;font-family:var(--display);font-size:26px;text-transform:uppercase;line-height:1.1}
+.selected-day p{font-size:12px;letter-spacing:.13em;text-transform:uppercase;margin:6px 0 0}
+.gallery-footer{max-width:1268px;margin:0 auto 35px;border-top:1px solid #c8c1b1;padding:20px 0;display:flex;justify-content:space-between;gap:18px;color:#6c6559;font-size:13px}
+
+/* 01: The date is the page. */
+.tearoff{padding:79px 25px 20px;--paper:#f2e7d0;--accent:#bf292a;--line:#817862}
+.binding{position:absolute;left:0;top:0;width:100%;height:57px;background:#b42b2b;border-radius:5px 5px 0 0;box-shadow:0 3px 3px #38291c2b}
+.binding:after{content:'';position:absolute;bottom:-7px;left:0;right:0;height:11px;background:#efe3cc;clip-path:polygon(0 0,3% 50%,6% 0,9% 80%,12% 30%,15% 60%,18% 20%,21% 100%,24% 20%,27% 70%,30% 35%,33% 75%,36% 0,39% 50%,42% 30%,45% 80%,48% 15%,51% 40%,54% 20%,57% 100%,60% 20%,63% 80%,66% 5%,69% 60%,72% 25%,75% 80%,78% 0,81% 55%,84% 20%,87% 80%,90% 0,93% 75%,96% 30%,100% 80%,100% 0)}
+.binding i{position:absolute;top:17px;width:17px;height:17px;border-radius:50%;background:#3f3322;box-shadow:inset 1px 3px 4px #140c0899,0 1px 0 #e5b679;left:17%}
+.binding i+ i{left:auto;right:17%}
+.tearoff .month-heading{font-family:Georgia,serif;font-weight:bold;font-size:24px;letter-spacing:.035em}
+.tearoff .nav-arrow{font-size:22px;width:18px;flex-basis:18px}
+.tear-date{font-family:var(--serif);font-size:280px;line-height:.88;text-align:center;font-weight:400;letter-spacing:-.08em;padding-right:.07em;color:var(--accent);margin:6px -10px 0}
+.tear-date.two-digit{font-size:228px;letter-spacing:-.1em;margin-top:28px;margin-bottom:19px}
+.tear-weekday{font-family:Georgia,serif;font-weight:bold;font-size:40px;letter-spacing:.16em;text-align:center;color:var(--accent);margin:0 0 7px}
+.tear-translations{display:flex;align-items:center;justify-content:space-around;gap:8px;border-top:2px solid var(--line);border-bottom:1px solid var(--line);padding:7px 0;font-size:15px;font-weight:600}
+.tear-month{display:grid;grid-template-columns:2.4fr 1fr;gap:18px;padding-top:8px;margin-bottom:13px}
+.tear-month-label{border-left:1px solid #aaa18a;padding-left:16px;align-self:center;text-transform:uppercase;font-family:Georgia,serif;font-size:14px;line-height:1.5}
+.tearoff .mini-calendar .date-cell.selected .date-number{background:transparent;color:var(--accent);font-weight:700}
+.tearoff .agenda{padding:0;border-top:1px solid var(--line);border-left:1px solid var(--line)}
+.tearoff .event-row{padding:3px 7px;grid-template-columns:46px 1fr;font-weight:600}
+.tearoff .event-row time{border-right:1px solid var(--line);padding-right:8px}
+.tearoff .check{display:none}
+.tearoff .controls{justify-content:center;margin-top:11px}
+.tearoff .add-event{min-height:37px;width:145px}
+
+/* 02: Racing-horse wall calendar. */
+.horse{--paper:#f4e8ce;--ink:#14486f;--accent:#c4312b;--line:#cc5543;padding:10px 10px 14px;border:2px solid var(--accent);outline:1px solid var(--accent);outline-offset:-8px}
+.horse-masthead{height:153px;position:relative;border-bottom:2px solid var(--accent);padding:5px 10px;flex-shrink:0}
+.horse-masthead h3{font-family:var(--display);font-size:60px;font-weight:700;color:var(--accent);margin:0;text-align:center;letter-spacing:-.065em;transform:scaleX(.85);transform-origin:center}
+.horse-masthead .art-horse{position:absolute;width:111px;height:111px;right:1px;bottom:2px}
+.horse-copy{position:absolute;left:13px;bottom:18px;line-height:1.4;font-size:15px;font-weight:600;letter-spacing:.1em}
+.horse-copy small{font-size:10px;display:block;letter-spacing:.045em;margin-top:5px}
+.horse .month-title-wrap{padding-top:8px}
+.horse .month-heading{font-family:var(--display);font-size:43px;font-weight:800;letter-spacing:-.02em}
+.horse .multilingual{margin:4px 0 10px;font-weight:600;gap:14px;font-size:13px}
+.horse .calendar{border-top:1px solid var(--line);border-left:1px solid var(--line);margin-bottom:3px}
+.horse .weekday,.horse .date-cell{border-right:1px solid var(--line);border-bottom:1px solid var(--line)}
+.horse .weekday{height:36px;font-family:var(--display);font-size:17px;font-weight:600}
+.horse .date-cell{height:48px;font-size:26px}
+.horse .date-cell.selected .date-number{width:100%;height:100%;border:2px solid var(--accent);border-radius:0;background:transparent;color:var(--ink)}
+.horse .agenda{margin-top:auto;border-top:2px solid var(--accent);color:#2e2a21;padding:5px 4px 0}
+.horse .date-caption{color:#14486f;font-size:15px;margin:0 0 5px;font-weight:700}
+.horse .event-row{min-height:31px;font-size:16px;border-color:#bb9d84}
+.horse .event-row .check{border-color:#14486f}
+.horse .controls{padding:0 4px;margin-top:10px;gap:12px}
+.horse .view-switch{max-width:220px}
+
+/* 03: Coffee-shop accounts become a week. */
+.ledger{--paper:#e9e0c6;--ink:#234d37;--accent:#24553c;--line:#8a987a;padding:12px 12px 18px;border:1px solid #31583e;outline:1px solid #31583e;outline-offset:-6px;border-radius:0}
+.coffee-masthead{height:148px;padding:7px 76px 0 0;border-bottom:2px solid var(--ink);text-align:center}
+.coffee-masthead h3{font-family:Georgia,serif;font-size:31px;line-height:1;letter-spacing:-.04em;margin:0;text-transform:uppercase;font-weight:900}
+.coffee-masthead h3 small{display:block;font-size:26px;margin-bottom:3px}
+.coffee-masthead .chinese{font-size:20px;color:#ad302d;letter-spacing:.15em;margin:10px 0 9px;white-space:nowrap}
+.coffee-masthead .strapline{position:absolute;left:0;right:0;bottom:9px;margin:0;font-family:var(--mono);font-size:9px;letter-spacing:.14em}
+.coffee-masthead .art-coffee{position:absolute;right:-8px;top:10px;width:111px}
+.ledger .month-title-wrap{border-bottom:1px solid var(--line)}
+.ledger .month-heading{font-family:Georgia,serif;font-weight:700;font-size:19px;letter-spacing:.04em;padding:8px 0}
+.ledger .nav-arrow{font-size:24px;padding:5px}
+.ledger-table{display:flex;flex-direction:column;flex:1;font-size:15px;margin-top:0;border-left:1px solid var(--line);border-right:1px solid var(--line)}
+.ledger-columns{display:grid;grid-template-columns:49px 97px 1fr;min-height:29px;font-family:var(--mono);font-size:10px;border-bottom:1px solid var(--line);text-align:center;align-items:center}
+.ledger-columns>*{height:100%;border-right:1px solid var(--line);display:flex;align-items:center;justify-content:center}
+.ledger-columns>:last-child{border:0}
+.ledger-row{display:grid;grid-template-columns:49px 97px 1fr;min-height:54px;border-bottom:1px solid var(--line)}
+.ledger-day{display:contents}
+.ledger-day button{background:transparent;border:0;border-right:1px solid var(--line);padding:5px;font-size:16px;text-align:center;font-family:Georgia,serif;font-weight:700;position:relative;min-width:0}
+.ledger-day button+button{text-align:left;padding-left:10px;font-family:var(--ui);font-size:14px;font-weight:600}
+.ledger-day .sunday{color:#b52c2f}
+.ledger-row.is-selected{background:#798d6730;min-height:65px}
+.ledger-row.is-selected .ledger-num:after{content:'';position:absolute;border:2px solid #b02b2c;width:42px;height:46px;border-radius:50%;left:2px;top:8px;transform:rotate(-9deg);pointer-events:none}
+.ledger-num{display:grid;place-items:center}
+.ledger-row.is-selected .ledger-num{font-size:35px}
+.ledger-events{padding:5px 7px;align-self:center;color:#2f3027;font-size:13px;line-height:1.5}
+.ledger-event{display:block;background:none;border:0;text-align:left;padding:0;font-size:13px;width:100%;line-height:1.4;overflow-wrap:anywhere}
+.ledger-event.completed{text-decoration:line-through;opacity:.5}
+.ledger-events .empty-events{min-height:0;font-size:12px}
+.ledger-tail{display:grid;grid-template-columns:49px 97px 1fr;flex:1;min-height:75px;background:repeating-linear-gradient(transparent 0,transparent 32px,#9ba28788 32px,#9ba28788 33px)}
+.ledger-tail>*{border-right:1px solid var(--line)}
+.ledger-tail>:last-child{border:0}
+.ledger .controls{margin-top:14px;gap:17px}
+.ledger .view-switch{border-color:var(--ink)}
+.ledger .agenda{margin-top:24px}
+
+/* 04: The sponsored sundry-shop calendar. */
+.runcit{--paper:#f4d866;--ink:#134d37;--accent:#c92d31;--line:#b48032;padding:14px 14px 16px}
+.shop-masthead{height:222px;border-bottom:2px solid var(--ink);position:relative;overflow:hidden}
+.shop-masthead h3{font-family:var(--display);font-size:74px;font-weight:900;line-height:.86;letter-spacing:-.025em;color:var(--accent);margin:0;text-align:center}
+.shop-masthead h4{font-family:var(--display);font-size:34px;line-height:1;letter-spacing:-.01em;margin:3px 0 0;text-align:center;font-weight:800}
+.shop-masthead .art-goods{width:220px;height:104px;background-size:300% 423.08%;background-position:100% 19%;margin:0 auto;clip-path:inset(0 3%)}
+.shop-masthead p{position:absolute;bottom:4px;left:0;right:0;margin:0;font-family:var(--display);font-weight:700;font-size:12px;text-align:center;line-height:1.1;letter-spacing:.03em}
+.runcit .month-heading{font-family:var(--display);font-size:44px;font-weight:800;letter-spacing:-.035em;margin-top:9px}
+.runcit .month-heading .month-word{color:var(--accent)}
+.runcit .multilingual{font-size:12px;margin:4px 0 12px;font-weight:600}
+.runcit .calendar{border-left:1px solid var(--line);border-top:1px solid var(--line)}
+.runcit .weekday{color:#ffebc6;background:var(--accent);border-right:1px solid #f3d98f;font-family:var(--display);font-size:18px;font-weight:600;min-height:31px}
+.runcit .date-cell{height:43px;border-right:1px solid var(--line);border-bottom:1px solid var(--line);font-family:var(--display);font-size:26px;font-weight:700}
+.runcit .date-cell.selected .date-number{border-radius:0;background:var(--ink);width:32px;height:33px}
+.receipt{position:relative;background:#f8edd6;color:#24251e;padding:15px 14px 10px;margin:16px -2px 0;flex:1;display:flex;flex-direction:column}
+.receipt:before{content:'';position:absolute;top:-6px;left:0;right:0;height:7px;background:linear-gradient(135deg,transparent 5px,#f8edd6 0) 0 0/10px 8px repeat-x}
+.runcit .agenda{margin-top:0;border-top:0;padding:0}
+.runcit .date-caption{font-size:15px;line-height:1.1;margin:0 0 5px;border-bottom:1px dotted #9c8d72;padding-bottom:5px;color:#194630}
+.runcit .event-row{border-bottom:1px dotted #c1a58a;font-size:15px;min-height:30px;grid-template-columns:42px 1fr 14px}
+.runcit .event-row .check{border-color:var(--accent);width:12px;height:12px}
+.runcit .controls{margin-top:10px;justify-content:center}
+.runcit .add-event{width:146px}
+
+/* 05: An open printed page with a textile margin. */
+.batik{--paper:#f2e7cf;--ink:#17364d;--accent:#d9a03b;--line:#a19372;--button-ink:#fff6e4;padding:33px 78px 22px 22px}
+.batik-strip{position:absolute;top:0;bottom:0;right:0;width:61px;background:#163751 url('assets/batik-strip.webp') center top/100% auto repeat-y;border-left:2px solid #d7ae68}
+.batik .month-heading{font-size:48px;line-height:.9;letter-spacing:-.055em;position:relative;text-align:left}
+.batik .month-heading .year{font-size:49px}
+.batik .month-nav{display:block}
+.batik .nav-arrow{position:absolute;top:103px;right:0;font-size:19px;width:22px;padding:0}
+.batik .nav-arrow:first-child{right:25px}
+.batik .multilingual{font-size:11px;gap:9px;white-space:nowrap;justify-content:flex-start;margin:14px 0 20px;letter-spacing:.02em}
+.batik .calendar{border-top:1px solid var(--line);margin-bottom:135px}
+.batik .weekday{min-height:34px;font-size:12px}
+.batik .date-cell{font-size:23px;height:46px}
+.batik .date-cell.sunday,.batik .weekday.sunday{color:#b6382f}
+.batik .date-cell.selected .date-number{width:40px;height:40px}
+.batik .agenda{padding-top:12px}
+.batik .date-caption{font-family:Georgia,serif;font-weight:700;font-size:13px;white-space:nowrap;margin:0 0 14px}
+.batik .event-row{font-size:15px;min-height:34px;grid-template-columns:42px 1fr 14px;gap:8px}
+.batik .controls{gap:10px;margin-right:-25px;margin-top:20px;flex-wrap:wrap}
+.batik .view-switch{border-color:var(--ink);max-width:165px}
+.batik .view-switch button[aria-pressed=true]{background:var(--ink)}
+.batik .view-switch button{padding:9px 11px}
+.batik .add-event{padding:8px 12px;color:#17364d!important}
+
+/* 06: Tourism postcard above a familiar month. */
+.postcard{--paper:#f2e1bb;--ink:#17384c;--accent:#dd8875;--line:#b79e79;padding:0 18px 19px}
+.postcard-picture{height:247px;margin:0 -18px 14px;position:relative;overflow:hidden;border-bottom:2px solid #b9a382}
+.postcard-picture img{width:100%;height:100%;object-fit:cover;object-position:center 60%;display:block}
+.postcard-greeting{position:absolute;right:17px;top:16px;display:block;text-align:center;font-size:14px;line-height:1.1;font-family:Georgia,serif;font-style:italic;color:#254756;text-shadow:0 1px 3px #fff2d7}
+.postcard-greeting strong{display:block;font-family:var(--display);font-style:normal;letter-spacing:.16em;font-size:17px;margin-top:4px}
+.postcard .month-heading{font-size:39px;letter-spacing:-.055em}
+.postcard .nav-arrow{width:18px;flex-basis:18px;font-size:19px;padding:0}
+.postcard .multilingual{font-size:12px;gap:9px;margin:5px 0 12px}
+.postcard .calendar{border-top:1px solid var(--line);border-left:1px solid var(--line)}
+.postcard .date-cell,.postcard .weekday{border-right:1px solid var(--line);border-bottom:1px solid var(--line)}
+.postcard .weekday{min-height:26px;font-size:12px}
+.postcard .date-cell{height:37px;font-size:22px}
+.postcard .date-cell.sunday,.postcard .weekday.sunday{color:#b5322c}
+.postcard .date-cell.selected .date-number{border-radius:0;width:100%;height:100%}
+.postcard-bottom{display:grid;grid-template-columns:93px 1fr;gap:10px;margin-top:auto;padding-top:17px}
+.postcard-bottom .art-flower{width:105px;height:105px;align-self:center;filter:saturate(.55)}
+.postcard .agenda{border:0;margin:0;padding-top:0}
+.postcard .date-caption{font-size:13px;letter-spacing:0;margin:0 0 6px}
+.postcard .event-row{font-size:14px;min-height:29px;grid-template-columns:40px 1fr 12px;gap:5px}
+.postcard .event-row .check{width:12px;height:12px}
+.postcard .controls{gap:12px;margin-top:12px}
+.postcard .view-switch{max-width:218px}
+.postcard .view-switch button[aria-pressed=true]{background:#f1d0b0;color:var(--ink)}
+.postcard .add-event{font-size:15px}
+
+/* 07: A stamped daily form. */
+.stamp{--paper:#eee4ce;--ink:#853340;--accent:#943340;--line:#a87069;padding:21px 20px 18px;border:1px solid var(--line);outline:1px solid var(--line);outline-offset:-10px;border-radius:1px}
+.stamp-header{height:86px;position:relative;display:flex;justify-content:space-between;align-items:flex-start}
+.stamp-header p{font-family:var(--mono);font-size:11px;line-height:1.15;letter-spacing:.1em;margin:0}
+.stamp-header .serial{font-size:12px;letter-spacing:.02em;text-align:right}
+.weekday-stamp{position:absolute;right:0;top:29px;border:3px double var(--accent);padding:1px 6px;font-family:var(--display);font-weight:800;font-size:32px;line-height:1.1;letter-spacing:.025em;transform:rotate(-5deg)}
+.stamp-date{font-family:var(--display);font-weight:700;font-size:60px;line-height:1.05;letter-spacing:-.055em;white-space:nowrap;margin:0 0 10px;text-align:center}
+.stamp .month-title-wrap{border-top:2px solid var(--line);border-bottom:1px solid var(--line)}
+.stamp .month-heading{font-family:var(--mono);font-size:14px;letter-spacing:-.02em;line-height:1.3}
+.stamp .nav-arrow{font-size:20px}
+.stamp .agenda{margin:23px 0 0;border:0;padding:0 0 0 23px;position:relative}
+.stamp .agenda:before{content:'';position:absolute;top:12px;bottom:12px;width:1px;background:var(--accent);left:7px}
+.stamp .event-row{position:relative;font-size:16px;grid-template-columns:53px 1fr 14px;min-height:66px;align-items:start;padding-top:6px;border-color:#b3917b;font-weight:600;gap:9px}
+.stamp .event-row:before{content:'';width:10px;height:10px;border-radius:50%;position:absolute;left:-20px;top:9px;background:var(--accent)}
+.stamp .event-row time{font-family:var(--mono);font-size:14px}
+.stamp .event-row .event-place{font-family:var(--mono);font-size:11px;color:#443e31;letter-spacing:0}
+.stamp .event-row .check{border-radius:0;width:13px;height:13px;margin-top:3px}
+.stamp-notes{display:block;margin:20px 0 0;border-top:1px solid var(--line);padding-top:5px;font-family:var(--mono);font-size:11px;letter-spacing:.03em}
+.stamp-notes textarea{display:block;width:100%;height:124px;border:0;outline-offset:2px;resize:vertical;font-size:12px;line-height:31px;background:repeating-linear-gradient(transparent 0,transparent 30px,#ad9a7e90 30px,#ad9a7e90 31px);color:var(--ink);padding:0;margin-top:4px;letter-spacing:0}
+.stamp-footer{display:grid;grid-template-columns:1.2fr 1fr;gap:16px;align-items:center;border-top:1px solid var(--line);margin-top:auto;padding-top:14px}
+.stamp-mini-title{font-size:12px;font-family:var(--display);font-weight:600;letter-spacing:.1em;margin:0 0 3px}
+.stamp .mini-calendar .date-cell{font-family:var(--display);font-weight:600;font-size:12px;height:19px}
+.stamp .mini-calendar .weekday{font-family:var(--mono);font-size:9px;min-height:16px}
+.stamp .mini-calendar .date-cell.selected .date-number{width:18px;height:18px}
+.print-seal{width:115px;height:115px;border:4px double var(--accent);border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;transform:rotate(15deg);font-family:var(--display);font-size:19px;line-height:1;letter-spacing:.12em}
+.print-seal strong{font-family:Georgia,serif;font-size:29px;line-height:1}
+.stamp .controls{gap:11px;margin-top:16px}
+.stamp .view-switch,.stamp .add-event{border-radius:0}
+.stamp .view-switch{max-width:200px}
+
+/* 08: Two inks, a large date, and a city bus. */
+.riso{--paper:#f6ead3;--ink:#285db0;--accent:#e94a47;--line:#e76560;padding:15px 17px 19px}
+.riso-masthead{height:270px;position:relative}
+.riso-masthead h3{font-family:var(--display);font-weight:900;font-size:160px;line-height:.78;letter-spacing:-.04em;color:var(--accent);margin:0 0 13px;position:relative;z-index:1}
+.riso-masthead .riso-year{font-family:var(--display);font-size:65px;font-weight:800;color:var(--accent);line-height:.9;margin:0;position:relative;z-index:1}
+.riso-masthead .art-flower{position:absolute;width:200px;right:-14px;top:96px}
+.riso-masthead .riso-languages{margin:10px 0 0;font-family:var(--ui);font-size:15px;line-height:1.3;font-weight:600;display:flex;flex-direction:column;align-items:flex-start;gap:3px}
+.riso .calendar{border-top:3px solid var(--accent);border-bottom:3px solid var(--accent)}
+.riso .weekday{font-family:var(--display);font-size:17px;font-weight:600;min-height:36px;border-bottom:1px solid #baab92}
+.riso .date-cell{font-family:var(--display);font-size:22px;font-weight:600;height:44px;border-bottom:1px solid #baab92}
+.riso .date-cell.selected .date-number{width:38px;height:38px}
+.riso-bottom{display:grid;grid-template-columns:43% 1fr;gap:7px;flex:1;margin-top:15px;min-height:170px}
+.riso-bottom .art-bus{width:100%;align-self:end;margin-bottom:6px}
+.riso .agenda{margin:0;border:0;padding:0;display:flex;flex-direction:column}
+.riso .date-caption{font-family:var(--display);font-size:15px;letter-spacing:.06em;margin:0 0 7px;line-height:1.1}
+.riso .date-caption .caption-weekday{display:block}
+.riso .event-row{font-size:15px;grid-template-columns:40px 1fr 12px;gap:6px;border-color:#bd9b89;min-height:34px;color:#292820}
+.riso .event-row .check{width:12px;height:12px}
+.riso .add-event{margin-top:auto;align-self:flex-end;padding:6px 17px}
+.riso>.controls{justify-content:center;margin-top:8px}
+.riso .view-switch{max-width:230px;border-color:var(--ink)}
+.riso .view-switch button[aria-pressed=true]{background:var(--ink)}
+.riso .week-navigation{display:flex;align-items:center;justify-content:space-between;font-family:var(--mono);font-size:10px;margin-top:5px}
+.riso .week-navigation button{background:transparent;border:0;color:var(--ink);font-size:16px;padding:0 6px}
+
+/* 09: Brass rules and cream type on ink-black paper. */
+.midnight{color-scheme:dark;--paper:#25251f;--ink:#ead4a7;--accent:#d6412b;--line:#a58147;--button-ink:#fff0d4;padding:23px 18px 20px;background-color:var(--paper)}
+.midnight:after{opacity:.08;mix-blend-mode:screen}
+.midnight .month-heading{font-size:35px;letter-spacing:-.035em;text-align:left}
+.midnight .month-nav{display:block}
+.midnight .nav-arrow{position:absolute;right:0;top:4px;font-size:17px;z-index:2;width:15px;padding:0}
+.midnight .nav-arrow:first-child{right:18px}
+.midnight .multilingual{font-size:11px;letter-spacing:.1em;gap:13px;justify-content:flex-start;margin:12px 0 20px}
+.midnight .art-moon{width:78px;position:absolute;right:0;top:-5px;opacity:.8;z-index:0}
+.midnight .calendar{border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding-bottom:18px;margin-bottom:0}
+.midnight .weekday{min-height:34px;font-size:13px}
+.midnight .date-cell{height:42px;font-size:23px}
+.midnight .date-cell:hover{background:#ffffff0d}
+.midnight .date-cell.selected .date-number{width:35px;height:35px}
+.midnight .selected-day{margin-top:0;padding:16px 0 19px;border-top:0;border-bottom:1px solid var(--line);gap:12px;min-height:155px}
+.midnight .selected-number{font-size:125px;line-height:.8;letter-spacing:-.07em;min-width:75px}
+.midnight .selected-day-copy{border-left:1px solid var(--line);padding-left:15px}
+.midnight .selected-day h3{font-family:var(--display);font-size:28px;color:var(--ink);letter-spacing:.025em}
+.midnight .selected-day p{font-size:13px;letter-spacing:.2em;margin:5px 0}
+.midnight .selected-day .art-moon{position:relative;top:auto;right:auto;width:87px;margin-left:auto;align-self:flex-end;opacity:.55}
+.midnight .agenda{margin-top:auto;border-top:0;padding-top:14px}
+.midnight .event-row{min-height:44px;font-size:16px;border-color:var(--line);grid-template-columns:49px 1fr 17px}
+.midnight .event-row .check{border-color:#bc964e;opacity:1}
+.midnight .event-row.completed .check{background:var(--ink);color:var(--paper)}
+.midnight .controls{margin-top:17px;gap:14px}
+.midnight .view-switch{border-color:var(--line);max-width:225px}
+.midnight .view-switch button[aria-pressed=true]{background:#5d2c20;color:var(--ink)}
+.midnight .view-switch button{font-size:15px;min-height:38px}
+.midnight .add-event{font-size:15px;min-height:40px;padding:7px 17px}
+.screen[data-view=day] .calendar:not(.mini-calendar){display:none}
+.screen[data-view=day] .day-expanded{display:flex;margin-top:24px;min-height:205px;border-bottom:1px solid var(--line);padding-bottom:20px;align-items:center}
+.day-expanded{display:none}
+.screen[data-view=day] .agenda{flex:1;margin-top:25px}
+.screen[data-view=day] .event-row{min-height:49px}
+.screen[data-view=day].batik .calendar{margin-bottom:0}
+.screen[data-view=day].postcard .postcard-bottom{display:block;padding:0;margin-top:18px}
+.screen[data-view=day].postcard .postcard-bottom>.print-art{display:none}
+.screen[data-view=day].riso .riso-bottom{grid-template-columns:35% 1fr}
+.screen[data-view=day].midnight .selected-day{min-height:260px}
+.screen[data-view=day].midnight .selected-number{font-size:150px}
+
+/* Shared event form and standalone pages. */
+.event-dialog{--modal-paper:#f6efdf;--modal-ink:#263327;--modal-accent:#b62d2b;width:min(440px,calc(100vw - 32px));max-height:calc(100dvh - 32px);overflow:auto;border:1px solid #b3a48b;border-radius:5px;padding:27px;background:var(--modal-paper);color:var(--modal-ink);box-shadow:0 15px 80px #211b224d;color-scheme:light}
+.event-dialog::backdrop{background:#27231c80;backdrop-filter:blur(3px)}
+.dialog-heading{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;gap:18px}
+.dialog-heading h2{font:400 28px var(--serif);margin:0}
+.close-dialog{border:0;background:transparent;font-size:29px;padding:0 3px;color:var(--modal-ink);line-height:1}
+.event-dialog label{display:block;font-size:14px;font-weight:600;line-height:1.4;margin-bottom:17px}
+.event-dialog label span{font-weight:400;opacity:.6}
+.event-dialog input{width:100%;min-width:0;display:block;margin-top:6px;border:1px solid #beaf94;border-radius:2px;padding:10px 11px;background:#fffaf0;color:#282d25;font-size:16px;font-weight:400;min-height:45px}
+.form-row{display:grid;grid-template-columns:1.3fr 1fr;gap:14px}
+.save-event{width:100%;padding:12px 20px;min-height:45px;border:0;border-radius:3px;background:var(--modal-accent);color:#fff8e9;font-size:16px;font-weight:600}
+.reset-actions{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:24px}
+.cancel-reset{border:1px solid #b4a58b;border-radius:3px;padding:10px;background:transparent;color:inherit}
+.reset-actions .save-event{padding:12px 10px}
+.sr-only{position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+.solo-header{max-width:1080px;margin:auto;padding:25px 28px;display:flex;align-items:center;justify-content:space-between;gap:20px;border-bottom:1px solid #c8c1b1}
+.solo-header a{font-size:14px;text-decoration:none}
+.solo-header nav{display:flex;gap:24px;font-family:var(--mono);font-size:11px}
+.solo-main{max-width:440px;margin:35px auto;padding:0 25px}
+.solo-main .study-heading{margin-bottom:18px}
+.solo-main .study-heading h2{font-size:25px}
+.solo-main .screen{min-height:758px}
+.solo-main .study-description{font-size:15px;margin-top:18px}
+.solo-footer{text-align:center;font-size:12px;color:#6d6659;margin:25px 0 40px}
+.reset-demo{border:0;background:transparent;padding:0;color:inherit;text-decoration:underline;text-underline-offset:4px;font-size:12px}
+.solo-footer .reset-demo{margin-left:8px}
+.ledger>.calendar{margin-top:18px}
+.ledger>.agenda{margin-top:auto}
+@media(min-width:1450px){.studies{gap:52px 44px}}
+@media(max-width:1150px) and (min-width:901px){.studies{gap:40px 24px;padding-left:24px;padding-right:24px}.screen{font-size:14px}.horse-masthead h3{font-size:52px}.month-heading{font-size:32px}.batik .month-heading{font-size:40px}.batik{padding-right:68px}.batik-strip{width:50px}.batik .date-cell{font-size:20px}.shop-masthead h3{font-size:65px}.shop-masthead h4{font-size:31px}.runcit .month-heading{font-size:36px}.postcard .month-heading{font-size:32px}.riso-masthead h3{font-size:140px}.ledger-day button+button{padding-left:6px}.ledger-row,.ledger-columns,.ledger-tail{grid-template-columns:42px 73px 1fr}.stamp-date{font-size:54px}.controls{gap:7px}.view-switch button{padding:7px 10px}.add-event{padding:7px 12px}.tear-date{font-size:250px}}
+@media(max-width:900px){.gallery-header{padding:36px 24px 26px;gap:24px}.gallery-intro{width:245px}.studies{max-width:860px;grid-template-columns:repeat(2,minmax(0,1fr));padding:32px 24px 60px;gap:38px 30px}.gallery-footer{margin:0 24px 25px}.screen{min-height:758px}}
+@media(max-width:650px){.gallery-header{display:block;padding:30px 22px 25px}.gallery-header h1{font-size:34px;max-width:320px}.gallery-intro{width:auto;margin-top:21px;max-width:345px}.gallery-intro p:first-child{font-size:16px;margin-bottom:5px}.gallery-intro p{font-size:14px}.studies{display:block;max-width:436px;padding:28px 22px 35px}.study{margin-bottom:38px}.study-heading h2{font-size:24px}.screen{min-height:758px}.gallery-footer{flex-direction:column;font-size:12px;gap:9px}.solo-header{padding:19px 18px}.solo-header nav{gap:18px}.solo-main{margin:26px auto;padding:0 16px;max-width:422px}.solo-main .screen{min-height:758px}.event-dialog{padding:22px}}
+@media(max-width:370px){.screen{padding-left:17px;padding-right:17px}.horse{padding-left:9px;padding-right:9px}.batik{padding-right:64px}.batik-strip{width:48px}.batik .month-heading{font-size:40px}.batik .multilingual{font-size:9px;gap:6px}.tear-date{font-size:245px}.tear-weekday{font-size:34px}.coffee-masthead h3{font-size:28px}.coffee-masthead h3 small{font-size:23px}.ledger-row,.ledger-columns,.ledger-tail{grid-template-columns:43px 75px 1fr}.shop-masthead h3{font-size:67px}.runcit .month-heading{font-size:38px}.stamp-date{font-size:52px}.riso-masthead h3{font-size:145px}.postcard .month-heading{font-size:34px}.postcard{padding-left:14px;padding-right:14px}.postcard-picture{margin-left:-14px;margin-right:-14px}.controls{gap:8px}.view-switch button{padding-left:10px;padding-right:10px}.add-event{padding:7px 12px}.midnight .month-heading{font-size:31px}}
+@media(prefers-reduced-motion:no-preference){button,a{transition:background-color .14s,color .14s,filter .14s,opacity .14s}.event-dialog[open]{animation:appear .18s ease-out}@keyframes appear{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}}

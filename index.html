@@ -1,29 +1,92 @@
 <!doctype html>
-<html lang="en">
+<html lang="ms">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#e9e4d9">
-  <title>Kalendar · Nine Malaysian calendar studies</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Sehari Selembar · Kalendar Fakta &amp; Peribahasa</title>
+  <meta name="description" content="Kalendar gaya lama Malaysia: fakta, peribahasa dan jadual acara untuk setiap hari, dalam sembilan gaya. Import dari Google Calendar, Apple Calendar, Outlook atau Notion.">
+  <meta name="theme-color" content="#c4312b">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icons/icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Sehari Selembar">
+  <link rel="stylesheet" href="design.css">
   <link rel="stylesheet" href="styles.css">
-  <script src="app.js" defer></script>
 </head>
-<body>
-  <header class="gallery-header">
-    <div><p class="eyebrow">MALAYSIAN CALENDAR STUDIES</p><h1>Same day. Nine different ways.</h1></div>
-    <div class="gallery-intro"><p>Old print, new plans.</p><p>Select a date or add an event in any study. Open a design to see it on its own.</p></div>
-  </header>
-  <main id="studies" class="studies" aria-label="Nine calendar designs"></main>
-  <footer class="gallery-footer"><span>1 October 2026 · Kuala Lumpur</span><button class="reset-demo" data-reset="all">Reset demo</button><a href="references/design-board.png" target="_blank" rel="noopener">View the original design board ↗</a></footer>
-  <dialog id="event-dialog" class="event-dialog" aria-labelledby="event-title">
-    <form id="event-form">
-      <div class="dialog-heading"><h2 id="event-title">Tambah acara</h2><button type="button" class="close-dialog" aria-label="Close event form">×</button></div>
+<body data-style="kuda">
+  <div class="app" id="app">
+    <header class="topbar">
+      <span class="brand">Sehari Selembar</span>
+      <nav class="top-actions" aria-label="Aplikasi">
+        <button type="button" class="chip" id="todayBtn">Hari ini</button>
+        <button type="button" class="chip" id="themeBtn" aria-haspopup="dialog">Gaya</button>
+        <button type="button" class="chip" id="importBtn" aria-haspopup="dialog">Import</button>
+        <button type="button" class="chip" id="soundBtn" aria-pressed="true">Bunyi</button>
+        <button type="button" class="chip" id="installBtn" hidden>Pasang</button>
+      </nav>
+    </header>
+    <main class="desk">
+      <div class="stage" id="stage"><div class="flip-shade" id="flipShade" aria-hidden="true"></div></div>
+      <section class="leaf" id="leaf" aria-label="Helaian hari ini" aria-live="polite"></section>
+    </main>
+    <p class="smallprint">Leret ke kiri atau kanan untuk tukar bulan, atau tukar hari pada paparan Hari. Tarikh merah ialah Ahad dan cuti umum; yang bertanda * bergantung pada anak bulan.</p>
+  </div>
+
+  <dialog id="eventDialog" class="event-dialog" aria-labelledby="eventTitle">
+    <form id="eventForm">
+      <div class="dialog-heading"><h2 id="eventTitle">Tambah acara</h2><button type="button" class="close-dialog" aria-label="Tutup">×</button></div>
       <label>Nama acara<input name="title" autocomplete="off" placeholder="Contoh: Makan keluarga" maxlength="80" required></label>
       <div class="form-row"><label>Tarikh<input name="date" type="date" min="1900-01-01" max="2100-12-31" required></label><label>Masa<input name="time" type="time" value="09:00" required></label></div>
       <label>Tempat <span>(pilihan)</span><input name="place" autocomplete="off" placeholder="Rumah, pejabat…" maxlength="100"></label>
       <button class="save-event" type="submit">Simpan acara</button>
+      <button class="delete-event" type="button" id="deleteEvent" hidden>Padam acara ini</button>
     </form>
   </dialog>
+
+  <dialog id="importDialog" class="event-dialog import-dialog" aria-labelledby="importTitle">
+    <div class="dialog-heading"><h2 id="importTitle">Import kalendar</h2><button type="button" class="close-dialog" aria-label="Tutup">×</button></div>
+    <p class="imp-lead">Bawa masuk acara dari kalendar yang anda guna sekarang. Semuanya kekal dalam pelayar ini.</p>
+
+    <section class="imp-block">
+      <h3>Dari fail</h3>
+      <label class="imp-drop">Pilih fail .ics, .zip atau .csv<input id="importFile" type="file" accept=".ics,.ical,.ifb,.zip,.csv,text/calendar,text/csv,application/zip" multiple></label>
+      <details><summary>Google Calendar</summary><p>Di komputer, buka calendar.google.com → Tetapan → <b>Import &amp; eksport</b> → <b>Eksport</b>. Pilih fail .zip yang dimuat turun di sini; tak perlu nyahzip.</p></details>
+      <details><summary>Apple Calendar (Mac / iCloud)</summary><p>Mac: pilih kalendar, kemudian <b>Fail → Eksport → Eksport…</b> untuk dapatkan fail .ics. iPhone: kongsi kalendar sebagai <b>Kalendar Awam</b> di iCloud dan guna pautan di bawah.</p></details>
+      <details><summary>Outlook</summary><p>Outlook web: <b>Tetapan → Kalendar → Kalendar dikongsi → Terbitkan kalendar</b>, salin pautan ICS ke bahagian pautan. Outlook desktop: <b>Fail → Simpan Kalendar</b> sebagai .ics.</p></details>
+      <details><summary>Notion</summary><p>Pada pangkalan data kalendar Notion, tekan <b>••• → Export → Markdown &amp; CSV</b>. Pilih fail .csv (atau .zip) di sini. Lajur nama dan tarikh dikesan sendiri.</p></details>
+    </section>
+
+    <section class="imp-block">
+      <h3>Dari pautan langganan</h3>
+      <form id="importUrlForm" class="imp-url">
+        <label>Pautan iCal<input name="url" type="url" inputmode="url" placeholder="https://… atau webcal://…" required autocomplete="off"></label>
+        <label>Nama <span>(pilihan)</span><input name="name" maxlength="60" placeholder="cth: Kerja" autocomplete="off"></label>
+        <button class="save-event" type="submit">Langgan</button>
+      </form>
+      <details><summary>Di mana pautannya?</summary><p><b>Google:</b> Tetapan kalendar → Integrasikan kalendar → <b>Alamat rahsia dalam format iCal</b>. <b>Apple:</b> Kongsi kalendar → Kalendar Awam → salin pautan webcal://. <b>Outlook:</b> pautan ICS dari Terbitkan kalendar. <b>Notion Calendar:</b> mana-mana kalendar yang memberi pautan .ics.</p><p>Langganan disegerak semula bila aplikasi dibuka. Pautan rahsia memberi akses baca kepada kalendar itu, jadi jangan kongsi.</p></details>
+    </section>
+
+    <p class="imp-status" id="importStatus" role="status" aria-live="polite"></p>
+    <section class="imp-block"><h3>Kalendar diimport</h3><div id="importSources"></div></section>
+  </dialog>
+
+  <div class="onboard" id="onboard" hidden>
+    <div class="ob-inner" role="dialog" aria-modal="true" aria-labelledby="obTitle">
+      <button type="button" class="ob-close" id="obClose" aria-label="Tutup" hidden>×</button>
+      <p class="eyebrow">SEHARI SELEMBAR · KALENDAR MALAYSIA</p>
+      <h1 id="obTitle">Hari yang sama. Sembilan cara.</h1>
+      <p class="ob-sub">Setiap hari ada satu fakta Malaysia dan satu peribahasa. Pilih rupa kalendar anda; boleh tukar bila-bila masa melalui <b>Gaya</b>.</p>
+      <div class="ob-grid" id="obGrid" role="radiogroup" aria-label="Gaya kalendar"></div>
+      <div class="ob-bar"><span class="ob-picked" id="obPicked"></span><button type="button" class="ob-go" id="obGo">Guna gaya ini →</button></div>
+    </div>
+  </div>
+
   <p id="announcement" class="sr-only" role="status" aria-live="polite"></p>
+  <script src="data/holidays.js"></script>
+  <script src="data/facts.js"></script>
+  <script src="data/peribahasa.js"></script>
+  <script src="import.js"></script>
+  <script src="app.js"></script>
 </body>
 </html>

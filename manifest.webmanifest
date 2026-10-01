@@ -1,0 +1,18 @@
+{
+  "name": "Sehari Selembar · Kalendar Fakta & Peribahasa",
+  "short_name": "Sehari Selembar",
+  "description": "Kalendar gaya lama Malaysia: fakta, peribahasa dan jadual acara untuk setiap hari, dalam sembilan gaya.",
+  "lang": "ms",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#d3e2d4",
+  "theme_color": "#b72a22",
+  "icons": [
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "icons/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" },
+    { "src": "icons/icon.svg", "sizes": "any", "type": "image/svg+xml" }
+  ]
+}

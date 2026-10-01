@@ -1,0 +1,8 @@
+# Static site, no build step. Netlify publishes the repo root as-is;
+# the only server code is the iCal proxy in netlify/functions (served at /api/ics).
+[build]
+  publish = "."
+  command = ""
+
+[functions]
+  directory = "netlify/functions"

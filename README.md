@@ -1,45 +1,74 @@
-# Kalendar
+# Sehari Selembar
 
-Nine HTML calendar studies based on the generated Malaysian calendar design board. Open `index.html` for the comparison gallery, or open one of the individual pages.
+A nostalgic Malaysian calendar app with nine styles. Every day has a **Tahukah Anda?** fact about Malaysia and a **peribahasa** with its maksud, an English explanation and an example sentence. You can keep your own appointments or import them from Google Calendar, Apple Calendar, Outlook or Notion.
 
-[Download the complete HTML pack](malaysian-calendar-html.zip), including the local artwork and fonts.
+It is static HTML, CSS and JS with no build step, published from the repository root. The only server code is the small iCal proxy for subscription links.
 
-| No. | Design | HTML page |
-| --- | --- | --- |
-| 1 | Tear-off | `tear-off.html` |
-| 2 | Kalendar Kuda | `kalendar-kuda.html` |
-| 3 | Kopitiam Ledger | `kopitiam-ledger.html` |
-| 4 | Kedai Runcit | `kedai-runcit.html` |
-| 5 | Batik Margin | `batik-margin.html` |
-| 6 | Postcard Month | `postcard-month.html` |
-| 7 | Rubber Stamp | `rubber-stamp.html` |
-| 8 | Riso Pop | `riso-pop.html` |
-| 9 | Midnight Almanac | `midnight-almanac.html` |
+The nine original design studies this app is built from live in [`studies/`](studies/) (open `studies/index.html` for the gallery).
 
-All pages share `styles.css` and `app.js`. No build step or package installation is needed. Artwork and fonts are included locally in `assets/`, so the screens do not depend on external font or image requests.
+## The nine styles
 
-Select a date to see its appointments. Use **+ Acara** to add an appointment, and click an appointment to mark it complete. The screens with **Hari / Bulan** controls also have day and month views. The ledger and riso studies initially show the compact week layouts from the reference; selecting **Bulan** opens a full month. The stamp study has an editable note field.
+The screens are a 1:1 port of the design studies in `studies/`. That covers their markup, `design.css`, local fonts, and the print atlas, postcard, batik and paper-grain artwork, re-encoded from PNG to WebP (12 MB down to 2.4 MB). A pixel diff against the original pages differs by at most 0.6% of pixels, all of it text anti-aliasing.
 
-Each design stores its appointments, selection and notes separately in browser localStorage. The gallery and individual pages share data when served from the same local address. Browser behavior for storage on directly opened `file:` pages varies; use the local preview for consistent persistence across pages.
+1. Tear-off
+2. Kalendar Kuda
+3. Kopitiam Ledger
+4. Kedai Runcit
+5. Batik Margin
+6. Postcard Month
+7. Rubber Stamp
+8. Riso Pop
+9. Midnight Almanac
 
-The calendar starts at Thursday, 1 October 2026. The demo reset returns all nine designs to that date in the gallery, or resets only the current design on an individual page. A confirmation appears before added appointments and notes are cleared.
+On first launch you pick a style from a gallery of live previews. The **Gaya** button reopens it.
 
-This is a local frontend prototype. There is no calendar account connection, server database or device sync.
+## What the app adds around each screen
 
-## Local preview
+- **The daily leaf.** A second page set in the chosen design's paper, ink and type. It holds:
+  - the date, Hijri and Chinese lunar dates, and any public holiday
+  - the fact and peribahasa, with a reroll button for each
+  - notes, and an "Urus acara" list to edit or delete your events
+- **Animations.** Moving months lifts the page with a curl. Moving days on a day page (Tear-off, or any Hari view) tears the sheet off.
+- **Holidays.** Sundays and public holidays print in the design's red.
+- **One shared agenda.** Events are shared across all nine styles. Tap an event row to mark it done.
 
-The development preview uses a static HTTP server at `http://localhost:4173/`. With Python installed, run this command from the project folder:
+## Import
 
-```powershell
-python -m http.server 4173 --bind 127.0.0.1
+**Import** accepts:
+
+- **Files:** `.ics`, Google Calendar's export `.zip` (no need to unzip) and Notion CSV exports. These come from:
+  - Google Calendar: Tetapan → Import & eksport → Eksport
+  - Apple Calendar: Fail → Eksport
+  - Outlook: Simpan Kalendar
+  - Notion: Export → CSV
+- **Subscription links:** `https://` or `webcal://` iCal links, such as Google's secret iCal address, iCloud public calendars and Outlook published calendars. Each one re-syncs when the app opens, at most every 3 hours.
+
+The parser, `import.js`, handles:
+- timezones, including Outlook's Windows zone names
+- recurring events: daily, weekly, monthly and yearly, with COUNT/UNTIL/INTERVAL/BYDAY/BYMONTHDAY, EXDATE and RECURRENCE-ID
+- multi-day all-day events and cancelled events
+- Notion date formats such as `October 1, 2026 9:00 AM (GMT+8)` and `A → B` ranges
+
+Imported calendars are stored separately from your own events, so a re-sync never overwrites them. Removing a calendar removes its events.
+
+Subscription links are fetched by `netlify/functions/ics-proxy.mjs` at `/api/ics`, because most calendar hosts don't allow browsers to fetch them directly. It accepts only public http(s) hosts, re-checks every redirect, caps size and time, and returns only iCal.
+
+## Files
+
+| File | What it holds |
+|---|---|
+| `index.html`, `styles.css`, `app.js` | app shell, leaf, dialogs, onboarding |
+| `design.css`, `assets/` | the nine designs, fonts and artwork, ported 1:1 |
+| `import.js` | ICS / zip / CSV import |
+| `data/facts.js`, `data/peribahasa.js`, `data/holidays.js` | daily content and gazetted holidays for 2025–2027 |
+| `sw.js`, `manifest.webmanifest`, `icons/` | offline support and install on a phone |
+| `netlify/functions/ics-proxy.mjs`, `netlify.toml` | the `/api/ics` proxy for subscription links |
+| `studies/` | the original nine HTML design studies, design notes and reference board |
+
+## Run locally
+
+```sh
+npx http-server -p 8080 .   # then open http://localhost:8080/ (studies at /studies/)
 ```
 
-The bundled Python runtime was used to start the preview in this session.
-
-## Design source and assets
-
-`references/design-board.png` contains the original nine-cell ImageGen board. `DESIGN.md` records the layout, palette and typography extracted from each cell.
-
-The built-in ImageGen tool generated four implementation assets: `print-atlas.png` (six decorative print illustrations), `postcard-street.png`, `batik-strip.png` and `paper-grain.png`. `assets/image-prompts.md` records their prompts. The decorative atlas contains artwork only; calendar screens are rendered as HTML.
-
-Fonts are Barlow Condensed, DM Serif Display, IBM Plex Mono and IBM Plex Sans Condensed, downloaded from Google Fonts and accompanied by their licenses. Chinese and Tamil text use system fonts. Gregorian month and weekday translations come from the browser's `Intl.DateTimeFormat` implementation. No lunar or Hijri dates are inferred.
+Subscription links only work under `netlify dev` or when deployed, because they need the proxy function. File imports work anywhere.
