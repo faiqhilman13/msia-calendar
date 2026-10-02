@@ -217,7 +217,7 @@ struct CalDay {
     let inMonth: Bool
     let today: Bool
     let red: Bool
-    /// The app's data for the day, when the snapshot has it (today and the next 20 days).
+    /// The app's data for the day, when the snapshot has it: today and the next 20 days, and holidays for a year.
     let info: DayInfo?
 }
 

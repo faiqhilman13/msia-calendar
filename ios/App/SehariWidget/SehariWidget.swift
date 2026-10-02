@@ -48,9 +48,17 @@ extension DayInfo {
     var languages: String { [dayZhName, day, dayTa].filter { !$0.isEmpty }.joined(separator: "  ·  ") }
 }
 
+/// A public holiday's name in Malay and English.
+struct Holiday: Codable {
+    let ms: String?
+    let en: String?
+}
+
 private struct Snapshot: Codable {
     let style: String?
     let days: [DayInfo]
+    /// Public holidays by date, for a year from the 1st of the month. Snapshots from older versions have none.
+    let holidays: [String: Holiday]?
 }
 
 enum Sheet {
@@ -78,13 +86,20 @@ enum Sheet {
         return String(format: "%04d-%02d-%02d", c.year ?? 0, c.month ?? 0, c.day ?? 0)
     }
 
-    /// Today's sheet with no data from the app: the date is still right.
-    static func plain(_ date: Date) -> DayInfo {
+    /// The date a "yyyy-MM-dd" key names.
+    static func date(key: String) -> Date? {
+        let p = key.split(separator: "-").compactMap { Int($0) }
+        guard p.count == 3 else { return nil }
+        return calendar.date(from: DateComponents(year: p[0], month: p[1], day: p[2]))
+    }
+
+    /// A sheet with no data from the app: the date is still right, and so is a holiday the app listed.
+    static func plain(_ date: Date, holiday: Holiday? = nil) -> DayInfo {
         let c = calendar.dateComponents([.year, .month, .day, .weekday], from: date)
         let w = (c.weekday ?? 1) - 1, m = (c.month ?? 1) - 1
         return DayInfo(date: key(date), d: c.day ?? 1, year: c.year ?? 2026, weekday: w, month: months[m], monthEn: monthsEn[m],
-                       monthZh: monthsZh[m], day: days[w], dayEn: daysEn[w], dayZh: daysZh[w], red: w == 0, holiday: nil,
-                       holidayEn: nil, peribahasa: nil, maksud: nil, maksudEn: nil, events: nil)
+                       monthZh: monthsZh[m], day: days[w], dayEn: daysEn[w], dayZh: daysZh[w], red: w == 0 || holiday != nil,
+                       holiday: holiday?.ms, holidayEn: holiday?.en, peribahasa: nil, maksud: nil, maksudEn: nil, events: nil)
     }
 
     /// The app's design and its days, by date. Before the app has written anything: its first design and no days.
@@ -92,7 +107,13 @@ enum Sheet {
         guard let json = UserDefaults(suiteName: appGroup)?.string(forKey: "snapshot"),
               let data = json.data(using: .utf8),
               let snap = try? JSONDecoder().decode(Snapshot.self, from: data) else { return (SheetStyle(id: nil), [:]) }
-        return (SheetStyle(id: snap.style), Dictionary(snap.days.map { ($0.date, $0) }, uniquingKeysWith: { a, _ in a }))
+        var days = Dictionary(snap.days.map { ($0.date, $0) }, uniquingKeysWith: { a, _ in a })
+        // The snapshot's days run from today for 21 days. Holidays outside them still print red in the month
+        // grids, and still head their sheet when the app hasn't been opened for a while.
+        for (k, h) in snap.holidays ?? [:] where days[k] == nil {
+            if let date = date(key: k) { days[k] = plain(date, holiday: h) }
+        }
+        return (SheetStyle(id: snap.style), days)
     }
 
     static func info(for date: Date, in days: [String: DayInfo]) -> DayInfo {
@@ -487,10 +508,11 @@ struct LanguageRow: View {
     }
 }
 
-/// The month at a glance, Monday first, with Sundays in red and today underlined.
+/// The month at a glance, Monday first, with Sundays and public holidays in red and today underlined.
 struct MiniMonth: View {
     @Environment(\.palette) private var palette
     let info: DayInfo
+    let days: [String: DayInfo]
     let rowHeight: CGFloat
     private static let heads = ["M", "T", "W", "T", "F", "S", "S"]
 
@@ -500,6 +522,7 @@ struct MiniMonth: View {
         let offset = (cal.component(.weekday, from: first) + 5) % 7
         let count = cal.range(of: .day, in: .month, for: first)?.count ?? 30
         let cells = Array(repeating: 0, count: offset) + Array(1...count)
+        let holidays = Set((1...count).filter { days[String(format: "%04d-%02d-%02d", info.year, info.monthIndex + 1, $0)]?.red == true })
         let cols = Array(repeating: GridItem(.flexible(), spacing: 0), count: 7)
         let size = min(11, rowHeight * 0.72)
         LazyVGrid(columns: cols, spacing: 0) {
@@ -508,7 +531,7 @@ struct MiniMonth: View {
                 let n = i < 7 ? 0 : cells[i - 7]
                 Text(i < 7 ? Self.heads[i] : n == 0 ? " " : "\(n)")
                     .font(serif(i < 7 ? size - 2 : size))
-                    .foregroundColor(i % 7 == 6 || n == info.d ? palette.red : palette.ink)
+                    .foregroundColor(i % 7 == 6 || n == info.d || holidays.contains(n) ? palette.red : palette.ink)
                     .underline(n == info.d, color: palette.red)
                     .fixedSize()
                     .frame(height: rowHeight)
@@ -520,6 +543,7 @@ struct MiniMonth: View {
 struct LargeSheet: View {
     @Environment(\.palette) private var palette
     let info: DayInfo
+    let days: [String: DayInfo]
     let size: CGSize
     let paper: Bool
 
@@ -532,7 +556,7 @@ struct LargeSheet: View {
                     DateBlock(info: info).frame(width: size.width * 0.4)
                     Rectangle().fill(palette.divider).frame(width: 1)
                     VStack(spacing: 4) {
-                        MiniMonth(info: info, rowHeight: min(16, (top - 18) / 7))
+                        MiniMonth(info: info, days: days, rowHeight: min(16, (top - 18) / 7))
                         Text("\(info.month)  ·  \(info.monthZhName)")
                             .font(georgia(10)).tracking(0.5).foregroundColor(palette.ink)
                             .lineLimit(1).minimumScaleFactor(0.7)
@@ -578,7 +602,7 @@ struct TearOffSheet: View {
         Group {
             switch ctx.family {
             case .systemMedium: MediumSheet(info: ctx.info, size: ctx.size, paper: paper)
-            case .systemLarge, .systemExtraLarge: LargeSheet(info: ctx.info, size: ctx.size, paper: paper)
+            case .systemLarge, .systemExtraLarge: LargeSheet(info: ctx.info, days: ctx.days, size: ctx.size, paper: paper)
             default: SmallSheet(info: ctx.info, size: ctx.size, paper: paper)
             }
         }

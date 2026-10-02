@@ -44,9 +44,9 @@ final class WidgetData {
         w.holiday = w.peribahasa = w.maksud = w.eventTime = w.eventTitle = "";
         SharedPreferences prefs = ctx.getSharedPreferences(PREFS, Context.MODE_PRIVATE);
         try {
-            JSONArray days = new JSONObject(prefs.getString(KEY, "{}")).optJSONArray("days");
-            if (days == null) return w;
-            for (int i = 0; i < days.length(); i++) {
+            JSONObject snap = new JSONObject(prefs.getString(KEY, "{}"));
+            JSONArray days = snap.optJSONArray("days");
+            for (int i = 0; days != null && i < days.length(); i++) {
                 JSONObject d = days.getJSONObject(i);
                 if (!w.date.equals(d.optString("date"))) continue;
                 w.red = d.optBoolean("red", w.red);
@@ -61,7 +61,14 @@ final class WidgetData {
                     w.eventTime = e.optString("time", "");
                     w.eventTitle = e.optString("title", "");
                 }
-                break;
+                return w;
+            }
+            // The days run out 21 days after the app was last opened. The holidays, listed for a year, still show.
+            JSONObject holidays = snap.optJSONObject("holidays");
+            JSONObject h = holidays == null ? null : holidays.optJSONObject(w.date);
+            if (h != null) {
+                w.red = true;
+                w.holiday = firstNonEmpty(h.optString("en", ""), h.optString("ms", ""));
             }
         } catch (Exception ignored) {
             // A damaged snapshot still leaves a correct date on the widget.

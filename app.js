@@ -944,8 +944,8 @@
 
   /* ----------------------------------------------------- native widgets
      In the iOS and Android app (Capacitor), the home and lock screen widgets read
-     a snapshot of the next 21 days that the app writes through the native
-     WidgetBridge plugin. In a browser this does nothing. */
+     a snapshot of the next 21 days, plus a year of public holidays, that the app
+     writes through the native WidgetBridge plugin. In a browser this does nothing. */
   const cap = window.Capacitor;
   // Without @capacitor/core bundled, the injected native bridge has nativePromise() but no registerPlugin().
   const WidgetBridge = !(cap && cap.isNativePlatform && cap.isNativePlatform()) ? null
@@ -974,7 +974,14 @@
           events: eventsFor(k).filter(e => !e.done).slice(0, 4).map(e => ({ time: e.time || '', title: e.title })),
         });
       }
-      WidgetBridge.setData({ json: JSON.stringify({ style: style.id, updated: Date.now(), days }) }).catch(() => {});
+      // Public holidays from the 1st of this month for a year, so the widgets' month grids print the days
+      // before today and after the 21 in red too, and later pages still show the holiday.
+      const holidays = {};
+      for (let i = 0, p = { ...today(), d: 1 }; i < 400; i++, p = addDays(p, 1)) {
+        const h = holiday(p.y, p.m, p.d);
+        if (h) holidays[iso(p.y, p.m, p.d)] = { ms: h.ms, en: h.en };
+      }
+      WidgetBridge.setData({ json: JSON.stringify({ style: style.id, updated: Date.now(), days, holidays }) }).catch(() => {});
     }, 400);
   }
   document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'hidden') pushWidget(); });
