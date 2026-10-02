@@ -59,7 +59,7 @@ Subscription links are fetched by `netlify/functions/ics-proxy.mjs` at `/api/ics
 
 The same web app is packaged with [Capacitor](https://capacitorjs.com) as a native app for the App Store and Play Store. The native apps add home screen and lock screen widgets, which a web app can't offer.
 
-**The "Tear-off Calendar" widget** shows today's sheet, with Sundays and public holidays in red. The bigger sizes add the peribahasa and the day's events.
+**The widget** shows today's sheet, with Sundays and public holidays in red. The bigger sizes add the peribahasa and the day's events. It is called "Daily Sheet" in the iPhone widget gallery and "Tear-off Calendar" on Android.
 - **iPhone:**
   - home screen: small, medium and large sizes, drawn in whichever of the nine styles the app is set to. They redraw when you pick another style. Each style lays out its sheet like its own screen. Tear-off, for example, has a red binding, a DM Serif numeral, the day in English, Chinese, Malay and Tamil, and in the large size the month at a glance.
   - lock screen: inline, circular and rectangular slots, which take the system's tint in every style
@@ -73,8 +73,9 @@ The app writes a snapshot of the next 21 days through the `WidgetBridge` plugin:
 - the peribahasa and fact
 - the next events
 - the chosen style
+- the public holidays for a year from the 1st of this month, so month grids print earlier and later holidays in red too, and the holidays still show after the 21 days run out
 
-Saves are batched and also run when the app goes to the background. The widgets turn the page at midnight from that snapshot. With no snapshot yet, they still show the correct date.
+Saves are batched and also run when the app goes to the background. The widgets turn the page at midnight from that snapshot. With no snapshot yet, they still show the correct date, and the iPhone widgets use the Tear-off style until the app has been opened once.
 
 | Platform | Files |
 |---|---|
@@ -92,6 +93,8 @@ npm run android     # opens Android Studio: Run, or Build > Generate Signed Bund
 npm run ios         # opens Xcode (on a Mac)
 ```
 
+Android builds need JDK 21, which Android Studio bundles. From the command line, point `JAVA_HOME` at a JDK 21.
+
 **iOS, one-time setup:**
 1. Put your Apple Developer team ID in `ios/App/Signing.local.xcconfig`, a git-ignored file next to `Signing.xcconfig`:
    ```
@@ -100,11 +103,11 @@ npm run ios         # opens Xcode (on a Mac)
    Both targets read it through `ios/App/Signing.xcconfig`, so your ID never lands in `project.pbxproj`. Leave Team unset in Xcode's Signing & Capabilities tab, because picking one there writes it into the project. Simulator builds don't need a team.
 2. Sign in to Xcode with the same Apple ID (Xcode → Settings → Accounts) so it can make the provisioning profiles.
 3. **App Groups** already lists `group.my.sehariselembar.app` on both targets, through `App/App.entitlements` and `SehariWidget/SehariWidget.entitlements`. Xcode registers it with your team the first time you build for a phone.
-4. Run the app once on a phone so the widgets get their first snapshot. Then long-press the home screen → **Edit** → **Add Widget**, or the lock screen → **Customize**, and pick Sehari Selembar.
+4. Run the app once on a phone so the widgets get their first snapshot. Then long-press the home screen → **Edit** → **Add Widget**, or the lock screen → **Customize**, and pick Sehari Selembar → **Daily Sheet**.
 
 A free Apple ID (Personal Team) can put the app and widgets on your own phone. Its profiles expire after 7 days, and it can register only 10 App IDs a week. TestFlight and the App Store need a paid Apple Developer Program membership.
 
-The widget target was added by `scripts/add-ios-widget.rb` (uses the `xcodeproj` gem). It is safe to re-run. The widget needs iOS 16 for the lock screen, while the app supports iOS 15. The widget's deployment target lives in `ios/App/SehariWidget/SehariWidget.xcconfig`, not in `project.pbxproj`, because `npx cap sync` copies the first deployment target it finds there into `CapApp-SPM/Package.swift`.
+The widget target was added by `scripts/add-ios-widget.rb` (needs `gem install xcodeproj`). It also adds the widget's fonts, entitlements and privacy manifests, and is safe to re-run, for example after adding a font to `STYLE_FONTS`. If you regenerate `ios/` with `npx cap add ios`, copy back this repo's `ios/App/App/` and `ios/App/SehariWidget/` files and `ios/App/Signing.xcconfig`, then run the script: it rebuilds the same project. The widget needs iOS 16 for the lock screen, while the app supports iOS 15. The widget's deployment target lives in `ios/App/SehariWidget/SehariWidget.xcconfig`, not in `project.pbxproj`, because `npx cap sync` copies the first deployment target it finds there into `CapApp-SPM/Package.swift`.
 
 **Before you publish:**
 - The bundle id `my.sehariselembar.app` is set in `capacitor.config.json`. Change it there and in the two native projects before the first upload if you want a different one.
