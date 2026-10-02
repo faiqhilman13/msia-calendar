@@ -7,7 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1A451437A62396BDDDBD9F87 /* BarlowCondensed-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0B4B8A1ABBB1DBD82096FF8B /* BarlowCondensed-SemiBold.ttf */; };
+		1EDD147B3F83D9FE48FB50ED /* IBMPlexSansCondensed-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3CB0F456E1485A33CC05B9A3 /* IBMPlexSansCondensed-SemiBold.ttf */; };
 		2FAD9763203C412B000D30F8 /* config.xml in Resources */ = {isa = PBXBuildFile; fileRef = 2FAD9762203C412B000D30F8 /* config.xml */; };
+		3F7F1B93A4CFF5E1DBEABBB2 /* BarlowCondensed-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8406CE56CE0B12865B7DDA31 /* BarlowCondensed-Bold.ttf */; };
+		45E9693738E7C36EBFAC41A7 /* BarlowCondensed-ExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EB9FAB92B5D1416EF39DFBA1 /* BarlowCondensed-ExtraBold.ttf */; };
+		495757D0CE6E81EB5CB034DF /* IBMPlexMono-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1CF95B2640FAAB2B11BBE77E /* IBMPlexMono-Regular.ttf */; };
 		4D22ABE92AF431CB00220026 /* CapApp-SPM in Frameworks */ = {isa = PBXBuildFile; productRef = 4D22ABE82AF431CB00220026 /* CapApp-SPM */; };
 		50379B232058CBB4000EE86E /* capacitor.config.json in Resources */ = {isa = PBXBuildFile; fileRef = 50379B222058CBB4000EE86E /* capacitor.config.json */; };
 		504EC3081FED79650016851F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 504EC3071FED79650016851F /* AppDelegate.swift */; };
@@ -16,22 +21,18 @@
 		504EC3121FED79650016851F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 504EC3101FED79650016851F /* LaunchScreen.storyboard */; };
 		50B271D11FEDC1A000F3C39B /* public in Resources */ = {isa = PBXBuildFile; fileRef = 50B271D01FEDC1A000F3C39B /* public */; };
 		75FADF72D7BB1D1B3B3B6F26 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A955DE04CE9490490349B835 /* Assets.xcassets */; };
-		81F098F4AD4209F8CE9B35A5 /* SehariWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = F08052D018D59D5BB7664CE6 /* SehariWidget.swift */; };
-		9582B6832FE993A70072D4E8 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9582B6822FE993A50072D4E8 /* SceneDelegate.swift */; };
-		979A01FD1F94789E4AB200BC /* DMSerifDisplay-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FA70A2F987E30149B059A420 /* DMSerifDisplay-Regular.ttf */; };
-		1A451437A62396BDDDBD9F87 /* BarlowCondensed-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0B4B8A1ABBB1DBD82096FF8B /* BarlowCondensed-SemiBold.ttf */; };
-		3F7F1B93A4CFF5E1DBEABBB2 /* BarlowCondensed-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8406CE56CE0B12865B7DDA31 /* BarlowCondensed-Bold.ttf */; };
-		45E9693738E7C36EBFAC41A7 /* BarlowCondensed-ExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EB9FAB92B5D1416EF39DFBA1 /* BarlowCondensed-ExtraBold.ttf */; };
 		81DCC41F45C0D66920470977 /* BarlowCondensed-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DAF21FA31365F1F090ECBEA2 /* BarlowCondensed-Black.ttf */; };
+		81F098F4AD4209F8CE9B35A5 /* SehariWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = F08052D018D59D5BB7664CE6 /* SehariWidget.swift */; };
 		830AA76D314820FFDAF4C1D8 /* IBMPlexSansCondensed-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3B796C6413C61320C0AB9A65 /* IBMPlexSansCondensed-Medium.ttf */; };
-		1EDD147B3F83D9FE48FB50ED /* IBMPlexSansCondensed-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3CB0F456E1485A33CC05B9A3 /* IBMPlexSansCondensed-SemiBold.ttf */; };
-		495757D0CE6E81EB5CB034DF /* IBMPlexMono-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1CF95B2640FAAB2B11BBE77E /* IBMPlexMono-Regular.ttf */; };
-		FA4B86B3FD85A6DDB06C2A78 /* SehariStyles.swift in Sources */ = {isa = PBXBuildFile; fileRef = A19CD27C67B25143C15B6B1B /* SehariStyles.swift */; };
+		9582B6832FE993A70072D4E8 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9582B6822FE993A50072D4E8 /* SceneDelegate.swift */; };
+		95F996181C7B01E3031797E7 /* BarlowCondensed-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6A049DB154154BC5F4B1FCA6 /* BarlowCondensed-Regular.ttf */; };
+		979A01FD1F94789E4AB200BC /* DMSerifDisplay-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FA70A2F987E30149B059A420 /* DMSerifDisplay-Regular.ttf */; };
 		9FB9523328F94A6D9CACD268 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00AA74C337D2953C20597CEE /* SwiftUI.framework */; };
 		C1E0A5D27B4F4E2A9D3B6F04 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = C1E0A5D27B4F4E2A9D3B6F03 /* PrivacyInfo.xcprivacy */; };
 		C1E0A5D27B4F4E2A9D3B6F06 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = C1E0A5D27B4F4E2A9D3B6F05 /* PrivacyInfo.xcprivacy */; };
 		D40B4A467496B38D71EB7B7E /* SehariWidget.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = F20A57F54D9E5E6FA63C9651 /* SehariWidget.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		F7E3FF5AB4CC68EAF579D69C /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C64CE50F3DEB4D1BF5854B8 /* WidgetKit.framework */; };
+		FA4B86B3FD85A6DDB06C2A78 /* SehariStyles.swift in Sources */ = {isa = PBXBuildFile; fileRef = A19CD27C67B25143C15B6B1B /* SehariStyles.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -60,7 +61,11 @@
 
 /* Begin PBXFileReference section */
 		00AA74C337D2953C20597CEE /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
+		0B4B8A1ABBB1DBD82096FF8B /* BarlowCondensed-SemiBold.ttf */ = {isa = PBXFileReference; includeInIndex = 1; path = "BarlowCondensed-SemiBold.ttf"; sourceTree = "<group>"; };
+		1CF95B2640FAAB2B11BBE77E /* IBMPlexMono-Regular.ttf */ = {isa = PBXFileReference; includeInIndex = 1; path = "IBMPlexMono-Regular.ttf"; sourceTree = "<group>"; };
 		2FAD9762203C412B000D30F8 /* config.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = config.xml; sourceTree = "<group>"; };
+		3B796C6413C61320C0AB9A65 /* IBMPlexSansCondensed-Medium.ttf */ = {isa = PBXFileReference; includeInIndex = 1; path = "IBMPlexSansCondensed-Medium.ttf"; sourceTree = "<group>"; };
+		3CB0F456E1485A33CC05B9A3 /* IBMPlexSansCondensed-SemiBold.ttf */ = {isa = PBXFileReference; includeInIndex = 1; path = "IBMPlexSansCondensed-SemiBold.ttf"; sourceTree = "<group>"; };
 		3D14BF773A213BDE7DDAEEB5 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		50379B222058CBB4000EE86E /* capacitor.config.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = capacitor.config.json; sourceTree = "<group>"; };
 		504EC3041FED79650016851F /* App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = App.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -70,27 +75,24 @@
 		504EC3111FED79650016851F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		504EC3131FED79650016851F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		50B271D01FEDC1A000F3C39B /* public */ = {isa = PBXFileReference; lastKnownFileType = folder; path = public; sourceTree = "<group>"; };
+		6A049DB154154BC5F4B1FCA6 /* BarlowCondensed-Regular.ttf */ = {isa = PBXFileReference; includeInIndex = 1; path = "BarlowCondensed-Regular.ttf"; sourceTree = "<group>"; };
 		6DBAB6401C170559D20A041D /* SehariWidget.entitlements */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.entitlements; path = SehariWidget.entitlements; sourceTree = "<group>"; };
+		8406CE56CE0B12865B7DDA31 /* BarlowCondensed-Bold.ttf */ = {isa = PBXFileReference; includeInIndex = 1; path = "BarlowCondensed-Bold.ttf"; sourceTree = "<group>"; };
 		9582B6822FE993A50072D4E8 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		958DCC722DB07C7200EA8C5F /* debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = debug.xcconfig; path = ../debug.xcconfig; sourceTree = SOURCE_ROOT; };
 		9C64CE50F3DEB4D1BF5854B8 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
+		A19CD27C67B25143C15B6B1B /* SehariStyles.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SehariStyles.swift; sourceTree = "<group>"; };
 		A955DE04CE9490490349B835 /* Assets.xcassets */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C1E0A5D27B4F4E2A9D3B6F01 /* SehariWidget.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = SehariWidget.xcconfig; sourceTree = "<group>"; };
 		C1E0A5D27B4F4E2A9D3B6F02 /* Signing.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Signing.xcconfig; sourceTree = "<group>"; };
 		C1E0A5D27B4F4E2A9D3B6F03 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		C1E0A5D27B4F4E2A9D3B6F05 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+		DAF21FA31365F1F090ECBEA2 /* BarlowCondensed-Black.ttf */ = {isa = PBXFileReference; includeInIndex = 1; path = "BarlowCondensed-Black.ttf"; sourceTree = "<group>"; };
+		EB9FAB92B5D1416EF39DFBA1 /* BarlowCondensed-ExtraBold.ttf */ = {isa = PBXFileReference; includeInIndex = 1; path = "BarlowCondensed-ExtraBold.ttf"; sourceTree = "<group>"; };
 		F08052D018D59D5BB7664CE6 /* SehariWidget.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SehariWidget.swift; sourceTree = "<group>"; };
 		F20A57F54D9E5E6FA63C9651 /* SehariWidget.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; name = SehariWidget.appex; path = SehariWidget.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		F999A818695EA0C6C7421C9D /* App.entitlements */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.entitlements; path = App.entitlements; sourceTree = "<group>"; };
 		FA70A2F987E30149B059A420 /* DMSerifDisplay-Regular.ttf */ = {isa = PBXFileReference; includeInIndex = 1; path = "DMSerifDisplay-Regular.ttf"; sourceTree = "<group>"; };
-		0B4B8A1ABBB1DBD82096FF8B /* BarlowCondensed-SemiBold.ttf */ = {isa = PBXFileReference; includeInIndex = 1; path = "BarlowCondensed-SemiBold.ttf"; sourceTree = "<group>"; };
-		8406CE56CE0B12865B7DDA31 /* BarlowCondensed-Bold.ttf */ = {isa = PBXFileReference; includeInIndex = 1; path = "BarlowCondensed-Bold.ttf"; sourceTree = "<group>"; };
-		EB9FAB92B5D1416EF39DFBA1 /* BarlowCondensed-ExtraBold.ttf */ = {isa = PBXFileReference; includeInIndex = 1; path = "BarlowCondensed-ExtraBold.ttf"; sourceTree = "<group>"; };
-		DAF21FA31365F1F090ECBEA2 /* BarlowCondensed-Black.ttf */ = {isa = PBXFileReference; includeInIndex = 1; path = "BarlowCondensed-Black.ttf"; sourceTree = "<group>"; };
-		3B796C6413C61320C0AB9A65 /* IBMPlexSansCondensed-Medium.ttf */ = {isa = PBXFileReference; includeInIndex = 1; path = "IBMPlexSansCondensed-Medium.ttf"; sourceTree = "<group>"; };
-		3CB0F456E1485A33CC05B9A3 /* IBMPlexSansCondensed-SemiBold.ttf */ = {isa = PBXFileReference; includeInIndex = 1; path = "IBMPlexSansCondensed-SemiBold.ttf"; sourceTree = "<group>"; };
-		1CF95B2640FAAB2B11BBE77E /* IBMPlexMono-Regular.ttf */ = {isa = PBXFileReference; includeInIndex = 1; path = "IBMPlexMono-Regular.ttf"; sourceTree = "<group>"; };
-		A19CD27C67B25143C15B6B1B /* SehariStyles.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SehariStyles.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -141,6 +143,7 @@
 				6DBAB6401C170559D20A041D /* SehariWidget.entitlements */,
 				C1E0A5D27B4F4E2A9D3B6F01 /* SehariWidget.xcconfig */,
 				C1E0A5D27B4F4E2A9D3B6F05 /* PrivacyInfo.xcprivacy */,
+				6A049DB154154BC5F4B1FCA6 /* BarlowCondensed-Regular.ttf */,
 			);
 			name = SehariWidget;
 			path = SehariWidget;
@@ -292,6 +295,7 @@
 				1EDD147B3F83D9FE48FB50ED /* IBMPlexSansCondensed-SemiBold.ttf in Resources */,
 				495757D0CE6E81EB5CB034DF /* IBMPlexMono-Regular.ttf in Resources */,
 				C1E0A5D27B4F4E2A9D3B6F06 /* PrivacyInfo.xcprivacy in Resources */,
+				95F996181C7B01E3031797E7 /* BarlowCondensed-Regular.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

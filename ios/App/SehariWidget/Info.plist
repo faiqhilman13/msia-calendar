@@ -23,6 +23,7 @@
 	<key>UIAppFonts</key>
 	<array>
 		<string>DMSerifDisplay-Regular.ttf</string>
+		<string>BarlowCondensed-Regular.ttf</string>
 		<string>BarlowCondensed-SemiBold.ttf</string>
 		<string>BarlowCondensed-Bold.ttf</string>
 		<string>BarlowCondensed-ExtraBold.ttf</string>

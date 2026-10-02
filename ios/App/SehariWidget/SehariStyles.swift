@@ -27,6 +27,7 @@ enum Face: String {
     case serif = "DMSerifDisplay-Regular"
     case georgia = "Georgia-Bold"
     case georgiaItalic = "Georgia-Italic"
+    case regular = "BarlowCondensed-Regular"
     case semibold = "BarlowCondensed-SemiBold"
     case bold = "BarlowCondensed-Bold"
     case extraBold = "BarlowCondensed-ExtraBold"
@@ -1460,7 +1461,7 @@ struct Seal: View {
                 Text("★").font(face(.georgia, 29 * u))
                 Text("HARIAN")
             }
-            .font(face(.semibold, 19 * u)).tracking(19 * u * 0.12)
+            .font(face(.regular, 19 * u)).tracking(19 * u * 0.12)
             .foregroundColor(color)
             .rotationEffect(.degrees(15))
         }

@@ -21,8 +21,9 @@ add_privacy_manifest(app, app_group)
 
 # SehariStyles.swift draws the widget in each of the app's styles, with these fonts besides DM Serif Display.
 # Info.plist lists the same fonts under UIAppFonts.
-STYLE_FONTS = %w[BarlowCondensed-SemiBold BarlowCondensed-Bold BarlowCondensed-ExtraBold BarlowCondensed-Black
-                 IBMPlexSansCondensed-Medium IBMPlexSansCondensed-SemiBold IBMPlexMono-Regular].map { |f| "#{f}.ttf" }
+STYLE_FONTS = %w[BarlowCondensed-Regular BarlowCondensed-SemiBold BarlowCondensed-Bold BarlowCondensed-ExtraBold
+                 BarlowCondensed-Black IBMPlexSansCondensed-Medium IBMPlexSansCondensed-SemiBold
+                 IBMPlexMono-Regular].map { |f| "#{f}.ttf" }
 def add_style_files(target, group)
   ref = group.files.find { |f| f.path == 'SehariStyles.swift' } || group.new_file('SehariStyles.swift')
   target.add_file_references([ref]) unless target.source_build_phase.files_references.include?(ref)
