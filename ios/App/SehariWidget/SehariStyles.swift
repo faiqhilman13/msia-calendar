@@ -10,8 +10,9 @@ import WidgetKit
 enum SheetStyle: String, CaseIterable {
     case tearoff, kuda, kopitiam, runcit, batik, postcard, stamp, riso, midnight
 
-    /// Unknown or missing ids get the design the app starts with: `applyStyle(saved || 'kuda')` in app.js.
-    init(id: String?) { self = id.flatMap(SheetStyle.init(rawValue:)) ?? .kuda }
+    /// The app always sends its design. With no snapshot yet (the app hasn't been opened), or an id this widget
+    /// doesn't know, the widget shows the Tear-off sheet, as in the widget gallery.
+    init(id: String?) { self = id.flatMap(SheetStyle.init(rawValue:)) ?? .tearoff }
 }
 
 extension Color {

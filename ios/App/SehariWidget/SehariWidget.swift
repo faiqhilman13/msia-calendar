@@ -102,7 +102,7 @@ enum Sheet {
                        holiday: holiday?.ms, holidayEn: holiday?.en, peribahasa: nil, maksud: nil, maksudEn: nil, events: nil)
     }
 
-    /// The app's design and its days, by date. Before the app has written anything: its first design and no days.
+    /// The app's design and its days, by date. Before the app has written anything: the Tear-off sheet and no days.
     static func load() -> (style: SheetStyle, days: [String: DayInfo]) {
         guard let json = UserDefaults(suiteName: appGroup)?.string(forKey: "snapshot"),
               let data = json.data(using: .utf8),
@@ -723,14 +723,15 @@ extension WidgetConfiguration {
 }
 
 struct SehariTearOffWidget: Widget {
+    /// The first version only drew the Tear-off design. The kind keeps that name so placed widgets stay put.
     let kind = "SehariTearOff"
 
     var body: some WidgetConfiguration {
         StaticConfiguration(kind: kind, provider: SheetProvider()) { entry in
             SehariWidgetView(entry: entry)
         }
-        .configurationDisplayName("Tear-off Calendar")
-        .description("Today's page in the app's design: the date, a peribahasa and your next event.")
+        .configurationDisplayName("Daily Sheet")
+        .description("Today's page in the style you picked in the app: the date, a peribahasa and your next event.")
         .supportedFamilies([.systemSmall, .systemMedium, .systemLarge, .accessoryInline, .accessoryCircular, .accessoryRectangular])
         .fullBleed()
     }
