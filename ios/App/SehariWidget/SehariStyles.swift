@@ -333,22 +333,38 @@ struct Rule: View {
     var body: some View { Rectangle().fill(color).frame(height: weight) }
 }
 
-/// The month in Chinese, Malay and Tamil.
+/// The month in Chinese, Malay and Tamil, on one line where it fits at full size. Where it doesn't (a long month
+/// beside Midnight's moon in a small sheet), the Tamil takes a second line, as on the Riso sheet, instead of the
+/// whole line shrinking.
 struct MonthLanguages: View {
     @Environment(\.theme) private var theme
     let info: DayInfo
     let size: CGFloat
     var tracking: CGFloat = 0.04
     var spacing: CGFloat = 1
+    /// How the two lines line up when the month needs both.
+    var alignment: HorizontalAlignment = .leading
 
     var body: some View {
-        HStack(spacing: size * spacing) {
-            ForEach(info.monthLanguages, id: \.self) { Text($0) }
+        let names = info.monthLanguages
+        ViewThatFits(in: .horizontal) {
+            line(names)
+            if names.count > 1 {
+                VStack(alignment: alignment, spacing: size * 0.3) {
+                    line(Array(names.dropLast()))
+                    line(Array(names.suffix(1)))
+                }
+            }
+            line(names).minimumScaleFactor(0.7)
         }
         .font(face(.uiBold, size)).tracking(size * tracking)
         .foregroundColor(theme.ink)
-        .lineLimit(1).minimumScaleFactor(0.7)
+        .lineLimit(1)
         .fixedSize(horizontal: false, vertical: true)
+    }
+
+    private func line(_ names: [String]) -> some View {
+        HStack(spacing: size * spacing) { ForEach(names, id: \.self) { Text($0) } }
     }
 }
 
@@ -691,7 +707,7 @@ struct KudaSheet: View {
             }
             Rule(color: t.accent, weight: 2).padding(.top, 3 * k)
             CapText(text: info.monthYear, face: .extraBold, size: 23 * k, color: t.ink, tracking: -0.02).padding(.top, 9 * k)
-            MonthLanguages(info: info, size: 8.5 * k).padding(.top, 6 * k)
+            MonthLanguages(info: info, size: 8.5 * k, alignment: .center).padding(.top, 6 * k)
             MonthGrid(weeks: weeks, look: GridLook(
                 head: face(.semibold, 10 * k), headColor: t.ink, headSunday: t.red,
                 day: face(.serif, 15.5 * k), dayColor: t.ink, sunday: t.red, lines: t.line,
@@ -987,7 +1003,7 @@ struct RuncitSheet: View {
             }
             .frame(maxWidth: .infinity)
             .padding(.top, 8 * k)
-            MonthLanguages(info: info, size: 8.5 * k).frame(maxWidth: .infinity).padding(.top, 5 * k)
+            MonthLanguages(info: info, size: 8.5 * k, alignment: .center).frame(maxWidth: .infinity).padding(.top, 5 * k)
             MonthGrid(weeks: weeks, look: GridLook(
                 head: face(.semibold, 10 * k), headColor: t.buttonInk, headSunday: t.buttonInk, headBand: t.accent,
                 headRules: t.onPaper ? Color(hex: 0xf3d98f) : nil,
@@ -1262,7 +1278,7 @@ struct PostcardSheet: View {
             }
             VStack(spacing: 0) {
                 CapText(text: info.monthYear, face: .serif, size: 23 * k, color: t.ink, tracking: -0.05).padding(.top, 10 * k)
-                MonthLanguages(info: info, size: 8.5 * k).padding(.top, 6 * k)
+                MonthLanguages(info: info, size: 8.5 * k, alignment: .center).padding(.top, 6 * k)
                 MonthGrid(weeks: weeks, look: GridLook(
                     head: face(.serif, 9 * k), headColor: t.ink, headSunday: t.red,
                     day: face(.serif, 14.5 * k), dayColor: t.ink, sunday: t.red, lines: t.line,
